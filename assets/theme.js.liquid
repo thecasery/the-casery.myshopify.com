@@ -1,0 +1,352 @@
+/* Simple jQuery Equal Heights @version 1.5.1. Copyright (c) 2013 Matt Banks. Dual licensed under the MIT and GPL licenses. */
+!function(a){a.fn.equalHeights=function(){var b=0,c=a(this);return c.each(function(){var c=a(this).innerHeight();c>b&&(b=c)}),c.css("height",b)},a("[data-equal]").each(function(){var b=a(this),c=b.data("equal");b.find(c).equalHeights()})}(jQuery);
+
+/* Run function after window resize */
+var afterResize=(function(){var t={};return function(callback,ms,uniqueId){if(!uniqueId){uniqueId="Don't call this twice without a uniqueId";}if(t[uniqueId]){clearTimeout(t[uniqueId]);}t[uniqueId]=setTimeout(callback,ms);};})();
+
+window.theme = window.theme || {};
+
+theme.cacheSelectors = function () {
+  theme.cache = {
+    // General
+    $w: $(window),
+    $body: $('body'),
+
+    // Mobile Nav
+    $mobileNavTrigger: $('#MobileNavTrigger'),
+    $mobileNav: $('#MobileNav'),
+    $mobileSublistTrigger: $('.mobile-nav__sublist-trigger'),
+
+    // Equal height elements
+    $productGridImages: $('.grid-link__image--product'),
+    $featuredGridImages: $('.grid-link__image--collection'),
+    
+    // Product page
+    $productImage: $('#ProductPhotoImg'),
+    $productImageGallery: $('.gallery__item'),
+
+    // Cart Page
+    cartNoteAdd: '.cart__note-add',
+    cartNote: '.cart__note'
+  }
+};
+
+theme.init = function () {
+  theme.cacheSelectors();
+  theme.mobileNav();
+  theme.equalHeights();
+  theme.cartPage();
+
+  {% if settings.product_image_zoom_type == 'lightbox' %}
+    theme.productImageGallery();
+  {% endif %}
+};
+
+theme.mobileNav = function () {
+  theme.cache.$mobileNavTrigger.on('click', function() {
+    theme.cache.$mobileNav.slideToggle(220);
+  });
+
+  theme.cache.$mobileSublistTrigger.on('click', function(evt) {
+    var $el = $(this);
+
+    // Enable commented out if statement to allow direct clicking on trigger link
+    // if (!$el.hasClass('is-active')) {
+      evt.preventDefault();
+      $el.toggleClass('is-active').next('.mobile-nav__sublist').slideToggle(200);
+    // }
+  });
+};
+
+theme.equalHeights = function () {
+  theme.cache.$w.on('load', resizeElements());
+
+  theme.cache.$w.on('resize',
+    afterResize(function() {
+      resizeElements();
+    }, 250, 'equal-heights')
+  );
+
+  function resizeElements() {
+    theme.cache.$productGridImages.css('height', 'auto').equalHeights();
+    theme.cache.$featuredGridImages.css('height', 'auto').equalHeights();
+  }
+};
+
+theme.productImageGallery = function() {
+
+  if (!theme.cache.$productImageGallery.length) {
+    return;
+  };
+
+  theme.cache.$productImageGallery.magnificPopup({
+    type: 'image',
+    mainClass: 'mfp-fade',
+    closeOnBgClick: true,
+    closeBtnInside: false,
+    closeOnContentClick: true,
+    tClose: '{{ "products.zoom.close" | t }}',
+    removalDelay: 500,
+    gallery: {
+      enabled: true,
+      navigateByImgClick: false,
+      arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"><span class="mfp-chevron mfp-chevron-%dir%"></span></button>',
+      tPrev: '{{ "products.zoom.prev" | t }}',
+      tNext: '{{ "products.zoom.next" | t }}'
+    }
+  });
+  
+  theme.cache.$productImage.bind('click', function() {
+    var imageId = $(this).attr('data-image-id');
+    theme.cache.$productImageGallery.filter('[data-image-id="' + imageId + '"]').trigger('click');
+  });
+};
+
+theme.cartPage = function () {
+  {% unless settings.cart_notes_enable %}
+    return;
+  {% endunless %}
+
+  theme.cache.$body.on('click', theme.cache.cartNoteAdd, function () {
+    $(this).addClass('is-hidden');
+    $(theme.cache.cartNote).addClass('is-active');
+    ajaxifyShopify.sizeDrawer();
+  });
+};
+
+// Initialize theme's JS on docready
+$(theme.init);
+
+/* Belowing is implemented by Yang Wang @thecasery.Inc 2015 */
+
+/* The autoscale element function is used for adjusting picture size and location according to screen size.
+ * The container size is set to current screen size.
+ * The inside element size is set to 2:1. if it's largger than 2:1, we cut some of the width;
+ *   if it's smaller than 2:1, we cut some of the height.
+ * 
+ * To realize this function, don't forget to set container "overflow:hidden", and use margin to set element position.
+ */
+var autoscale_element = function(){ 
+  // At this point, pic_width & height are screen size, used to set div size.
+  var picture_height = document.documentElement.clientHeight-30;
+  $('.autoscale__div').css("height", picture_height);
+  $('.autoscale__div').css("width", '100%');
+  var picture_width = $('.autoscale__div').width();
+
+  // Adjust picture width:height to 2:1
+  if (picture_height < 600 && picture_width < 1200) {
+    picture_height = 600;
+    picture_width = 1200;
+  } else if (picture_height * 2 < picture_width) {
+    picture_height = picture_width / 2;
+  } else {
+    picture_width = picture_height * 2;
+  }
+
+  // calculate margin to adjust picture position, make it at center.
+  var margin_top = (document.documentElement.clientHeight - 50 - picture_height) / 2;
+  var margin_left = ($('.autoscale__div').width() - picture_width) / 2;
+
+  $(".autoscale__elem").css("height", picture_height);
+  $(".autoscale__elem").css("width", picture_width);
+
+  $(".autoscale__elem").css("margin-left", margin_left);
+  $(".autoscale__elem").css("margin-top", margin_top);
+
+    // This is a side function, just to adjust slider's navigation-bar position
+  $(".slider-nav").css("top", $('.slide-img').height() - 70);
+  $(".slider-nav").css("left", ($('.slide-img').width()-200) / 2);
+};
+
+if ((typeof Shopify) == 'undefined') {
+  var Shopify = {};
+}
+
+/* The Ajax inpage add_to_shopping_cart function is creating a sliding down page below 
+ * the picture user clicked, allowing user to do add_to_cart action without redirecting to another page.
+ *
+ * The basic strategy is finding the last picture in the line that having the picture user clicked.
+ * After finding that picture, we added the sliding down page after that picture, set "display:block".
+ * 
+ * BTW: There're several 'active-' classes that helping us locating current working elements.
+ */
+var shopping_cart = function(){
+  $('.grid__product').click(function() {
+    var $img = $(this),
+    subPage = $('.inpage-cart');
+
+    // Belowing is find the last image in this line
+    var offset = $img.offset(),
+        nextImage = $img.next(),
+        finalImage = $img;
+
+    if (!$img.is(':last-child')) {
+      while (!nextImage.is(':last-child') && offset.top == nextImage.offset().top) {
+        nextImage = nextImage.next();
+      }
+
+      if (nextImage.is(':last-child')){ 
+        finalImage = nextImage;
+      }
+      else{
+        finalImage = nextImage.prev();
+      }
+    }
+
+    // first check if there's already one slided down shopping cart when we clicking a different image.
+    if (subPage.hasClass('active-cart') && (!$(this).hasClass('active-product'))){
+      $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
+      subPage.removeClass('active-cart').css("display","none");
+      $('.active-product').removeClass('active-product');
+    }
+
+    // We can take advantage of 'active-' class.
+    // active-cart is shopping cart, active-btn is borrowed from subpage, active-product is subpage's top container
+    // There're several operations, most of them are related to display, add/remove class.
+    if (subPage.hasClass('active-cart')){
+      subPage.removeClass('active-cart').slideUp('middle',function(){
+        $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
+        $('.active-product').removeClass('active-product');
+      });
+      // scroll page to show slide-down cart
+      $("html, body").animate({ scrollTop: $('.active-product').offset().top - 100 }, 400); 
+    }
+    else{
+      ($(this).find('.inpage-cart__copy-container')).addClass('active-btn').insertAfter(subPage.find('.inpage-cart__close')).css("display","block");
+      subPage.addClass('active-cart').insertAfter(finalImage).slideDown('middle');
+      $(this).addClass('active-product');
+      $("html, body").animate({ scrollTop: subPage.offset().top - 100 }, 400);
+    }
+  });
+  
+  // When user clicking close button at top-right of slide-down cart
+  $('.inpage-cart__close').click(function(){
+    $('.inpage-cart').removeClass('active-cart').slideUp('middle',function(){
+      $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
+      $('.active-product').removeClass('active-product');
+    });
+    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 100 }, 400);
+  });
+
+  // When user clicking add-to-cart-btn, remove the button
+  $('.add-to-cart-btn').click(function(){
+    $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
+    $('.active-cart').removeClass('active-cart');
+    $('.active-product').removeClass('active-product');
+  });
+
+  $('.grid__product').hover(function(){
+    $(this).find('.product-img').css('display','none');
+    $(this).find('.product-img__second').css('display','block');
+  }, function(){
+    $(this).find('.product-img__second').css('display','none');
+    $(this).find('.product-img').css('display','block');
+  });
+
+  $('.thumbnail-img').click(function(){
+    $('.active-thumbnail').removeClass('active-thumbnail');
+    $(this).addClass('active-thumbnail');
+
+    $(this).parents('.inpage-cart__left-container').find('.back-img').attr('src',$(this).attr('src'));
+  });
+}
+
+// slider
+var next_pic = function(){
+  $('.slide-img').stop(true, true);
+  var currentSlide = $('.active-img'),
+      currentDot = $('.active-dot'),
+      nextDot = currentDot.next();
+      nextSlide = currentSlide.next();
+  if (nextDot.length == 0){
+      nextSlide = $('.slide-img').first();
+      nextDot = $('.dot').first();
+  }
+  
+  // animation
+  var front_slide = (currentSlide.index() < nextSlide.index()) ? (currentSlide) : (nextSlide);
+  front_slide.css("position", "absolute");
+
+  nextSlide.addClass('active-img').fadeIn("slow", function(){
+      currentSlide.removeClass('active-img').css("display","none");
+      front_slide.css("position","static");
+  });
+  
+  currentDot.removeClass('active-dot');
+  nextDot.addClass('active-dot');
+}
+
+var prev_pic = function(){
+  $('.slide-img').stop(true, true);
+  var currentSlide = $('.active-img'),
+      currentDot = $('.active-dot'),
+      prevDot = currentDot.prev();
+      prevSlide = currentSlide.prev();
+  if (prevDot.length == 0){
+      prevSlide = $('.slide-img').last();
+      prevDot = $('.dot').last();
+  }
+  
+  //animation
+  var front_slide = (currentSlide.index() < prevSlide.index()) ? (currentSlide) : (prevSlide);
+  front_slide.css("position", "absolute");
+  prevSlide.addClass('active-img').fadeIn("slow", function(){
+    currentSlide.removeClass('active-img').css("display","none");
+    front_slide.css("position","static");
+  });
+  
+  currentDot.removeClass('active-dot');
+  prevDot.addClass('active-dot');
+}
+
+// click on dot to change pictures
+var change_pic = function(){
+  $('.slide-img').stop(true, true);
+  var currentSlide = $('.active-img'),
+      currentDot = $('.active-dot'),
+      nextDot = currentDot,
+      nextSlide = currentSlide;
+
+  if ($(this).hasClass('active-dot')) return;
+
+  // index technique, very important
+  var index = $(this).index();
+  nextDot = $('.dot').eq(index);
+  nextSlide = $('.slide-img').eq(index);
+
+  //animation
+  var front_slide = (currentSlide.index() < nextSlide.index()) ? (currentSlide) : (nextSlide);
+  front_slide.css("position", "absolute");
+  nextSlide.addClass('active-img').fadeIn("slow", function(){
+    currentSlide.removeClass('active-img').css("display","none");
+    front_slide.css("position","static");
+  });
+  
+  currentDot.removeClass('active-dot');
+  nextDot.addClass('active-dot');
+}
+
+var start_nav = function(){
+  $(".slider-nav").css("top", $('.autoscale__div').height() - 70);
+  $(".slider-nav").css("left", ($('.autoscale__div').width()-200) / 2);
+
+  $(".dot").first().addClass('active-dot');
+  $(".slide-img").first().css("display","block");
+  $(".slide-img").first().addClass('active-img');
+
+  var auto_slide = setInterval(next_pic, 5000);
+
+  $('.arrow-next').click(next_pic);
+  $('.arrow-prev').click(prev_pic);
+  $('.dot').click(change_pic);
+  $('.slider-nav').hover(function(){
+    clearInterval(auto_slide);
+  }, function(){
+    auto_slide = setInterval(next_pic, 5000);
+  });
+}
+
+window.onresize = autoscale_element;
+$(document).ready(autoscale_element);
+$(document).ready(shopping_cart);
+$(document).ready(start_nav);

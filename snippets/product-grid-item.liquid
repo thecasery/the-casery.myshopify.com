@@ -1,0 +1,188 @@
+{% unless grid_item_width %}
+  {% assign grid_item_width = 'wide--one-sixth large--one-quarter medium-down--one-half' %}
+{% endunless %}
+
+{% unless current_collection == blank %}
+  {% assign current_collection = collection %}
+{% endunless %}
+
+{% assign on_sale = false %}
+{% assign sale_text = 'products.product.sale' | t %}
+{% if product.compare_at_price > product.price %}
+  {% assign on_sale = true %}
+{% endif %}
+
+{% assign sold_out = true %}
+{% assign sold_out_text = 'products.product.sold_out' | t %}
+{% if product.available %}
+  {% assign sold_out = false %}
+{% endif %}
+
+<!-- "collection-item is a specific grid class for this webpage, developed by Yang. Havn't integrate with original griding system" -->
+<div class = "grid__product">
+  <span class="grid-link__image grid-link__image--product">
+    {% if on_sale and settings.collections_show_sale_circle %}
+      <span class="badge badge--sale">
+        <span class="badge__text{% if sale_text.size > 7 %} badge__text--small{% endif %}">{{ 'products.product.sale' | t }}</span>
+      </span>
+    {% endif %}
+    {% if sold_out and settings.collections_show_sold_out_circle %}
+      <span class="badge badge--sold-out">
+        <span class="badge__text{% if sold_out_text.size > 9 %} badge__text--small{% endif %}">{{ 'products.product.sold_out' | t }}</span>
+      </span>
+    {% endif %}
+
+    <span class="grid-link__image-centered">
+      <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}"/>
+      <img class='product-img__second' src="{{ product.images[1].src | img_url: 'large' }}" alt="{{ product.images[1].alt | escape }}" style = "display : none"/>
+    </span>
+  </span>
+
+  <!-- Shopping cart add button -->
+  <div class = 'inpage-cart__copy-container wrapper' style = "display:none">
+    <div class = 'inpage-cart__left-container'>
+      <div class="grid">
+        <div class="grid__item one-fifth">
+          <ul class="grid">
+            {% for image in product.images %}
+              <li class="grid__item">
+                <img class = 'thumbnail-img' onmouseover="this.style.cursor='hand'" src="{{ image.src | img_url: 'large' }}"/>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+
+        <div class="grid__item four-fifths">
+          <img class = 'back-img' src="{{ product.featured_image | img_url: 'large'}}"/>
+        </div>
+      </div>
+    </div>
+
+    <div class = 'inpage-cart__right-container'>
+      <div class="grid__item">
+        {% if settings.product_vendor_enable %}
+          <h3>{{ product.vendor }}</h3>
+        {% endif %}
+        <h1 itemprop="name">{{ product.title }}</h1>
+
+        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+          {% assign variant = product.selected_or_first_available_variant %}
+
+          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+
+          <div class="product-single__prices">
+            <span id="ProductPrice" class="product-single__price" itemprop="price">
+              {{ product.price | money }}
+            </span>
+
+            {% if product.compare_at_price > product.price %}
+              <s id="ComparePrice" class="product-single__sale-price">
+                {{ product.compare_at_price_max | money }}
+              </s>
+            {% endif %}
+          </div>
+
+          <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+            <select name="id" id="productSelect" class="product-single__variants">
+              {% for variant in product.variants %}
+                {% if variant.available %}
+
+                  <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
+
+                {% else %}
+                  <option disabled="disabled">
+                    {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                  </option>
+                {% endif %}
+              {% endfor %}
+            </select>
+            <!-- Be care about this hash method, If there's IPhone6S before IPhone6, then when we dedect duplication of IPhone6, 
+            IPhone6 will be marked existed. Because IPhone6 is substring of IPhone6S. Be care about that!!! -->
+            {% if product.options[0] and product.options[0] != 'Title' %}
+              {% assign used = '' %}
+              <label for="select-one">{{ product.options[0] }}</label>
+              <select id='select-one'>
+                {% for variant in product.variants %}
+                  {% unless used contains variant.option1 %}
+                    <option value="{{ variant.option1 }}">{{ variant.option1 }}</option>
+                    {% capture used %}{{ used }} {{ variant.option1 }}{% endcapture %}
+                  {% endunless %}
+                {% endfor %}
+              </select>
+            {% endif %}
+            
+            {% if product.options[1] %}
+              <label for="color-group">{{ product.options[1] }}</label>
+              <div class = 'color-group'>
+                <ul>
+                  <li class = 'selected-color' value = '0' style="background-color:green;" onmouseover="this.style.cursor='hand'"></li>
+                  <li value = '1' style="background-color:gray;" onmouseover="this.style.cursor='hand'"></li>
+                  <li value = '2' style="background-color:yellow;" onmouseover="this.style.cursor='hand'"></li>
+                  <li value = '3' style="background-color:red;" onmouseover="this.style.cursor='hand'"></li>
+                  <li value = '4' style="background-color:blue;" onmouseover="this.style.cursor='hand'"></li>
+                  <li value = '5' style="background-color:#FF00DD;" onmouseover="this.style.cursor='hand'"></li>
+                </ul>
+              </div>
+            {% endif %}
+
+            <div class="product-single__quantity{% unless settings.product_quantity_enable %} is-hidden{% endunless %}">
+              <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+              <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
+            </div>
+            
+            <input type = "hidden" name = "return_to" value = "{{ product.url | within: collection }}"/>
+            <input type="submit" name="add" id="AddToCart" value="ADD TO CART"/>
+          </form>
+
+          <style>
+            .selected-color{
+              border: 3px solid #FFD700; 
+            }
+            .thumbnail-img{
+              cursor:pointer;
+            }
+          </style>
+          <script>
+            $(document).ready(function(){
+              $('.color-group li').click(function(){
+                $('.selected-color').removeClass('selected-color');
+                $(this).addClass('selected-color');
+                var index1 = $(this).parent().parent().parent().find('#select-one').get(0).selectedIndex;
+                var index2 = $(this).val();
+                var index = index1 * 6 + index2;
+
+                $(this).parents('.inpage-cart__right-container').find('#productSelect').get(0).selectedIndex = index;
+
+                /* images currently unavailable
+                var pic_finder = $(this).parent().parent().parent().parent().parent().parent().parent().parent();
+                var back_pic = pic_finder.find('.back-img');
+                var front_pic = pic_finder.find('.front-img');
+                front_pic.css("left", back_pic.offset().left).css('top', back_pic.offset().top).attr('src',"http://wy19900814fun.com/img/blue%20phone.png"); */
+
+              });
+
+              $('#select-one').change(function(){
+                var index1 = $(this).get(0).selectedIndex;
+                var index2 = $('.selected-color').val();
+                var index = index1 * 6 + index2;
+                
+                $(this).parent().find('#productSelect').get(0).selectedIndex = index;
+              });
+            });
+          </script>
+
+          <div class="product-description rte" itemprop="description">
+            {{ product.description }}
+          </div>
+
+          {% if settings.social_sharing_products %}
+            <hr class="hr--clear hr--small">
+            <h4>{{ 'products.general.share_title' | t }}</h4>
+            {% include 'social-sharing' %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

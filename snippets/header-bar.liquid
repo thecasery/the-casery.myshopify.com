@@ -1,0 +1,120 @@
+<div class="header-bar">
+  <!-- This is desktop version -->
+  <div class="wrapper medium-down--hide">
+    <div class="post-large--display-table">
+      
+      <div class="header-bar__left post-large--display-table-cell">
+        
+        <div class="header-bar__module header-bar__module--list">
+            {% for link in linklists.main-menu.links %}
+              {% comment %}
+                Create a dropdown menu by naming a linklist the same as a link in the parent nav
+
+                More info on dropdowns:
+                  - http://docs.shopify.com/manual/your-website/navigation/create-drop-down-menu
+              {% endcomment %}
+              {% assign child_list_handle = link.title | handleize %}
+              {% if linklists[child_list_handle].links != blank %}
+                <li class="site-nav--has-dropdown{% if link.active %} site-nav--active{% endif %}" aria-haspopup="true">
+                  <a href="{{ link.url }}" class="site-nav__link">
+                    {{ link.title }}
+                    <span class="icon-fallback-text">
+                      <span class="icon icon-arrow-down" aria-hidden="true"></span>
+                    </span>
+                  </a>
+                  <ul class="site-nav__dropdown">
+                    {% for childlink in linklists[child_list_handle].links %}
+                      <li{% if childlink.active %} class="site-nav--active"{% endif %}>
+                        <a href="{{ childlink.url }}" class="site-nav__link">{{ childlink.title | escape }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% else %}
+                <li {% if link.active %}class="site-nav--active"{% endif %}>
+                  <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+                </li>
+              {% endif %}
+            {% endfor %}
+        </div>
+
+        {% if settings.header_message == blank %}
+          {% if shop.customer_accounts_enabled %}
+            <ul class="header-bar__module header-bar__module--list">
+              {% if customer %}
+                <li>
+                  <a href="/account">{{ 'layout.customer.account' | t }}</a>
+                </li>
+                <li>
+                  {{ 'layout.customer.log_out' | t | customer_logout_link }}
+                </li>
+              {% else %}
+                <li>
+                  {{ 'layout.customer.log_in' | t | customer_login_link }}
+                </li>
+              {% endif %}
+            </ul>
+          {% endif %}
+        {% else %}
+          <div class="header-bar__module header-bar__message">
+            {{ settings.header_message }}
+          </div>
+        {% endif %}        
+      </div>
+
+      <div class="header-bar__right post-large--display-table-cell">
+
+
+        <div class="header-bar__module" style = "width:10%">
+          <a href="/cart" class="cart-page-link">
+            <span class="icon icon-cart header-bar__cart-icon" aria-hidden="true"></span>
+          </a>
+        </div>
+        <div class="header-bar__module" style = "width:20%">
+          <a href="/cart" class="cart-page-link">
+            {{ 'layout.cart.title' | t }}{% unless cart.item_count == 0 %}:{% endunless %}
+            <span class="cart-count header-bar__cart-count{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span>
+          </a>
+        </div>
+
+        {% if shop.customer_accounts_enabled and settings.header_message != blank %}
+          <span class="header-bar__sep" aria-hidden="true"></span>
+          <ul class="header-bar__module header-bar__module--list">
+            {% if customer %}
+              <li>
+                <a href="/account">{{ 'layout.customer.account' | t }}</a>
+              </li>
+              <li>
+                {{ 'layout.customer.log_out' | t | customer_logout_link }}
+              </li>
+            {% else %}
+              <li>
+                {{ 'layout.customer.log_in' | t | customer_login_link }}
+              </li>
+            {% endif %}
+          </ul>
+        {% endif %}
+        
+        {% if settings.header_search_enable %}
+          <div class="header-bar__module header-bar__search" style = "width:70%">
+            {% include 'search-bar' with 'header' %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <!-- This is mobile version -->
+  <div class="wrapper post-large--hide">
+    <button type="button" class="mobile-nav-trigger" id="MobileNavTrigger">
+      <span class="icon icon-hamburger" aria-hidden="true"></span>
+      {{ 'layout.navigation.menu' | t }}
+    </button>
+    
+    <a href="/cart" class="cart-page-link mobile-cart-page-link">
+      <span class="icon icon-cart header-bar__cart-icon" aria-hidden="true"></span>
+      {{ 'layout.cart.title' | t }} <span class="cart-count{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span>
+    </a>
+  </div>
+  {% include 'mobile-nav' %}
+</div>

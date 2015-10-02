@@ -1,0 +1,26 @@
+<div class = "newslider">
+  {% for i in (1..6) %}
+    {% capture slide %}slide_{{ i }}{% endcapture %}
+    {% capture slide_link %}slide_{{ i }}_link{% endcapture %}
+    {% capture slide_img %}slide_{{ i }}.jpg{% endcapture %}
+    {% capture slide_alt %}slide_{{ i }}_alt{% endcapture %}
+    {% if settings[slide] %}
+      <div class="autoscale__div slide-img" style = "overflow:hidden; display: none;">
+        <img class = 'autoscale__elem' src="{{ slide_img | asset_url }}"/>
+      </div>
+    {% endif %}
+  {% endfor %}
+
+  <div class="slider-nav">
+    <a class="arrow-prev" style = "cursor : pointer;" onmouseover="this.style.cursor='hand'"><img src="http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/flipboard/arrow-prev.png"></a>
+    <ul class="slider-dots">
+      {% for i in (1..6) %}
+        {% capture slide %}slide_{{ i }}{% endcapture %}
+        {% if settings[slide] %}
+          <li class="dot" style = "cursor : pointer;" onmouseover="this.style.cursor='hand'">&bull;</li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+    <a class="arrow-next" style = "cursor : pointer;" onmouseover="this.style.cursor='hand'"><img src="http://s3.amazonaws.com/codecademy-content/courses/ltp2/img/flipboard/arrow-next.png"></a>
+  </div> 
+</div>
