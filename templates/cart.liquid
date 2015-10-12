@@ -57,7 +57,7 @@
                 </a>
                 {% unless item.variant.title contains 'Default' %}
                   <br>
-                  <small>{{ item.variant.title }}</small>
+                  <small class="variant_title">{{ item.variant.option1 }} / {{ item.variant.option3 }}</small>
                 {% endunless %}
 
                 {% if settings.cart_vendor_enable %}
@@ -93,7 +93,6 @@
                   <small>{{ 'cart.general.remove' | t }}</small>
                 </a>
               </div>
-
             </div>
           </div>
 

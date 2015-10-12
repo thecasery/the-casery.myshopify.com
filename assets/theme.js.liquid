@@ -171,7 +171,7 @@ if ((typeof Shopify) == 'undefined') {
  * BTW: There're several 'active-' classes that helping us locating current working elements.
  */
 var shopping_cart = function(){
-  $('.grid__product').click(function() {
+  $('.grid__product').unbind("click").click(function() {
     var $img = $(this),
     subPage = $('.inpage-cart');
 
@@ -193,8 +193,149 @@ var shopping_cart = function(){
       }
     }
 
+    /* The picture variants initialization*/
+    // pre-load process
+    var productSelect = $(this).find('#productSelect');
+    var product_options = productSelect.find('option');
+    var total_options = product_options.length;
+    var variants = new Array();
+
+    for (var i = 0; i < total_options; i++){
+      var string = product_options.eq(i).text();
+      var t = string.split(' - ');
+      variants.push(t);
+    }
+
+    // remove previous results; 
+    $(this).find('#option1 img').remove();
+    $(this).find('#option2 li').remove();
+    $(this).find('#option3 option').remove();
+
+    var arr1 = new Array(); // deal with Duplicates
+    var arr2 = new Array();
+    var arr3 = new Array();
+
+    // option1 initial value
+    for (var i = 0; i < total_options; i++){
+      var flag1 = true;
+      for (var j = 0; j < arr1.length; j++){
+        if (arr1[j] == variants[i][1]){
+          flag1 = false;
+          break;
+        }
+      }
+      if (flag1){
+        arr1.push(variants[i][1]);
+        $(this).find('#option1').append("<img style='display:inline-block; width:100px;' src='"+variants[i][4]+"'/>");
+      }
+    }
+    
+
+    // option2 initial value
+    for (var i = 0; i < total_options && variants[i][1] == variants[0][1]; i++){
+      var flag2 = true;
+      for (var j = 0; j < arr2.length; j++){
+        if (arr2[j] == variants[i][2]){
+          flag2 = false;
+          break;
+        }
+      }
+      if (flag2){
+        arr2.push(variants[i][2]);
+        var back_img_id = $(this).find('.back-img').attr("id");
+        $(this).find('#option2').append("<li class='grid__item thumbnail-img'><img style='display:inline-block; width:100px;' src='"+variants[i][4]+"' onclick='option2_change(this,"+back_img_id+")'/></li>");
+      }
+    }
+
+    // option3 initial value
+    for (var i = 0; i < total_options && variants[i][1] == variants[0][1] && variants[i][2] == variants[0][2]; i++){
+      var flag3 = true;
+      for (var j = 0; j < arr3.length; j++){
+        if (arr3[j] == variants[i][3]){
+          flag3 = false;
+          break;
+        }
+      }
+      if (flag3){
+        arr3.push(variants[i][3]);
+        $(this).find('#option3').append("<option value='"+i+"'>"+variants[i][3]+"</option>");
+      }
+    }
+
+    // set selectedIndex and initial selected image
+    $(this).find('#option1 img').first().addClass('active-option1');
+    $(this).find('#option2 img').first().addClass('active-option2');
+
+
+    /* change value of option 1 */
+    $('.grid__product #option1 img').unbind("click").click(function(){
+      // image problem
+      $('.active-option1').removeClass('active-option1');
+      $('.active-option2').removeClass('active-option2');
+      $(this).addClass('active-option1');
+      $(this).parents('.inpage-cart__copy-container').find('#option2 li').remove();
+      $(this).parents('.inpage-cart__right-container').find('#option3 option').remove();
+      $(this).parents('.inpage-cart__copy-container').find('.back-img').attr("src",$(this).attr("src"));
+
+      // pre-load process
+      var productSelect = $(this).parents('.inpage-cart__right-container').find('#productSelect');
+      var product_options = productSelect.find('option');
+      var total_options = product_options.length;
+      var variants = new Array();
+
+      for (var i = 0; i < total_options; i++){
+        var string = product_options.eq(i).text();
+        var t = string.split(' - ');
+        variants.push(t);
+      }
+      var current_img_url = $(this).attr("src");
+
+      var new_index = 0;
+      for (; new_index < total_options && variants[new_index][4] != current_img_url; new_index++);
+
+      // option2 change value
+      var arr2 = new Array();
+      for (var i = new_index; i < total_options && variants[i][1] == variants[new_index][1]; i++){
+        var flag2 = true;
+        for (var j = 0; j < arr2.length; j++){
+          if (arr2[j] == variants[i][2]){
+            flag2 = false;
+            break;
+          }
+        }
+        if (flag2){
+          arr2.push(variants[i][2]);
+          var back_img_id = $(this).parents('.inpage-cart__copy-container').find('.back-img').attr("id");
+          $(this).parents('.inpage-cart__copy-container').find('#option2').append("<li class='grid__item thumbnail-img'><img style='display:inline-block; width:100px;' src='"+variants[i][4]+"' onclick='option2_change(this,"+back_img_id+")'/></li>");
+        }
+      }
+
+      // option3 change value
+      var arr3 = new Array();
+      for (var i = new_index; i < total_options && variants[i][1] == variants[new_index][1] && variants[i][2] == variants[new_index][2]; i++){
+        var flag3 = true;
+        for (var j = 0; j < arr3.length; j++){
+          if (arr3[j] == variants[i][3]){
+            flag3 = false;
+            break;
+          }
+        }
+        if (flag3){
+          arr3.push(variants[i][3]);
+          $(this).parents('.inpage-cart__right-container').find('#option3').append("<option value='"+i+"'>"+variants[i][3]+"</option>");
+        }
+      }
+
+      // reset selectindex, option2 initial, option3 initial
+      productSelect.get(0).selectedIndex = new_index;
+      $(this).parents('.inpage-cart__copy-container').find('#option2 img').first().addClass('active-option2');
+      $(this).parents('.inpage-cart__right-container').find('#option3').get(0).selectedIndex = 0;          
+    });
+    
+    var prev_pos;
     // first check if there's already one slided down shopping cart when we clicking a different image.
     if (subPage.hasClass('active-cart') && (!$(this).hasClass('active-product'))){
+      prev_pos = $('.active-product').offset().top;
       $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
       subPage.removeClass('active-cart').css("display","none");
       $('.active-product').removeClass('active-product');
@@ -204,28 +345,67 @@ var shopping_cart = function(){
     // active-cart is shopping cart, active-btn is borrowed from subpage, active-product is subpage's top container
     // There're several operations, most of them are related to display, add/remove class.
     if (subPage.hasClass('active-cart')){
-      subPage.removeClass('active-cart').slideUp('middle',function(){
+      subPage.removeClass('active-cart').slideUp(170,function(){
         $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
         $('.active-product').removeClass('active-product');
       });
       // scroll page to show slide-down cart
-      $("html, body").animate({ scrollTop: $('.active-product').offset().top - 100 }, 400); 
+      $("html, body").animate({ scrollTop: $('.active-product').offset().top - 40 }, 170); 
     }
     else{
       ($(this).find('.inpage-cart__copy-container')).addClass('active-btn').insertAfter(subPage.find('.inpage-cart__close')).css("display","block");
-      subPage.addClass('active-cart').insertAfter(finalImage).slideDown('middle');
+      subPage.addClass('active-cart').insertAfter(finalImage);
+      if (prev_pos <= $(this).offset().top){
+        subPage.css("display","block");
+      } else {
+        subPage.slideDown("middle");
+      }
       $(this).addClass('active-product');
-      $("html, body").animate({ scrollTop: subPage.offset().top - 100 }, 400);
+      $("html, body").animate({ scrollTop: $('.active-product').offset().top - 40}, 300);
     }
   });
-  
+
+  /* change value of option2 */
+  function option2_change(p, id){
+    document.getElementById(id).src = p.src;
+    $('.active-option2').removeClass("active-option2");
+    p.className = p.className + "active-option2";
+  }
+
+  /* change value of option3 */
+  $('.grid__product #option3').unbind("change").change(function(){
+    // pre-load process
+    var productSelect = $(this).parents('.inpage-cart__right-container').find('#productSelect');
+    var product_options = productSelect.find('option');
+    var total_options = product_options.length;
+    var variants = new Array();
+
+    for (var i = 0; i < total_options; i++){
+      var string = product_options.eq(i).text();
+      var t = string.split(' - ');
+      variants.push(t);
+    }
+
+    // 1. find old index  2. calculate difference  3. find new index
+    var old_index = productSelect.get(0).selectedIndex;
+
+    var count = 0;
+    for (; count <= old_index && variants[old_index][2] == variants[old_index - count][2] && variants[old_index][1] == variants[old_index - count][1]; count++);  // diff
+
+    var option3_index = $(this).get(0).selectedIndex;
+    var nex_index = 0;
+    new_index = old_index + option3_index - count + 1;
+
+    productSelect.get(0).selectedIndex = new_index;
+  });
+
   // When user clicking close button at top-right of slide-down cart
   $('.inpage-cart__close').click(function(){
-    $('.inpage-cart').removeClass('active-cart').slideUp('middle',function(){
+    $('.inpage-cart').removeClass('active-cart').slideUp(170, function(){
       $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
       $('.active-product').removeClass('active-product');
     });
-    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 100 }, 400);
+    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 40 }, 400);
   });
 
   // When user clicking add-to-cart-btn, remove the button
@@ -241,13 +421,6 @@ var shopping_cart = function(){
   }, function(){
     $(this).find('.product-img__second').css('display','none');
     $(this).find('.product-img').css('display','block');
-  });
-
-  $('.thumbnail-img').click(function(){
-    $('.active-thumbnail').removeClass('active-thumbnail');
-    $(this).addClass('active-thumbnail');
-
-    $(this).parents('.inpage-cart__left-container').find('.back-img').attr('src',$(this).attr('src'));
   });
 }
 

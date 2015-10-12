@@ -4,39 +4,42 @@
   <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
 
   <div class="wrapper">
-    <div class="success-add__container" style = "border: 1px solid gray">
-      <div style = "display:inline-block;">
-        <div style = "border-right: 1px solid gray; display:inline-block">
-          <div class="success-add__item" style = "padding-left:10px; display:inline-block; vertical-align:middle">
-            <h1 style="color:green">✓</h1>
+    <div class="success-add__container">
+      <div class="success-add__container-left">
+        <div class="success-add__itemcontainer">
+          <div id="item-yes" class="success-add__item">
+            <h1>✓</h1>
           </div>
-          <div class="success-add__item" style = "padding:5px 0 0 10px; display:inline-block; vertical-align:middle;">
-            <img style = "width:70px; height:60px; border: 1px solid green" src="{{ product.featured_image | img_url:'small'}}"/>
+          <div id="item-img" class="success-add__item">
+            <img id="item-subimg" src="{{ product.featured_image | img_url:'small'}}"/>
           </div>
-          <div class="success-add__item" style = "padding:8px 10px 0 10px; display:inline-block; vertical-align:middle; text-align:center">
-            <h4 style="color:green; display:block">Added to Cart</h4>
+          <div id="item-add" class="success-add__item">
+            <h4>Added to Cart</h4>
           </div>
         </div>
-        <div class="success-add__item" style = "padding:8px 10px 0 10px; display:inline-block; vertical-align:middle">
+        <div id="item-total" class="success-add__item">
           <h4>Cart subtotal ({{ cart.item_count }} {{ cart.item_count | pluralize: 'Item', 'Items' }}): {{ cart.total_price | money }}</h4>
         </div>
       </div>
 
-      <div style="float:right; display: inline-block; vertical-align:middle; padding: 15px 10px 0 0;">
-        <div class="success-add__item" style = "display:inline-block; vertical-align:middle">
+      <div class="success-add__container-right">
+        <div id = "continue-shopping" class="success-add__item">
           <a href="{{ product.collections[0].url }}"><button class = 'btn--secondary'>Continue Shopping</button></a>
         </div>
-        <div class="success-add__item" style = "display:inline-block; vertical-align:middle">
+        <div id = "process-checkout" class="success-add__item">
           <a href='/cart'><button class = 'btn'>Process to Checkout</button></a>
         </div>
       </div>
     </div>
   </div>
 
+  <hr/ class = "divider">
+
   {% if settings.product_related_enable %}
     {% include 'related-products' %}
   {% endif %}
 
+  <hr/ class = "divider">
   <!-- Accessories -->
   {% if collections.accessory.products_count != 0 %}
     {% assign accessory = collections.accessory %}
@@ -51,7 +54,6 @@
     <div class = "grid__collection">
       {% for product in acc_products limit: number_of_products_to_fetch %}
         {% unless forloop.last %}
-          {% assign grid_item_width = 'one-quarter small--one-half' %}
           {% include 'product-grid-item' %}
         {% endunless %}
       {% endfor %}

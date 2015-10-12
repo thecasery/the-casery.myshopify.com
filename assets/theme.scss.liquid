@@ -920,7 +920,8 @@ h6 {
   width: 100%;
   background-color: #f0f0f0;
   padding-bottom: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+  margin-top: 5px;
 }
 
 .inpage-cart__left-container{
@@ -983,22 +984,9 @@ h6 {
   }
 }
 
-.color-group{
-}
-.color-group ul{
-  padding:0;
-}
-.color-group li{
-  width:35px;
-  height:35px;
-  margin-left: 3px;
-  border-radius: 100%;
-  cursor:pointer;
-  display:inline-block;
-}
-
 /* customized grid__collection-item */
 .grid__collection {
+  padding-top: 10px;
   text-align : center;
 }
 
@@ -1006,7 +994,15 @@ h6 {
   display:inline-block;
   width:360px;
   padding-left: 10px;
-  padding-top: 7px;
+  padding-top: 5px;
+}
+
+.active-option1{
+  border: 1px solid orange;
+}
+
+.active-option2{
+  border: 1px solid orange;
 }
 
 .product-discription {
@@ -2199,3 +2195,91 @@ $shareBorderColor: #ececec;
   }
 }
 
+/*============= Product | Product Successful Added Cart =============*/
+.success-add__container{
+  border: 1px solid gray;
+}
+.success-add__container-left{
+  display:inline-block;
+  text-align:center;
+}
+.success-add__container-right{
+  float: right; 
+  display: inline-block;
+  vertical-align: middle;
+  text-align: center;
+  padding: 15px 10px 0 0;
+}
+.success-add__itemcontainer{
+  border-right: 1px solid gray;
+  display:inline-block;
+}
+.success-add__item{
+  display:inline-block;
+  vertical-align:middle;
+  text-align:center;
+}
+#item-total{
+  padding:8px 10px 0 10px;
+}
+#item-yes{
+  padding-left:10px;
+  color:green;
+}
+#item-img{
+  padding:5px 0 0 10px;
+}
+#item-subimg{
+  width:70px; 
+  height:60px; 
+  border:1px solid green;
+}
+#item-add{
+  padding:8px 10px 0 10px;color:green;
+}
+
+@media screen and (max-width:768px){
+  .divider{
+    display:block;
+  }
+  .success-add__container{
+    border: 0px;
+  }
+  .success-add__itemcontainer{
+    border-right: 0px;
+  }
+  .success-add__container-left{
+    width:100%;
+  }
+  .success-add__container-right{
+    width:100%;
+  }
+  #item-total{
+    padding:0px 0px 0px 0px;
+    display: block;
+  }
+  #process-checkout{
+    margin-top:-5px;
+  }
+}
+
+@media screen and (min-width: 769px){
+  .divider{
+    display:none;
+  }
+  #item-total{
+    display:inline-block;
+  }
+}
+
+@media screen and (max-width:1023px){
+  #continue-shopping{
+    display:none;
+  }
+}
+
+@media screen and (min-width:1024px){
+  #continue-shopping{
+    display:inline-block;
+  }
+}
