@@ -20,7 +20,7 @@
 
 <!-- "grid__product is a specific grid class for this webpage, developed by Yang. Havn't integrate with original griding system" -->
 <div class = "grid__product">
-  <span class="grid-link__image grid-link__image--product">
+  <span class="grid-link__image grid-link__image--product" style="margin-bottom:-8px">
     {% if on_sale and settings.collections_show_sale_circle %}
       <span class="badge badge--sale">
         <span class="badge__text{% if sale_text.size > 7 %} badge__text--small{% endif %}">{{ 'products.product.sale' | t }}</span>
@@ -48,9 +48,8 @@
         </div>
 
         <div class="grid__item four-fifths">
-          <img id = "{{ product.id }}"class = 'back-img' src="{{ product.featured_image | img_url: 'large'}}"/>
+          <img class = 'back-img' src="{{ product.featured_image | img_url: 'large'}}"/>
           {% if settings.social_sharing_products %}
-            <h4 style="text-align:center">{{ 'products.general.share_title' | t }}</h4>
             {% include 'social-sharing' %}
           {% endif %}
         </div>
@@ -64,61 +63,58 @@
     </div>
 
     <div class = 'inpage-cart__right-container'>
-      <div class="grid__item">
-        <h1 itemprop="name">{{ product.title }}</h1>
+      <h1 itemprop="name">{{ product.title }}</h1>
 
-        <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
-          {% assign variant = product.selected_or_first_available_variant %}
+      <div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        {% assign variant = product.selected_or_first_available_variant %}
 
-          <meta itemprop="priceCurrency" content="{{ shop.currency }}">
-          <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
+        <meta itemprop="priceCurrency" content="{{ shop.currency }}">
+        <link itemprop="availability" href="http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}">
 
-          <div class="product-single__prices">
-            <span id="ProductPrice" class="product-single__price" itemprop="price">
-              {{ product.price | money }}
-            </span>
+        <div class="product-single__prices">
+          <span id="ProductPrice" class="product-single__price" itemprop="price">
+            {{ product.price | money }}
+          </span>
 
-            {% if product.compare_at_price > product.price %}
-              <s id="ComparePrice" class="product-single__sale-price">
-                {{ product.compare_at_price_max | money }}
-              </s>
-            {% endif %}
-          </div>
-
-          <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
-            <select name="id" id="productSelect" class="product-single__variants">
-              {% for variant in product.variants %}
-                {% if variant.available  %}
-
-                  <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.id }} - {{ variant.option1 }} - {{ variant.option2 }} - {{ variant.option3 }} - {{ variant.image | img_url: 'large' }}</option>
-
-                {% else %}
-                  <option disabled="disabled">
-                    {{ variant.title }} - {{ 'products.product.sold_out' | t }}
-                  </option>
-                {% endif %}
-              {% endfor %}
-            </select>
-
-            <label for="option1">{{ product.options[0] }}</label>
-            <div id = "option1" style="display:block; text-align:left;"></div>
-
-            <label for="option3">{{ product.options[2] }}</label>
-            <select id = "option3"></select>
-
-            <div class="product-single__quantity{% unless settings.product_quantity_enable %} is-hidden{% endunless %}">
-              <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
-              <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
-            </div>
-            
-            <input type = "hidden" name = "return_to" value = "{{ product.url | within: collection }}"/>
-            <input type="submit" name="add" id="AddToCart" value="ADD TO CART"/>
-          </form>
+          {% if product.compare_at_price > product.price %}
+            <s id="ComparePrice" class="product-single__sale-price">
+              {{ product.compare_at_price_max | money }}
+            </s>
+          {% endif %}
         </div>
+
+        <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+          <select name="id" id="productSelect" class="product-single__variants">
+            {% for variant in product.variants %}
+              {% if variant.available  %}
+
+                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.id }} - {{ variant.option1 }} - {{ variant.option2 }} - {{ variant.option3 }} - {{ variant.image | img_url: 'large' }}</option>
+
+              {% else %}
+                <option disabled="disabled">
+                  {{ variant.title }} - {{ 'products.product.sold_out' | t }}
+                </option>
+              {% endif %}
+            {% endfor %}
+          </select>
+
+          <label>{{ product.options[0] }}</label>
+          <div id = "option1" class="option1"></div>
+
+          <label>{{ product.options[2] }}</label>
+          <select id = "option3" class="option3"></select>
+
+          <div class="product-single__quantity{% unless settings.product_quantity_enable %} is-hidden{% endunless %}">
+            <label for="Quantity">{{ 'products.product.quantity' | t }}</label>
+            <input type="number" id="Quantity" name="quantity" value="1" min="1" class="quantity-selector">
+          </div>
+          
+          <input type = "hidden" name = "return_to" value = "{{ product.url | within: collection }}"/>
+          <input type="submit" name="add" id="AddToCart" value="ADD TO CART"/>
+        </form>
       </div>
     </div>
   </div>
-  <script>
-    
-  </script>
+
+  <div class="arrow-up"></div>
 </div>

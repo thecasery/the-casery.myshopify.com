@@ -1,7 +1,15 @@
 <ul class="inline-list social-icons">
+  {% if settings.social_instagram_link != blank %}
+    <li>
+      <a class="icon-fallback-text" href="{{ settings.social_instagram_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}" style="color: #675144;" onmouseover="this.style.color='#473124';" onmouseout="this.style.color='#675144';">
+        <span class="icon icon-instagram" aria-hidden="true"></span>
+        <span class="fallback-text">Instagram</span>
+      </a>
+    </li>
+  {% endif %}
   {% if settings.social_twitter_link != blank %}
     <li>
-      <a class="icon-fallback-text" href="{{ settings.social_twitter_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}">
+      <a class="icon-fallback-text" href="{{ settings.social_twitter_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}" style="color: #00aced;" onmouseover="this.style.color='#008ccd';" onmouseout="this.style.color='#00aced';">
         <span class="icon icon-twitter" aria-hidden="true"></span>
         <span class="fallback-text">Twitter</span>
       </a>
@@ -9,7 +17,7 @@
   {% endif %}
   {% if settings.social_facebook_link != blank %}
     <li>
-      <a class="icon-fallback-text" href="{{ settings.social_facebook_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}">
+      <a class="icon-fallback-text" href="{{ settings.social_facebook_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}" style="color: #3b5998;" onmouseover="this.style.color='#1b3978';" onmouseout="this.style.color='#3b5998';">
         <span class="icon icon-facebook" aria-hidden="true"></span>
         <span class="fallback-text">Facebook</span>
       </a>
@@ -17,65 +25,25 @@
   {% endif %}
   {% if settings.social_pinterest_link != blank %}
     <li>
-      <a class="icon-fallback-text" href="{{ settings.social_pinterest_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}">
+      <a class="icon-fallback-text" href="{{ settings.social_pinterest_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}" style="color: #cb2027;" onmouseover="this.style.color='#ab0007';" onmouseout="this.style.color='#cb2027';">
         <span class="icon icon-pinterest" aria-hidden="true"></span>
         <span class="fallback-text">Pinterest</span>
       </a>
     </li>
   {% endif %}
-  {% if settings.social_google_plus_link != blank %}
-    <li>
-      <a class="icon-fallback-text" href="{{ settings.social_google_plus_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Google Plus' }}" rel="publisher">
-        <span class="icon icon-google" aria-hidden="true"></span>
-        <span class="fallback-text">Google</span>
-      </a>
-    </li>
-  {% endif %}
-  {% if settings.social_instagram_link != blank %}
-    <li>
-      <a class="icon-fallback-text" href="{{ settings.social_instagram_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}">
-        <span class="icon icon-instagram" aria-hidden="true"></span>
-        <span class="fallback-text">Instagram</span>
-      </a>
-    </li>
-  {% endif %}
-  {% if settings.social_tumblr_link != blank %}
-    <li>
-      <a class="icon-fallback-text" href="{{ settings.social_tumblr_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Tumblr' }}">
-        <span class="icon icon-tumblr" aria-hidden="true"></span>
-        <span class="fallback-text">Tumblr</span>
-      </a>
-    </li>
-  {% endif %}
   {% if settings.social_youtube_link != blank %}
     <li>
-      <a class="icon-fallback-text" href="{{ settings.social_youtube_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'YouTube' }}">
+      <a class="icon-fallback-text" href="{{ settings.social_youtube_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'YouTube' }}" style="color: #cd201f;">
         <span class="icon icon-youtube" aria-hidden="true"></span>
         <span class="fallback-text">YouTube</span>
       </a>
     </li>
   {% endif %}
-  {% if settings.social_vimeo_link != blank %}
+  {% if settings.social_tumblr_link != blank %}
     <li>
-      <a class="icon-fallback-text" href="{{ settings.social_vimeo_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Vimeo' }}">
-        <span class="icon icon-vimeo" aria-hidden="true"></span>
-        <span class="fallback-text">Vimeo</span>
-      </a>
-    </li>
-  {% endif %}
-  {% if settings.social_fancy_link != blank %}
-    <li>
-      <a class="icon-fallback-text" href="{{ settings.social_fancy_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Fancy' }}">
-        <span class="icon icon-fancy" aria-hidden="true"></span>
-        <span class="fallback-text">Fancy</span>
-      </a>
-    </li>
-  {% endif %}
-  {% if settings.social_rss_link != blank %}
-    <li>
-      <a class="icon-fallback-text" href="{{ settings.social_rss_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'RSS' }}">
-        <span class="icon icon-rss" aria-hidden="true"></span>
-        <span class="fallback-text">RSS</span>
+      <a class="icon-fallback-text" href="{{ settings.social_tumblr_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Tumblr' }}" style="color: #35465c;" onmouseover="this.style.color='#15263c';" onmouseout="this.style.color='#35465c';">
+        <span class="icon icon-tumblr" aria-hidden="true"></span>
+        <span class="fallback-text">Tumblr</span>
       </a>
     </li>
   {% endif %}

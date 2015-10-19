@@ -31,45 +31,6 @@
         "content": "Background"
       },
       {
-        "type": "select",
-        "id": "bg_image",
-        "label": "Image",
-        "options": [
-          {
-            "value": "",
-            "label": "No background image"
-          },
-          {
-            "value": "custom",
-            "label": "Use custom image (see upload button below)"
-          },
-          {
-            "value": "music",
-            "label": "Use background image of Music style"
-          }
-        ]
-      },
-      {
-        "type": "image",
-        "id": "bg-custom.png",
-        "label": "Custom image"
-      },
-      {
-        "type": "radio",
-        "id": "bg_image_display",
-        "label": "Image display",
-        "options": [
-          {
-            "value": "tile",
-            "label": "Tile"
-          },
-          {
-            "value": "stretch",
-            "label": "Stretch"
-          }
-        ]
-      },
-      {
         "type": "color",
         "id": "color_topbar_bg",
         "label": "Top bar background",
@@ -85,6 +46,12 @@
         "type": "color",
         "id": "color_footer_bg",
         "label": "Footer background",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_cart_bg",
+        "label": "Shopping cart background",
         "default": "#ffffff"
       },
       {
@@ -920,43 +887,6 @@
     "settings": [
       {
         "type": "header",
-        "content": "Logo"
-      },
-      {
-        "type": "checkbox",
-        "id": "logo_use_image",
-        "label": "Use a custom logo"
-      },
-      {
-        "type": "image",
-        "id": "logo.png",
-        "label": "Custom logo",
-        "max-width": 1340,
-        "info": "450 x 200px recommended"
-      },
-      {
-        "type": "text",
-        "id": "logo_max_width",
-        "label": "Custom logo width (in pixels)",
-        "default": "450"
-      },
-      {
-        "type": "checkbox",
-        "id": "nav_below_logo",
-        "label": "Main Menu below logo"
-      },
-      {
-        "type": "checkbox",
-        "id": "left_aligned_logo",
-        "label": "Left-align logo"
-      },
-      {
-        "type": "checkbox",
-        "id": "show_header_lines",
-        "label": "Show divider lines in header"
-      },
-      {
-        "type": "header",
         "content": "Favicon"
       },
       {
@@ -975,12 +905,6 @@
       {
         "type": "header",
         "content": "Top bar"
-      },
-      {
-        "type": "text",
-        "id": "header_message",
-        "label": "Top bar message",
-        "info": "Max 55 characters"
       },
       {
         "type": "checkbox",
@@ -1059,12 +983,6 @@
       },
       {
         "type": "text",
-        "id": "social_google_plus_link",
-        "label": "Google+",
-        "info": "https:\/\/plus.google.com\/+shopify"
-      },
-      {
-        "type": "text",
         "id": "social_instagram_link",
         "label": "Instagram",
         "info": "https:\/\/instagram.com\/shopify"
@@ -1082,24 +1000,6 @@
         "info": "https:\/\/www.youtube.com\/user\/shopify"
       },
       {
-        "type": "text",
-        "id": "social_vimeo_link",
-        "label": "Vimeo",
-        "info": "https:\/\/vimeo.com\/shopify"
-      },
-      {
-        "type": "text",
-        "id": "social_fancy_link",
-        "label": "Fancy",
-        "info": "http:\/\/fancy.com\/shopify"
-      },
-      {
-        "type": "text",
-        "id": "social_rss_link",
-        "label": "RSS",
-        "info": "http:\/\/store.myshopify.com\/blogs\/blogname.atom"
-      },
-      {
         "type": "checkbox",
         "id": "footer_contact_enable",
         "label": "Show contact information"
@@ -1114,12 +1014,6 @@
         "type": "checkbox",
         "id": "footer_newsletter_enable",
         "label": "Show newsletter sign-up"
-      },
-      {
-        "type": "text",
-        "id": "newsletter_form_action",
-        "label": "MailChimp form action URL",
-        "info": "[Find your MailChimp form action URL](https:\/\/docs.shopify.com\/manual\/configuration\/store-customization\/communicating-with-customers\/accounts-and-newsletters\/get-a-mailchimp-form-action-url)."
       }
     ]
   },
@@ -1158,10 +1052,6 @@
           {
             "value": "featured-products",
             "label": "Featured Products"
-          },
-          {
-            "value": "home-content",
-            "label": "Page Content"
           }
         ]
       },
@@ -1189,10 +1079,6 @@
           {
             "value": "featured-products",
             "label": "Featured Products"
-          },
-          {
-            "value": "home-content",
-            "label": "Page Content"
           }
         ]
       },
@@ -1220,10 +1106,6 @@
           {
             "value": "featured-products",
             "label": "Featured Products"
-          },
-          {
-            "value": "home-content",
-            "label": "Page Content"
           }
         ]
       },
@@ -1251,41 +1133,6 @@
           {
             "value": "featured-products",
             "label": "Featured Products"
-          },
-          {
-            "value": "home-content",
-            "label": "Page Content"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "home_section_5",
-        "label": "Section 5",
-        "options": [
-          {
-            "value": "",
-            "label": "None"
-          },
-          {
-            "value": "slider",
-            "label": "Slider"
-          },
-          {
-            "value": "promo-images",
-            "label": "Promo images"
-          },
-          {
-            "value": "featured-collections",
-            "label": "Featured Collections"
-          },
-          {
-            "value": "featured-products",
-            "label": "Featured Products"
-          },
-          {
-            "value": "home-content",
-            "label": "Page Content"
           }
         ]
       },
@@ -1702,16 +1549,6 @@
     ]
   },
   {
-    "name": "Home page - featured content",
-    "settings": [
-      {
-        "type": "page",
-        "id": "home_page_content",
-        "label": "Featured content"
-      }
-    ]
-  },
-  {
     "name": "Product page",
     "settings": [
       {
@@ -1723,40 +1560,6 @@
         "type": "checkbox",
         "id": "product_quantity_enable",
         "label": "Show quantity selector"
-      },
-      {
-        "type": "select",
-        "id": "product_image_zoom_type",
-        "label": "Image zoom type",
-        "options": [
-          {
-            "value": "lightbox",
-            "label": "Lightbox"
-          },
-          {
-            "value": "zoom-in",
-            "label": "Zoom-in"
-          },
-          {
-            "value": "",
-            "label": "No zoom"
-          }
-        ]
-      },
-      {
-        "type": "select",
-        "id": "product_thumbnails_position",
-        "label": "Product thumbnail position",
-        "options": [
-          {
-            "value": "right",
-            "label": "Right of main image"
-          },
-          {
-            "value": "below",
-            "label": "Below main image"
-          }
-        ]
       },
       {
         "type": "checkbox",
@@ -1824,47 +1627,6 @@
     "name": "Social media",
     "settings": [
       {
-        "type": "text",
-        "id": "twittercard_handle",
-        "label": "Twitter handle",
-        "info": "@shopify"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_sharing_products",
-        "label": "Enable product sharing"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_sharing_blog",
-        "label": "Enable blog post sharing"
-      },
-      {
-        "type": "checkbox",
-        "id": "social_sharing_count",
-        "label": "Show number of shares",
-        "info": "Available for Facebook, Twitter, and Pinterest."
-      },
-      {
-        "type": "select",
-        "id": "social_sharing_style",
-        "label": "Button style",
-        "options": [
-          {
-            "value": "normal",
-            "label": "Normal"
-          },
-          {
-            "value": "is-large",
-            "label": "Large"
-          },
-          {
-            "value": "is-clean",
-            "label": "Clean"
-          }
-        ]
-      },
-      {
         "type": "header",
         "content": "Sharing"
       },
@@ -1885,13 +1647,8 @@
       },
       {
         "type": "checkbox",
-        "id": "share_fancy",
-        "label": "Add to Fancy"
-      },
-      {
-        "type": "checkbox",
-        "id": "share_google",
-        "label": "+1 on Google Plus"
+        "id": "share_tumblr",
+        "label": "Share on Tumblr"
       }
     ]
   }
