@@ -53,10 +53,6 @@ theme.init = function () {
   theme.mobileNav();
   theme.equalHeights();
   theme.cartPage();
-
-  {% if settings.product_image_zoom_type == 'lightbox' %}
-    theme.productImageGallery();
-  {% endif %}
 };
 
 theme.mobileNav = function () {
@@ -88,35 +84,6 @@ theme.equalHeights = function () {
     theme.cache.$productGridImages.css('height', 'auto').equalHeights();
     theme.cache.$featuredGridImages.css('height', 'auto').equalHeights();
   }
-};
-
-theme.productImageGallery = function() {
-
-  if (!theme.cache.$productImageGallery.length) {
-    return;
-  };
-
-  theme.cache.$productImageGallery.magnificPopup({
-    type: 'image',
-    mainClass: 'mfp-fade',
-    closeOnBgClick: true,
-    closeBtnInside: false,
-    closeOnContentClick: true,
-    tClose: '{{ "products.zoom.close" | t }}',
-    removalDelay: 500,
-    gallery: {
-      enabled: true,
-      navigateByImgClick: false,
-      arrowMarkup: '<button title="%title%" type="button" class="mfp-arrow mfp-arrow-%dir%"><span class="mfp-chevron mfp-chevron-%dir%"></span></button>',
-      tPrev: '{{ "products.zoom.prev" | t }}',
-      tNext: '{{ "products.zoom.next" | t }}'
-    }
-  });
-  
-  theme.cache.$productImage.bind('click', function() {
-    var imageId = $(this).attr('data-image-id');
-    theme.cache.$productImageGallery.filter('[data-image-id="' + imageId + '"]').trigger('click');
-  });
 };
 
 theme.cartPage = function () {
@@ -418,15 +385,15 @@ function product_click(){
   // active-cart is shopping cart, active-btn is borrowed from subpage, active-product is subpage's top container
   // There're several operations, most of them are related to display, add/remove class.
   if (subPage.hasClass('active-cart')){
-    subPage.removeClass('active-cart').slideUp(170,function(){
+    subPage.removeClass('active-cart').slideUp(300,function(){
       $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
       $('.active-product').find('.arrow-up').css("opacity","0");
       $('.active-product').removeClass('active-product');
     });
     // scroll page to show slide-down cart
-    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 40 }, 170); 
+    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 40 }, 300); 
   }
-  else{
+  else if (!subPage.find('.inpage-cart__copy-container').hasClass('active-btn')){
     $(this).find('.arrow-up').css("opacity","1");
     ($(this).find('.inpage-cart__copy-container')).addClass('active-btn').insertAfter(subPage.find('.inpage-cart__close')).css("display","block");
     subPage.addClass('active-cart').insertAfter(finalImage);
@@ -447,12 +414,12 @@ var shopping_cart = function(){
 
   // When user clicking close button at top-right of slide-down cart
   $('.inpage-cart__close').click(function(){
-    $('.inpage-cart').removeClass('active-cart').slideUp(170, function(){
+    $('.inpage-cart').removeClass('active-cart').slideUp(300, function(){
       $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
       $('.active-product').find('.arrow-up').css("opacity","0");
       $('.active-product').removeClass('active-product');
     });
-    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 40 }, 400);
+    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 40 }, 300);
   });
 
   // When user clicking add-to-cart-btn, remove everything
@@ -484,7 +451,8 @@ var next_pic = function(){
       nextDot = $('.dot').first();
   }
   
-  // animation
+  // animation: The front_slide is crutial, fix the position of the small number picture.
+  // Otherwise, the small element cannot on top of large number element.
   var front_slide = (currentSlide.index() < nextSlide.index()) ? (currentSlide) : (nextSlide);
   front_slide.css("position", "absolute");
 
@@ -547,15 +515,18 @@ var change_pic = function(){
   nextDot.addClass('active-dot');
 }
 
-var start_nav = function(){
+var carousel_setting = function(){
+  // Try to make the navigation bar in the bottom-center of the screen.
   $(".slider-nav").css("top", $('.autoscale__div').height() - 70);
   $(".slider-nav").css("left", ($('.autoscale__div').width()-200) / 2);
 
+  // Initialization of first image and dot, interval time
   $(".dot").first().addClass('active-dot');
   $(".slide-img").first().css("display","block");
   $(".slide-img").first().addClass('active-img');
 
-  var auto_slide = setInterval(next_pic, 5000);
+  var speed = {{ settings.slider_home_rate }};
+  var auto_slide = setInterval(next_pic, speed);
 
   $('.arrow-next').click(next_pic);
   $('.arrow-prev').click(prev_pic);
@@ -563,12 +534,11 @@ var start_nav = function(){
   $('.slider-nav').hover(function(){
     clearInterval(auto_slide);
   }, function(){
-    auto_slide = setInterval(next_pic, 5000);
+    auto_slide = setInterval(next_pic, speed);
   });
 }
 
 window.onresize = autoscale_element;
 $(document).ready(autoscale_element);
 $(document).ready(shopping_cart);
-$(document).ready(start_nav);
-$(document).ready(load_google_api_key);
+$(document).ready(carousel_setting);
