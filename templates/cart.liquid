@@ -55,11 +55,11 @@
                 <a href="{{ item.url }}" class="h5">
                   {{ item.product.title }}
                 </a>
+
                 {% unless item.variant.title contains 'Default' %}
                   <br>
-                  <small class="variant_title">{{ item.variant.option1 }} / {{ item.variant.option3 }}</small>
+                  <small class="variant_title">{{ item.variant.option1 }} / {{ item.variant.option2 }}</small>
                 {% endunless %}
-
                 {% if settings.cart_vendor_enable %}
                   <p>{{ item.vendor }}</p>
                 {% endif %}

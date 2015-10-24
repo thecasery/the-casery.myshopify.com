@@ -137,113 +137,53 @@ var autoscale_element = function(){
   $(".autoscale__elem").css("margin-left", margin_left);
   $(".autoscale__elem").css("margin-top", margin_top);
 
-    // This is a side function, just to adjust slider's navigation-bar position
+  // This is a side function, just to adjust slider's navigation-bar position
   $(".slider-nav").css("top", $('.slide-img').height() - 70);
   $(".slider-nav").css("left", ($('.slide-img').width()-200) / 2);
+
+  // Also here's width of inpage-cart to be whole page
+  if ($('.active-cart').hasClass('active-cart')){
+    $('.active-cart').css("width", document.documentElement.clientWidth);
+    $('.active-cart').css("margin-left", 0 - $('.active-product').offset().left - 10);
+  }
 };
 
 if ((typeof Shopify) == 'undefined') {
   var Shopify = {};
 }
 
-/* The Ajax inpage add_to_shopping_cart function is creating a sliding down page below 
- * the picture user clicked, allowing user to do add_to_cart action without redirecting to another page.
+/* This is version 2.0 of Inpage shopping cart
  *
- * The basic strategy is finding the last picture in the line that having the picture user clicked.
- * After finding that picture, we added the sliding down page after that picture, set "display:block".
+ * The basic strategy is hidding the detail information of the product, and only display it when click the image.
+ * Node that most important part is the css. Actually, '.grid__product' are at the same line with same height.
+ * But display '.inpage-cart' could make one element pretty high, and the width of 'inpage-cart' could be larger than its parent.
+ * So the effects is that '.inpage-cart' takes a whole line. But actually its in the same line with other 'grid__product'
  * 
  * BTW: There're several 'active-' classes that helping us locating current working elements.
- * (Added variants part, 10/13/2015)
+ * 'active-product' is current 'grid_product', 'active-'
  */
 
-function product_click(){
-  var $img = $(this),
-  subPage = $('.inpage-cart');
+// Social Media Change: '.back-img' is the share img, 'h1' is product title, '.active-option1' is phone style name
+function change_social_media(product){
+  // Facebook
+  product.find('#facebook').attr("href","https://www.facebook.com/dialog/feed?app_id=1516749411980352&display=page&caption=Welcome%20to%20the%20casery&picture=http:"+product.find('.back-img').attr("src")+"&name="+product.find('h1').text()+"&description="+product.find('.active-option1').attr("name")+"&link=http://the-casery.myshopify.com/collections/all&redirect_uri="+window.location.href+"");
+  // Pinterest
+  product.find('#pinterest').attr("href","https://pinterest.com/pin/create/button/?url=http://the-casery.myshopify.com/collections/all&amp;media=http:"+product.find('.back-img').attr("src")+"&amp;description="+product.find('h1').text()+" ("+product.find('.active-option1').attr("name")+")");
+  // Twitter
+  product.find('#twitter').attr("href","https://twitter.com/share?url=http:"+product.find('.back-img').attr("src")+"&amp;text=The Casery - "+product.find('h1').text()+" ("+product.find('.active-option1').attr("name")+")");
+  // Tumblr
+  product.find('#tumblr').attr("href","https://www.tumblr.com/widgets/share/tool?posttype=photo&content="+product.find('.back-img').attr("src")+"&caption="+product.find('h1').text()+" ("+product.find('.active-option1').attr("name")+")&canonicalUrl=http://the-casery.myshopify.com/collections/all");
+}
 
-  // Belowing is find the last image in this line
-  var offset = $img.offset(),
-      nextImage = $img.next(),
-      finalImage = $img;
 
-  if (!$img.is(':last-child')) {
-    while (!nextImage.is(':last-child') && offset.top == nextImage.offset().top) {
-      nextImage = nextImage.next();
-    }
+// initial option3 value, which is picture
+function init_option3(product, start_pos, total_options, variants){
+  // remove previous image
+  $('.active-option3').removeClass("active-option3");
+  product.find('#option3 li').remove();
 
-    if (nextImage.is(':last-child')){ 
-      finalImage = nextImage;
-    }
-    else{
-      finalImage = nextImage.prev();
-    }
-  }
-
-  /* 
-  * Belowing is long part of program, dealing with variants of a product
-  * 
-  * Basically, a product have 3 variants. 1st is a picture representing color, 
-  * 2nd is several pictures showing different parts of this case. 3rd is phone type.
-  *
-  * Generally, only 1st and 3rd variants affect the product, the second variant is just for showing products.
-  * So the code is seperated in to two parts, 1st is initialization and 2nd is updating.
-  * Note that, we read data from a hidding select and after process, reset its selectedIndex, then job done.
-  */
-  // Part 1 : Initializtion
-  // pre-load process, all the variants infomation are saved in a hidding select called 'productSelect'
-  // in its text part, it saves variant option 1,2,3 and the variant image url
-  var productSelect = $(this).find('#productSelect');
-  var product_options = productSelect.find('option');
-  var total_options = product_options.length;
-  var variants = new Array();
-
-  // string split, I use ' - ' to seperate different option2
-  for (var i = 0; i < total_options; i++){
-    var string = product_options.eq(i).text();
-    var t = string.split(' - ');
-    variants.push(t);
-  }
-
-  // remove previous results; 
-  $(this).find('#option1 img').remove();
-  $(this).find('#option2 li').remove();
-  $(this).find('#option3 option').remove();
-
-  var arr1 = new Array(); // deal with Duplicates
-  var arr2 = new Array();
   var arr3 = new Array();
-
-  // option1 initial value
-  for (var i = 0; i < total_options; i++){
-    var flag1 = true;
-    for (var j = 0; j < arr1.length; j++){
-      if (arr1[j] == variants[i][1]){
-        flag1 = false;
-        break;
-      }
-    }
-    if (flag1){
-      arr1.push(variants[i][1]);
-      $(this).find('#option1').append("<img style='display:inline-block; width:100px;' name='"+variants[i][1]+"' src='"+variants[i][4]+"'/>");
-    }
-  }
-
-  // option2 initial value
-  for (var i = 0; i < total_options && variants[i][1] == variants[0][1]; i++){
-    var flag2 = true;
-    for (var j = 0; j < arr2.length; j++){
-      if (arr2[j] == variants[i][2]){
-        flag2 = false;
-        break;
-      }
-    }
-    if (flag2){
-      arr2.push(variants[i][2]);
-      $(this).find('#option2').append("<li class='grid__item thumbnail-img'><img style='display:inline-block; width:100px;' src='"+variants[i][4]+"'/></li>");
-    }
-  }
-
-  // option3 initial value
-  for (var i = 0; i < total_options && variants[i][1] == variants[0][1] && variants[i][2] == variants[0][2]; i++){
+  for (var i = start_pos; i < total_options && variants[i][0] == variants[start_pos][0] && variants[i][1] == variants[start_pos][1] && variants[i][2] == variants[start_pos][2]; i++){
     var flag3 = true;
     for (var j = 0; j < arr3.length; j++){
       if (arr3[j] == variants[i][3]){
@@ -253,180 +193,281 @@ function product_click(){
     }
     if (flag3){
       arr3.push(variants[i][3]);
-      $(this).find('#option3').append("<option value='"+i+"'>"+variants[i][3]+"</option>");
+      product.find('#option3').append("<li class='grid__item thumbnail-img'><img style='display:inline-block; width:100px;' src='"+variants[i][4]+"' /></li>");
     }
   }
 
-  // set selectedIndex and initial selected image
-  $(this).find('#option1 img').first().addClass('active-option1');
-  $(this).find('#option2 img').first().addClass('active-option2');
-  // social media here
-  // Facebook Feed Dialog
-  $(this).find('#facebook').attr("href","https://www.facebook.com/dialog/feed?app_id=1516749411980352&display=page&caption=Welcome%20to%20the%20casery&picture=http:"+$(this).find('.back-img').attr("src")+"&name="+$(this).find('.inpage-cart__right-container h1').text()+"&description="+$(this).find('#option1 img').attr("name")+"&link=http://the-casery.myshopify.com/collections/all&redirect_uri="+window.location.href+"");
-  // Pinterest share button
-  $(this).find('#pinterest').attr("href","https://pinterest.com/pin/create/button/?url=http://the-casery.myshopify.com/collections/all&amp;media=http:"+$(this).find('.back-img').attr("src")+"&amp;description="+$(this).find('.inpage-cart__right-container h1').text()+" ("+$(this).find('#option1 img').attr("name")+")");
-  // Twitter
-  $(this).find('#twitter').attr("href","https://twitter.com/share?url=http:"+$(this).find('.back-img').attr("src")+"&amp;text=The Casery - "+$(this).find('.inpage-cart__right-container h1').text()+" ("+$(this).find('#option1 img').attr("name")+")");
-  // Tumblr
-  $(this).find('#tumblr').attr("href","https://www.tumblr.com/widgets/share/tool?posttype=photo&content="+$(this).find('.back-img').attr("src")+"&caption="+$(this).find('.inpage-cart__right-container h1').text()+" ("+$(this).find('#option1 img').attr("name")+")&canonicalUrl=http://the-casery.myshopify.com/collections/all");
+  // reset '.back-img', '.active-option3', reset social media
+  product.find('#option3 img').first().addClass("active-option3");
+  product.find('.back-img').attr("src", $('.active-option3').attr("src"));
+  change_social_media(product);
+}
 
-  /* Part 2 : Updating */
-  /* change value of option 1 */
-  $(this).find('#option1 img').unbind("click").click(function(){
+// initial option2 value, which is phone type
+function init_option2(product, start_pos, total_options, variants){
+  product.find('#option2 option').remove();
+  var arr2 = new Array();
+  for (var i = start_pos; i < total_options && variants[i][0] == variants[start_pos][0] && variants[i][1] == variants[start_pos][1]; i++){
+    var flag2 = true;
+    for (var j = 0; j < arr2.length; j++){
+      if (arr2[j] == variants[i][2]){
+        flag2 = false;
+        break;
+      }
+    }
+    if (flag2){
+      arr2.push(variants[i][2]);
+      product.find('#option2').append("<option value='"+i+"'>"+variants[i][2]+"</option>");
+    }
+  }
+
+  // reset start_pos for init_option3, reset selectIndex for hidden select & option2 select
+  product.find('#productSelect').get(0).selectedIndex = start_pos;
+  product.find('#option2').get(0).selectedIndex = 0; 
+  init_option3(product, start_pos, total_options, variants);
+}
+
+// initial option1 value, which is phone style
+function init_option1(product, start_pos, total_options, variants){
+  // remove previous image
+  $('.active-option1').removeClass('active-option1');
+  product.find('#option1 img').remove();
+
+  var arr1 = new Array();
+  for (var i = start_pos; i < total_options && variants[i][0] == variants[start_pos][0]; i++){
+    var flag1 = true;
+    for (var j = 0; j < arr1.length; j++){
+      if (arr1[j] == variants[i][1]){
+        flag1 = false;
+        break;
+      }
+    }
+    if (flag1){
+      arr1.push(variants[i][1]);
+      product.find('#option1').append("<img name='"+variants[i][1]+"' src='"+variants[i][4]+"' onmouseover=\"this.style.cursor='hand'\"/>");
+    }
+  }
+
+  // reset start_pos for init_option2
+  product.find('#option1 img').first().addClass('active-option1');
+  init_option2(product, start_pos, total_options, variants);
+}
+
+// initialize all the variants!!
+function init_variants(product){
+  var productSelect = product.find('#productSelect');
+  var product_options = productSelect.find('option');
+  var total_options = product_options.length;
+  var variants = new Array();
+  var casetype = false;
+
+  // string split, I use ' @ ' to seperate different options
+  for (var i = 0; i < total_options; i++){
+    var string = product_options.eq(i).text();
+    var t = string.split(' @ ');
+    // if there's casetype, then we need to split the first option1 string
+    if (t[1].indexOf(' - ') >= 0){
+      var temp = t[1].split(' - ');
+      t[0] = temp[1];
+      t[1] = temp[0];
+      casetype = true;
+    } else {
+      t[0] = 'NONE';
+    }
+    variants.push(t);
+  }
+  // if there's casetype, we need to enable button
+  if (casetype){
+    product.find('#option0').css('display','block');
+  } else {
+    product.find('#option0').css('display','none');
+  }
+
+  // reset start_pos for init_option1
+  product.find('#option0 span').first().addClass('active-option0');
+  init_option1(product, 0, total_options, variants);
+}
+
+
+/* Part 2 : Updating */
+// update option0
+function change_option0(self, total_options, variants){
+  var product = self.parents('.grid__product');
+  var id = self.attr('id');
+
+  $('.active-option0').removeClass('active-option0');
+  self.addClass('active-option0');
+  if (id.indexOf('Snap') >= 0){
+    init_option1(product, 0, total_options, variants);
+  }
+  else{
+    var i = 0;
+    for (; i < total_options && variants[i][0].indexOf('Tough') < 0; i++);
+    init_option1(product, i, total_options, variants);
+  }
+}
+
+// update option1
+function change_option1(self, total_options, variants){
+    var product = self.parents('.grid__product');
     // remove all active-image class which highlight the border, and we need to remove previous
-    // option2 and option3 values and set main-img to first img of this color.
     $('.active-option1').removeClass('active-option1');
-    $('.active-option2').removeClass('active-option2');
-    $(this).addClass('active-option1');
-    $(this).parents('.inpage-cart__copy-container').find('#option2 li').remove();
-    $(this).parents('.inpage-cart__right-container').find('#option3 option').remove();
-    $(this).parents('.inpage-cart__copy-container').find('.back-img').attr("src",$(this).attr("src"));
+    self.addClass('active-option1');
 
     // After pre-set, find the first index that have the same picture url, that is the start of variant.option1
-    var current_img_url = $(this).attr("src");
+    var new_option1_name = self.attr("name");
+    var current_index = product.find('#productSelect').get(0).selectedIndex;
 
     var new_index = 0;
-    for (; new_index < total_options && variants[new_index][4] != current_img_url; new_index++);
+    for (; new_index < total_options && variants[new_index][0] != variants[current_index][0]; new_index ++);
+    for (; new_index < total_options && variants[new_index][0] == variants[current_index][0] && variants[new_index][1] != new_option1_name; new_index++);
 
-    // initial option2 value
-    var arr2 = new Array();
-    for (var i = new_index; i < total_options && variants[i][1] == variants[new_index][1]; i++){
-      var flag2 = true;
-      for (var j = 0; j < arr2.length; j++){
-        if (arr2[j] == variants[i][2]){
-          flag2 = false;
-          break;
-        }
-      }
-      if (flag2){
-        arr2.push(variants[i][2]);
-        $(this).parents('.inpage-cart__copy-container').find('#option2').append("<li class='grid__item thumbnail-img'><img style='display:inline-block; width:100px;' src='"+variants[i][4]+"' /></li>");
-      }
+    // initial option2
+    init_option2(product, new_index, total_options, variants);
+}
+
+// update option2
+function change_option2(self, total_options, variants){
+  var product = self.parents('.grid__product');
+  // find new index
+  var new_index = product.find('#option2').val();
+  product.find('#productSelect').get(0).selectedIndex = new_index;
+
+  // initial option3
+  init_option3(product, new_index, total_options, variants);
+}
+
+// update option3
+function change_option3(self, total_options, variants){
+  var product = self.parents('.grid__product');
+  
+  product.find('.back-img').attr("src",self.attr("src"));
+  $('.active-option3').removeClass("active-option3");
+  self.addClass("active-option3");
+
+  // social media
+  change_social_media(product);
+}
+
+function product_click(){
+  var productSelect = $(this).find('#productSelect');
+  var product_options = productSelect.find('option');
+  var total_options = product_options.length;
+  var variants = new Array();
+  var casetype = false;
+
+  // string split, I use ' @ ' to seperate different options
+  for (var i = 0; i < total_options; i++){
+    var string = product_options.eq(i).text();
+    var t = string.split(' @ ');
+    // if there's casetype, then we need to split the first option1 string
+    if (t[1].indexOf(' - ') >= 0){
+      var temp = t[1].split(' - ');
+      t[0] = temp[1];
+      t[1] = temp[0];
+      casetype = true;
+    } else {
+      t[0] = 'NONE';
     }
+    variants.push(t);
+  }
 
-    // initial option3 value
-    var arr3 = new Array();
-    for (var i = new_index; i < total_options && variants[i][1] == variants[new_index][1] && variants[i][2] == variants[new_index][2]; i++){
-      var flag3 = true;
-      for (var j = 0; j < arr3.length; j++){
-        if (arr3[j] == variants[i][3]){
-          flag3 = false;
-          break;
-        }
-      }
-      if (flag3){
-        arr3.push(variants[i][3]);
-        $(this).parents('.inpage-cart__right-container').find('#option3').append("<option value='"+i+"'>"+variants[i][3]+"</option>");
-      }
-    }
+  /* change value of option 0 */
+  $(this).find('#option0').off('click','span').on('click', 'span', function(){
+    change_option0($(this), total_options, variants);
+  });
 
-    // reset selectindex, option2 initial, option3 initial
-    productSelect.get(0).selectedIndex = new_index; // note that, this form submit select index to shopify backend, very important
-    $(this).parents('.inpage-cart__copy-container').find('#option2 img').first().addClass('active-option2');
-    $(this).parents('.inpage-cart__right-container').find('#option3').get(0).selectedIndex = 0;   
-
-    // social media here
-    // Facebook
-    $(this).parents('.inpage-cart__copy-container').find('#facebook').attr("href","https://www.facebook.com/dialog/feed?app_id=1516749411980352&display=page&caption=Welcome%20to%20the%20casery&picture=http:"+$(this).parents('.inpage-cart__copy-container').find('.back-img').attr("src")+"&name="+$(this).parents('.inpage-cart__right-container').find('h1').text()+"&description="+$(this).attr("name")+"&link=http://the-casery.myshopify.com/collections/all&redirect_uri="+window.location.href+"");
-    // Pinterest
-    $(this).parents('.inpage-cart__copy-container').find('#pinterest').attr("href","https://pinterest.com/pin/create/button/?url=http://the-casery.myshopify.com/collections/all&amp;media=http:"+$(this).parents('.inpage-cart__copy-container').find('.back-img').attr("src")+"&amp;description="+$(this).parents('.inpage-cart__right-container').find('h1').text()+" ("+$(this).attr("name")+")");
-    // Twitter
-    $(this).parents('.inpage-cart__copy-container').find('#twitter').attr("href","https://twitter.com/share?url=http:"+$(this).parents('.inpage-cart__copy-container').find('.back-img').attr("src")+"&amp;text=The Casery - "+$(this).parents('.inpage-cart__right-container').find('h1').text()+" ("+$(this).attr("name")+")");
-    // Tumblr
-    $(this).parents('.inpage-cart__copy-container').find('#tumblr').attr("href","https://www.tumblr.com/widgets/share/tool?posttype=photo&content="+$(this).parents('.inpage-cart__copy-container').find('.back-img').attr("src")+"&caption="+$(this).parents('.inpage-cart__right-container').find('h1').text()+" ("+$(this).attr("name")+")&canonicalUrl=http://the-casery.myshopify.com/collections/all");
+  /* change value of option 1 */
+  $(this).find('#option1').off('click','img').on('click', 'img', function(){
+    change_option1($(this), total_options, variants);
   });
 
   /* change value of option2 */
-  // This is easy, just image change. But note that JQuery 1.7+ use 'on' method to replace bind, delegate, etc.
-  // and don't forget to off everything before register new event, to avoid multiple calls
-  $(this).find('#option2').off('click','img').on('click', 'img', function(){
-    $(this).parents('.inpage-cart__left-container').find('.back-img').attr("src",$(this).attr("src"));
-    $('.active-option2').removeClass("active-option2");
-    $(this).addClass("active-option2");
-
-    // social media here
-    // Facebook
-    $(this).parents('.inpage-cart__left-container').find('#facebook').attr("href","https://www.facebook.com/dialog/feed?app_id=1516749411980352&display=page&caption=Welcome%20to%20the%20casery&picture=http:"+$(this).parents('.inpage-cart__left-container').find('.back-img').attr("src")+"&name="+$(this).parents('.inpage-cart__copy-container').find('h1').text()+"&description="+$(this).parents('.inpage-cart__copy-container').find('.active-option1').attr("name")+"&link=http://the-casery.myshopify.com/collections/all&redirect_uri="+window.location.href+"");
-    // Pinterest
-    $(this).parents('.inpage-cart__left-container').find('#pinterest').attr("href","https://pinterest.com/pin/create/button/?url=http://the-casery.myshopify.com/collections/all&amp;media=http:"+$(this).parents('.inpage-cart__left-container').find('.back-img').attr("src")+"&amp;description="+$(this).parents('.inpage-cart__copy-container').find('h1').text()+" ("+$(this).parents('.inpage-cart__copy-container').find('.active-option1').attr("name")+")");
-    // Twitter
-    $(this).parents('.inpage-cart__left-container').find('#twitter').attr("href","https://twitter.com/share?url=http:"+$(this).parents('.inpage-cart__left-container').find('.back-img').attr("src")+"&amp;text=The Casery - "+$(this).parents('.inpage-cart__copy-container').find('h1').text()+" ("+$(this).parents('.inpage-cart__copy-container').find('.active-option1').attr("name")+")");
-    // Tumblr
-    $(this).parents('.inpage-cart__left-container').find('#tumblr').attr("href","https://www.tumblr.com/widgets/share/tool?posttype=photo&content="+$(this).parents('.inpage-cart__left-container').find('.back-img').attr("src")+"&caption="+$(this).parents('.inpage-cart__copy-container').find('h1').text()+" ("+$(this).parents('.inpage-cart__copy-container').find('.active-option1').attr("name")+")&canonicalUrl=http://the-casery.myshopify.com/collections/all");
+  // don't forget to off everything before register new event, to avoid multiple calls
+  $(this).find('#option2').unbind('change').change(function(){
+    change_option2($(this), total_options, variants);
   });
 
   /* change value of option3 */
-  $(this).find('#option3').unbind("change").change(function(){
-    // 1. find old index  2. calculate difference  3. find new index
-    var old_index = productSelect.get(0).selectedIndex;
-
-    var count = 0;
-    for (; count <= old_index && variants[old_index][2] == variants[old_index - count][2] && variants[old_index][1] == variants[old_index - count][1]; count++);  // diff
-
-    var option3_index = $(this).get(0).selectedIndex;
-    var nex_index = 0;
-    new_index = old_index + option3_index - count + 1;
-
-    productSelect.get(0).selectedIndex = new_index;
+  //This is easy, just image change. But note that JQuery 1.7+ use 'on' method to replace bind, delegate, etc.
+  $(this).find('#option3').off('click','img').on('click', 'img', function(){
+    change_option3($(this), total_options, variants);
   });
 
-  /* Belowing it animation part of product-grid-item */
-  // first check if there's already one slided down shopping cart when we clicking a different image.
-  var prev_pos;
-  if (subPage.hasClass('active-cart') && (!$(this).hasClass('active-product'))){
-    prev_pos = $('.active-product').offset().top;
-    $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
-    subPage.removeClass('active-cart').css("display","none");
-    $('.active-product').find('.arrow-up').css("opacity","0");
-    $('.active-product').removeClass('active-product');
-  }
+  /* Belowing it animation part 1 of grid__product */
+  var subPage = $(this).find('.inpage-cart');
+  subPage.css("width", document.documentElement.clientWidth);
+  subPage.css("margin-left", 0 - $(this).offset().left - 10);
 
-  // We can take advantage of 'active-' class.
-  // active-cart is shopping cart, active-btn is borrowed from subpage, active-product is subpage's top container
-  // There're several operations, most of them are related to display, add/remove class.
-  if (subPage.hasClass('active-cart')){
-    subPage.removeClass('active-cart').slideUp(300,function(){
-      $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
-      $('.active-product').find('.arrow-up').css("opacity","0");
-      $('.active-product').removeClass('active-product');
-    });
-    // scroll page to show slide-down cart
-    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 40 }, 300); 
-  }
-  else if (!subPage.find('.inpage-cart__copy-container').hasClass('active-btn')){
-    $(this).find('.arrow-up').css("opacity","1");
-    ($(this).find('.inpage-cart__copy-container')).addClass('active-btn').insertAfter(subPage.find('.inpage-cart__close')).css("display","block");
-    subPage.addClass('active-cart').insertAfter(finalImage);
-    if (prev_pos <= $(this).offset().top){
-      subPage.css("display","block");
-    } else {
-      subPage.slideDown("middle");
-    }
-    $(this).addClass('active-product');
-    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 40}, 300);
-  }
+  // When user clicking close button at top-right of slide-down cart
+  $(this).find('.inpage-cart__close').unbind('click').click(function(){
+    $('.active-product').find('.arrow-up').animate({opacity : 0}, 'middle');
+    $('.active-cart').removeClass('active-cart').slideUp('middle');
+    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 80 }, 'middle');
+    $('.active-product').removeClass('active-product');
+  });
 }
+
 
 /* This is the main function of shopping cart */
 var shopping_cart = function(){
   // When user wanna to browse a product
   $('.grid__product').unbind("click").click(product_click);
 
-  // When user clicking close button at top-right of slide-down cart
-  $('.inpage-cart__close').click(function(){
-    $('.inpage-cart').removeClass('active-cart').slideUp(300, function(){
-      $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
-      $('.active-product').find('.arrow-up').css("opacity","0");
-      $('.active-product').removeClass('active-product');
-    });
-    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 40 }, 300);
-  });
+  /* Here's main part of animation
+   * Besides regular slideUp & Down, we need to check if current product posistion vs. previous product
+   * if ==, just change content, no animation
+   * if <>, the screen should animate accordingly
+   * BTW, current_activate is used to determine whether a new cart should be slide down;
+   * different_product is used to detect whether two product are the same
+  */
+  $('.grid__product').off('click','.grid-link__image-centered').on('click','.grid-link__image-centered',function(){
+    var current_activate, different_product = false;
+    var prev_pos;
+    if ($(this).parents('.grid__product').hasClass('active-product')){
+      current_activate = false;
+    }
+    else{
+      current_activate = true;
+      if ($('.active-product').hasClass('active-product')){
+        prev_pos = $('.active-product').offset().top;
+        different_product = true;
+      } else {
+        prev_pos = $(this).parents('.grid__product').offset().top;
+      }
+    }
 
-  // When user clicking add-to-cart-btn, remove everything
-  $('.add-to-cart-btn').click(function(){
-    $('.active-btn').insertAfter($('.active-product').find('.grid-link__image')).css("display","none").removeClass('active-btn');
-    $('.active-cart').removeClass('active-cart');
+    // slide up previous cart
+    $('.active-product').find('.arrow-up').animate({opacity : 0}, 'middle');
     $('.active-product').removeClass('active-product');
+    if (different_product && prev_pos == $(this).parents('.grid__product').offset().top){
+      $('.active-cart').removeClass('active-cart').css('display','none');
+    } else {
+      $('.active-cart').removeClass('active-cart').slideUp('middle');
+    }
+
+    // slide down new cart
+    if (current_activate){
+      $(this).parents('.grid__product').find('.arrow-up').animate({opacity : 1}, 'middle');
+      $(this).parents('.grid__product').addClass('active-product');
+      if (different_product && prev_pos == $(this).parents('.grid__product').offset().top){
+        $(this).parents('.grid__product').find('.inpage-cart').addClass('active-cart').css('display','block');
+      } else {
+        $(this).parents('.grid__product').find('.inpage-cart').addClass('active-cart').slideDown("middle");
+      }
+      // screen scroll
+      $('.active-cart').css("width", document.documentElement.clientWidth);
+      $('.active-cart').css("margin-left", 0 - $('.active-product').offset().left - 10);
+      if (prev_pos == $('.active-product').offset().top){
+        $("html, body").animate({ scrollTop: prev_pos - 80 }, "middle");
+      } else if (prev_pos < $('.active-product').offset().top){
+        $("html, body").animate({ scrollTop: prev_pos + 280}, "middle");
+      } else {
+        $("html, body").animate({ scrollTop: $('.active-product').offset().top - 80}, "middle");
+      }
+      var product = $(this).parents('.grid__product');
+      init_variants(product);
+    }
   });
 
   // When user hovering product, change picture
