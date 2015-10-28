@@ -142,11 +142,6 @@
             "group": "Sans-serif"
           },
           {
-            "value": "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif",
-            "label": "Gill Sans",
-            "group": "Sans-serif"
-          },
-          {
             "value": "'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
             "label": "Helvetica Neue",
             "group": "Sans-serif"
@@ -155,121 +150,6 @@
             "value": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
             "label": "Arial",
             "group": "Sans-serif"
-          },
-          {
-            "value": "Candara, Calibri, Segoe, 'Segoe UI', Optima, Arial, sans-serif",
-            "label": "Candara",
-            "group": "Sans-serif"
-          },
-          {
-            "value": "Geneva, Tahoma, Verdana, sans-serif",
-            "label": "Geneva",
-            "group": "Sans-serif"
-          },
-          {
-            "value": "Google_Droid+Sans_400,700_sans",
-            "label": "Droid Sans",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Lato_400,700_sans",
-            "label": "Lato",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Montserrat_400,700_sans",
-            "label": "Montserrat",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Open+Sans_400,700_sans",
-            "label": "Open Sans",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_PT+Sans_400,700_sans",
-            "label": "PT Sans",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Raleway_600,800_sans",
-            "label": "Raleway",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Roboto_400,700_sans",
-            "label": "Roboto",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Source+Sans+Pro_400,700_sans",
-            "label": "Source Sans Pro",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Ubuntu_400,700_sans",
-            "label": "Ubuntu",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif",
-            "label": "Big Calson",
-            "group": "Serif"
-          },
-          {
-            "value": "'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif",
-            "label": "Calisto MT",
-            "group": "Serif"
-          },
-          {
-            "value": "Baskerville, 'Baskerville Old Face', 'Hoefler Text', Garamond, 'Times New Roman', serif",
-            "label": "Baskerville",
-            "group": "Serif"
-          },
-          {
-            "value": "Garamond, Baskerville, 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif",
-            "label": "Garamond",
-            "group": "Serif"
-          },
-          {
-            "value": "Georgia, 'Hoefler Text', 'Times New Roman', serif",
-            "label": "Georgia",
-            "group": "Serif"
-          },
-          {
-            "value": "TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif",
-            "label": "Times New Roman",
-            "group": "Serif"
-          },
-          {
-            "value": "Google_Arvo_400,400_serif",
-            "label": "Arvo",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Crimson+Text_400,700_serif",
-            "label": "Crimson Text",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Droid+Serif_400,700_serif",
-            "label": "Droid Serif",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Lora_400,700_serif",
-            "label": "Lora",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_PT+Serif_400,700_serif",
-            "label": "PT Serif",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Vollkorn_400,700_serif",
-            "label": "Vollkorn",
-            "group": "Serif | Google Web Fonts"
           }
         ]
       },
@@ -315,11 +195,6 @@
             "group": "Sans-serif"
           },
           {
-            "value": "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif",
-            "label": "Gill Sans",
-            "group": "Sans-serif"
-          },
-          {
             "value": "'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
             "label": "Helvetica Neue",
             "group": "Sans-serif"
@@ -328,246 +203,6 @@
             "value": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
             "label": "Arial",
             "group": "Sans-serif"
-          },
-          {
-            "value": "Candara, Calibri, Segoe, 'Segoe UI', Optima, Arial, sans-serif",
-            "label": "Candara",
-            "group": "Sans-serif"
-          },
-          {
-            "value": "Geneva, Tahoma, Verdana, sans-serif",
-            "label": "Geneva",
-            "group": "Sans-serif"
-          },
-          {
-            "value": "Google_Asap_400_sans",
-            "label": "Asap",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Asap_700_sans",
-            "label": "Asap Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Cabin_400_sans",
-            "label": "Cabin",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Cabin_500_sans",
-            "label": "Cabin Medium",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Droid+Sans_400_sans",
-            "label": "Droid Sans",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Droid+Sans_700_sans",
-            "label": "Droid Sans Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Josefin+Sans_400_sans",
-            "label": "Josefin Sans",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Josefin+Sans_700_sans",
-            "label": "Josefin Sans Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Lato_400_sans",
-            "label": "Lato",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Lato_700_sans",
-            "label": "Lato Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Montserrat_400_sans",
-            "label": "Montserrat",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Montserrat_700_sans",
-            "label": "Montserrat Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Open+Sans_400_sans",
-            "label": "Open Sans",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Open+Sans_700_sans",
-            "label": "Open Sans Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_PT+Sans_400_sans",
-            "label": "PT Sans",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_PT+Sans_700_sans",
-            "label": "PT Sans Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Roboto_400_sans",
-            "label": "Roboto",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Roboto_700_sans",
-            "label": "Roboto Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Source+Sans+Pro_400_sans",
-            "label": "Source Sans Pro",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Source+Sans+Pro_700_sans",
-            "label": "Source Sans Pro Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Ubuntu_400_sans",
-            "label": "Ubuntu",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Ubuntu_700_sans",
-            "label": "Ubuntu Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif",
-            "label": "Big Calson",
-            "group": "Serif"
-          },
-          {
-            "value": "'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif",
-            "label": "Calisto MT",
-            "group": "Serif"
-          },
-          {
-            "value": "Baskerville, 'Baskerville Old Face', 'Hoefler Text', Garamond, 'Times New Roman', serif",
-            "label": "Baskerville",
-            "group": "Serif"
-          },
-          {
-            "value": "Garamond, Baskerville, 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif",
-            "label": "Garamond",
-            "group": "Serif"
-          },
-          {
-            "value": "TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif",
-            "label": "Times New Roman",
-            "group": "Serif"
-          },
-          {
-            "value": "Google_Arvo_400_serif",
-            "label": "Arvo",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Arvo_700_serif",
-            "label": "Arvo Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Copse_400_serif",
-            "label": "Copse",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Crimson+Text_400_serif",
-            "label": "Crimson Text",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Crimson+Text_700_serif",
-            "label": "Crimson Text Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Droid+Serif_400_serif",
-            "label": "Droid Serif",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Droid+Serif_700_serif",
-            "label": "Droid Serif Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Gentium+Book+Basic_400_serif",
-            "label": "Gentium Book Basic",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Gentium+Book+Basic_700_serif",
-            "label": "Gentium Book Basic Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Josefin+Slab_400_serif",
-            "label": "Josefin Slab",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Josefin+Slab_700_serif",
-            "label": "Josefin Slab Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Lora_400_serif",
-            "label": "Lora",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Lora_700_serif",
-            "label": "Lora Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Merriweather_400_serif",
-            "label": "Merriweather",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Merriweather_700_serif",
-            "label": "Merriweather Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_PT+Serif_400_serif",
-            "label": "PT Serif",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_PT+Serif_700_serif",
-            "label": "PT Serif Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Vollkorn_400_serif",
-            "label": "Vollkorn",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Vollkorn_700_serif",
-            "label": "Vollkorn Bold",
-            "group": "Serif | Google Web Fonts"
           }
         ]
       },
@@ -614,11 +249,6 @@
             "group": "Sans-serif"
           },
           {
-            "value": "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif",
-            "label": "Gill Sans",
-            "group": "Sans-serif"
-          },
-          {
             "value": "'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
             "label": "Helvetica Neue",
             "group": "Sans-serif"
@@ -627,196 +257,6 @@
             "value": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
             "label": "Arial",
             "group": "Sans-serif"
-          },
-          {
-            "value": "Candara, Calibri, Segoe, 'Segoe UI', Optima, Arial, sans-serif",
-            "label": "Candara",
-            "group": "Sans-serif"
-          },
-          {
-            "value": "Geneva, Tahoma, Verdana, sans-serif",
-            "label": "Geneva",
-            "group": "Sans-serif"
-          },
-          {
-            "value": "Google_Asap_400_sans",
-            "label": "Asap",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Asap_700_sans",
-            "label": "Asap Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Droid+Sans_400_sans",
-            "label": "Droid Sans",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Droid+Sans_700_sans",
-            "label": "Droid Sans Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Lato_400_sans",
-            "label": "Lato",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Lato_700_sans",
-            "label": "Lato Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Montserrat_400_sans",
-            "label": "Montserrat",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Montserrat_700_sans",
-            "label": "Montserrat Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Open+Sans_400_sans",
-            "label": "Open Sans",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Open+Sans_700_sans",
-            "label": "Open Sans Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_PT+Sans_400_sans",
-            "label": "PT Sans",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_PT+Sans_700_sans",
-            "label": "PT Sans Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Roboto_400_sans",
-            "label": "Roboto",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Roboto_700_sans",
-            "label": "Roboto Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Source+Sans+Pro_400_sans",
-            "label": "Source Sans Pro",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Source+Sans+Pro_700_sans",
-            "label": "Source Sans Pro Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Ubuntu_400_sans",
-            "label": "Ubuntu",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Ubuntu_700_sans",
-            "label": "Ubuntu Bold",
-            "group": "Sans-serif | Google Web Fonts"
-          },
-          {
-            "value": "'Big Caslon', 'Book Antiqua', 'Palatino Linotype', Georgia, serif",
-            "label": "Big Calson",
-            "group": "Serif"
-          },
-          {
-            "value": "'Calisto MT', 'Bookman Old Style', Bookman, 'Goudy Old Style', Garamond, 'Hoefler Text', 'Bitstream Charter', Georgia, serif",
-            "label": "Calisto MT",
-            "group": "Serif"
-          },
-          {
-            "value": "Baskerville, 'Baskerville Old Face', 'Hoefler Text', Garamond, 'Times New Roman', serif",
-            "label": "Baskerville",
-            "group": "Serif"
-          },
-          {
-            "value": "Garamond, Baskerville, 'Baskerville Old Face', 'Hoefler Text', 'Times New Roman', serif",
-            "label": "Garamond",
-            "group": "Serif"
-          },
-          {
-            "value": "TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif",
-            "label": "Times New Roman",
-            "group": "Serif"
-          },
-          {
-            "value": "Google_Arvo_400_serif",
-            "label": "Arvo",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Arvo_700_serif",
-            "label": "Arvo Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Crimson+Text_400_serif",
-            "label": "Crimson Text",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Crimson+Text_700_serif",
-            "label": "Crimson Text Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Droid+Serif_400_serif",
-            "label": "Droid Serif",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Droid+Serif_700_serif",
-            "label": "Droid Serif Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Lora_400_serif",
-            "label": "Lora",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Lora_700_serif",
-            "label": "Lora Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Old+Standard+TT_400_serif",
-            "label": "Old Standard TT",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_PT+Serif_400_serif",
-            "label": "PT Serif",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_PT+Serif_700_serif",
-            "label": "PT Serif Bold",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Vollkorn_400_serif",
-            "label": "Vollkorn",
-            "group": "Serif | Google Web Fonts"
-          },
-          {
-            "value": "Google_Vollkorn_700_serif",
-            "label": "Vollkorn Bold",
-            "group": "Serif | Google Web Fonts"
           }
         ]
       },
@@ -1600,6 +1040,321 @@
         "type": "checkbox",
         "id": "collections_center_grid_link",
         "label": "Center text below product images"
+      }
+    ]
+  },
+  {
+    "name": "Artist Collection",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Artist 1"
+      },
+      {
+        "type": "checkbox",
+        "id": "artist_1",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "artist_tag_1",
+        "label": "Please enter artist's tag name to let theme associate his\/her works"
+      },
+      {
+        "type": "text",
+        "id": "artist_quote_1",
+        "label": "Show artist's tagline or quote"
+      },
+      {
+        "type": "textarea",
+        "id": "artist_intro_1",
+        "label": "Artist's introduction"
+      },
+      {
+        "type": "image",
+        "id": "artist_1.jpg",
+        "label": "Image",
+        "max-width": 480,
+        "info": "(Recommended) 480 * 480px"
+      },
+      {
+        "type": "header",
+        "content": "Artist 2"
+      },
+      {
+        "type": "checkbox",
+        "id": "artist_2",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "artist_tag_2",
+        "label": "Please enter artist's tag name to let theme associate his\/her works"
+      },
+      {
+        "type": "text",
+        "id": "artist_quote_2",
+        "label": "Show artist's tagline or quote"
+      },
+      {
+        "type": "textarea",
+        "id": "artist_intro_2",
+        "label": "Artist's introduction"
+      },
+      {
+        "type": "image",
+        "id": "artist_2.jpg",
+        "label": "Image",
+        "max-width": 480,
+        "info": "(Recommended) 480 * 480px"
+      },
+      {
+        "type": "header",
+        "content": "Artist 3"
+      },
+      {
+        "type": "checkbox",
+        "id": "artist_3",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "artist_tag_3",
+        "label": "Please enter artist's tag name to let theme associate his\/her works"
+      },
+      {
+        "type": "text",
+        "id": "artist_quote_3",
+        "label": "Show artist's tagline or quote"
+      },
+      {
+        "type": "textarea",
+        "id": "artist_intro_3",
+        "label": "Artist's introduction"
+      },
+      {
+        "type": "image",
+        "id": "artist_3.jpg",
+        "label": "Image",
+        "max-width": 480,
+        "info": "(Recommended) 480 * 480px"
+      },
+      {
+        "type": "header",
+        "content": "Artist 4"
+      },
+      {
+        "type": "checkbox",
+        "id": "artist_4",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "artist_tag_4",
+        "label": "Please enter artist's tag name to let theme associate his\/her works"
+      },
+      {
+        "type": "text",
+        "id": "artist_quote_4",
+        "label": "Show artist's tagline or quote"
+      },
+      {
+        "type": "textarea",
+        "id": "artist_intro_4",
+        "label": "Artist's introduction"
+      },
+      {
+        "type": "image",
+        "id": "artist_4.jpg",
+        "label": "Image",
+        "max-width": 480,
+        "info": "(Recommended) 480 * 480px"
+      },
+      {
+        "type": "header",
+        "content": "Artist 5"
+      },
+      {
+        "type": "checkbox",
+        "id": "artist_5",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "artist_tag_5",
+        "label": "Please enter artist's tag name to let theme associate his\/her works"
+      },
+      {
+        "type": "text",
+        "id": "artist_quote_5",
+        "label": "Show artist's tagline or quote"
+      },
+      {
+        "type": "textarea",
+        "id": "artist_intro_5",
+        "label": "Artist's introduction"
+      },
+      {
+        "type": "image",
+        "id": "artist_5.jpg",
+        "label": "Image",
+        "max-width": 480,
+        "info": "(Recommended) 480 * 480px"
+      },
+      {
+        "type": "header",
+        "content": "Artist 6"
+      },
+      {
+        "type": "checkbox",
+        "id": "artist_6",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "artist_tag_6",
+        "label": "Please enter artist's tag name to let theme associate his\/her works"
+      },
+      {
+        "type": "text",
+        "id": "artist_quote_6",
+        "label": "Show artist's tagline or quote"
+      },
+      {
+        "type": "textarea",
+        "id": "artist_intro_6",
+        "label": "Artist's introduction"
+      },
+      {
+        "type": "image",
+        "id": "artist_6.jpg",
+        "label": "Image",
+        "max-width": 480,
+        "info": "(Recommended) 480 * 480px"
+      },
+      {
+        "type": "header",
+        "content": "Artist 7"
+      },
+      {
+        "type": "checkbox",
+        "id": "artist_7",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "artist_tag_7",
+        "label": "Please enter artist's tag name to let theme associate his\/her works"
+      },
+      {
+        "type": "text",
+        "id": "artist_quote_7",
+        "label": "Show artist's tagline or quote"
+      },
+      {
+        "type": "textarea",
+        "id": "artist_intro_7",
+        "label": "Artist's introduction"
+      },
+      {
+        "type": "image",
+        "id": "artist_7.jpg",
+        "label": "Image",
+        "max-width": 480,
+        "info": "(Recommended) 480 * 480px"
+      },
+      {
+        "type": "header",
+        "content": "Artist 8"
+      },
+      {
+        "type": "checkbox",
+        "id": "artist_8",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "artist_tag_8",
+        "label": "Please enter artist's tag name to let theme associate his\/her works"
+      },
+      {
+        "type": "text",
+        "id": "artist_quote_8",
+        "label": "Show artist's tagline or quote"
+      },
+      {
+        "type": "textarea",
+        "id": "artist_intro_8",
+        "label": "Artist's introduction"
+      },
+      {
+        "type": "image",
+        "id": "artist_8.jpg",
+        "label": "Image",
+        "max-width": 480,
+        "info": "(Recommended) 480 * 480px"
+      },
+      {
+        "type": "header",
+        "content": "Artist 9"
+      },
+      {
+        "type": "checkbox",
+        "id": "artist_9",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "artist_tag_9",
+        "label": "Please enter artist's tag name to let theme associate his\/her works"
+      },
+      {
+        "type": "text",
+        "id": "artist_quote_9",
+        "label": "Show artist's tagline or quote"
+      },
+      {
+        "type": "textarea",
+        "id": "artist_intro_9",
+        "label": "Artist's introduction"
+      },
+      {
+        "type": "image",
+        "id": "artist_9.jpg",
+        "label": "Image",
+        "max-width": 480,
+        "info": "(Recommended) 480 * 480px"
+      },
+      {
+        "type": "header",
+        "content": "Artist 10"
+      },
+      {
+        "type": "checkbox",
+        "id": "artist_10",
+        "label": "Enable"
+      },
+      {
+        "type": "text",
+        "id": "artist_tag_10",
+        "label": "Please enter artist's tag name to let theme associate his\/her works"
+      },
+      {
+        "type": "text",
+        "id": "artist_quote_10",
+        "label": "Show artist's tagline or quote"
+      },
+      {
+        "type": "textarea",
+        "id": "artist_intro_10",
+        "label": "Artist's introduction"
+      },
+      {
+        "type": "image",
+        "id": "artist_10.jpg",
+        "label": "Image",
+        "max-width": 480,
+        "info": "(Recommended) 480 * 480px"
       }
     ]
   },

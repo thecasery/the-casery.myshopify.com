@@ -44,6 +44,10 @@
     {% endfor %}
   </div>
 
+{% elsif collection.title contains 'Artist' %}
+  
+  {% include 'artist-collection' %}
+
 {% else %}
   <div class = "grid__collection">
     {% for product in collection.products %}

@@ -193,7 +193,7 @@ $passwordPageUseBgImage: true;
 
 
 // Body Font
-$bodyFontStack: 'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif;
+$bodyFontStack: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $baseFontSize: 16px;
 
 // Header Font
@@ -202,7 +202,7 @@ $headerFontWeight: 700;
 $headerBaseFontSize: 32px;
 
 // Navigation and buttons
-$accentFontStack: 'Avant Garde', Avantgarde, 'Century Gothic', CenturyGothic, 'AppleGothic', sans-serif;
+$accentFontStack: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 $accentFontWeight: 400;
 $accentFontSize: 16px;
 
@@ -1127,3 +1127,5 @@ $badgeSize: 60px;
     display:inline-block;
   }
 }
+
+/*============= The LENS Tool | Magnifier =============*/

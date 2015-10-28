@@ -292,7 +292,7 @@ function init_variants(product){
 /* Part 2 : Updating */
 // update option0
 function change_option0(self, total_options, variants){
-  var product = self.parents('.grid__product');
+  var product = self.parents('.inpage-cart');
   var id = self.attr('id');
 
   $('.active-option0').removeClass('active-option0');
@@ -309,7 +309,7 @@ function change_option0(self, total_options, variants){
 
 // update option1
 function change_option1(self, total_options, variants){
-    var product = self.parents('.grid__product');
+    var product = self.parents('.inpage-cart');
     // remove all active-image class which highlight the border, and we need to remove previous
     $('.active-option1').removeClass('active-option1');
     self.addClass('active-option1');
@@ -328,7 +328,7 @@ function change_option1(self, total_options, variants){
 
 // update option2
 function change_option2(self, total_options, variants){
-  var product = self.parents('.grid__product');
+  var product = self.parents('.inpage-cart');
   // find new index
   var new_index = product.find('#option2').val();
   product.find('#productSelect').get(0).selectedIndex = new_index;
@@ -339,7 +339,7 @@ function change_option2(self, total_options, variants){
 
 // update option3
 function change_option3(self, total_options, variants){
-  var product = self.parents('.grid__product');
+  var product = self.parents('.inpage-cart');
   
   product.find('.back-img').attr("src",self.attr("src"));
   $('.active-option3').removeClass("active-option3");
@@ -349,8 +349,9 @@ function change_option3(self, total_options, variants){
   change_social_media(product);
 }
 
-function product_click(){
-  var productSelect = $(this).find('#productSelect');
+/* Try not to use $(this) or other things, only use the parameter in this function */
+function product_click(cart){
+  var productSelect = cart.find('#productSelect');
   var product_options = productSelect.find('option');
   var total_options = product_options.length;
   var variants = new Array();
@@ -373,47 +374,35 @@ function product_click(){
   }
 
   /* change value of option 0 */
-  $(this).find('#option0').off('click','span').on('click', 'span', function(){
+  cart.find('#option0').off('click','span').on('click', 'span', function(){
     change_option0($(this), total_options, variants);
   });
 
   /* change value of option 1 */
-  $(this).find('#option1').off('click','img').on('click', 'img', function(){
+  cart.find('#option1').off('click','img').on('click', 'img', function(){
     change_option1($(this), total_options, variants);
   });
 
   /* change value of option2 */
   // don't forget to off everything before register new event, to avoid multiple calls
-  $(this).find('#option2').unbind('change').change(function(){
+  cart.find('#option2').unbind('change').change(function(){
     change_option2($(this), total_options, variants);
   });
 
   /* change value of option3 */
   //This is easy, just image change. But note that JQuery 1.7+ use 'on' method to replace bind, delegate, etc.
-  $(this).find('#option3').off('click','img').on('click', 'img', function(){
+  cart.find('#option3').off('click','img').on('click','img',function(){
     change_option3($(this), total_options, variants);
   });
 
-  /* Belowing it animation part 1 of grid__product */
-  var subPage = $(this).find('.inpage-cart');
-  subPage.css("width", document.documentElement.clientWidth);
-  subPage.css("margin-left", 0 - $(this).offset().left - 10);
-
-  // When user clicking close button at top-right of slide-down cart
-  $(this).find('.inpage-cart__close').unbind('click').click(function(){
-    $('.active-product').find('.arrow-up').animate({opacity : 0}, 'middle');
-    $('.active-cart').removeClass('active-cart').slideUp('middle');
-    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 80 }, 'middle');
-    $('.active-product').removeClass('active-product');
-  });
+  /* Small change on slide-down cart alignment */
+  cart.css("width", document.documentElement.clientWidth);
+  cart.css("margin-left", 0 - $(this).offset().left - 10);
 }
 
 
 /* This is the main function of shopping cart */
 var shopping_cart = function(){
-  // When user wanna to browse a product
-  $('.grid__product').unbind("click").click(product_click);
-
   /* Here's main part of animation
    * Besides regular slideUp & Down, we need to check if current product posistion vs. previous product
    * if ==, just change content, no animation
@@ -421,6 +410,14 @@ var shopping_cart = function(){
    * BTW, current_activate is used to determine whether a new cart should be slide down;
    * different_product is used to detect whether two product are the same
   */
+  // When user clicking close button at top-right of slide-down cart
+  $('.grid__product').off('click','.inpage-cart__close').on('click','.inpage-cart__close',function(){
+    $('.active-product').find('.arrow-up').animate({opacity : 0}, 'middle');
+    $('.active-cart').removeClass('active-cart').slideUp('middle');
+    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 80 }, 'middle');
+    $('.active-product').removeClass('active-product');
+  });
+
   $('.grid__product').off('click','.grid-link__image-centered').on('click','.grid-link__image-centered',function(){
     var current_activate, different_product = false;
     var prev_pos;
@@ -459,14 +456,15 @@ var shopping_cart = function(){
       $('.active-cart').css("width", document.documentElement.clientWidth);
       $('.active-cart').css("margin-left", 0 - $('.active-product').offset().left - 10);
       if (prev_pos == $('.active-product').offset().top){
-        $("html, body").animate({ scrollTop: prev_pos - 80 }, "middle");
+        $("html, body").animate({ scrollTop: prev_pos - 80 }, 0);
       } else if (prev_pos < $('.active-product').offset().top){
         $("html, body").animate({ scrollTop: prev_pos + 280}, "middle");
       } else {
         $("html, body").animate({ scrollTop: $('.active-product').offset().top - 80}, "middle");
       }
-      var product = $(this).parents('.grid__product');
-      init_variants(product);
+      var cart = $(this).parents('.grid__product').find('.inpage-cart');
+      init_variants(cart);
+      product_click(cart);
     }
   });
 
@@ -477,6 +475,60 @@ var shopping_cart = function(){
   }, function(){
     $(this).find('.product-img__second').css('display','none');
     $(this).find('.product-img').css('display','block');
+  });
+}
+
+/* artist_page animation*/
+// There might be some bugs
+var artist_page = function(){
+  $('.artist-works').off('click','.grid-link__image-centered').on('click','.grid-link__image-centered',function(){
+    var product = $(this).parents('.artist-works');
+    var cart = product.find('.inpage-cart');
+    var has_prev_product = false;
+    var pos_prev_product;
+
+    if ($('.active-cart').hasClass('active-cart') && !product.hasClass('active-product')){
+      var prev_product = $('.active-product');
+      has_prev_product = true;
+      pos_prev_product = $('.active-product').offset().top;
+
+      $('.active-product').removeClass('active-product');
+
+      if (pos_prev_product == product.offset().top){
+        $('.active-cart').removeClass('active-cart').css('display','none').insertAfter(prev_product.find('.arrow-up'));
+      } else {
+        $('.active-cart').removeClass('active-cart').slideUp('middle',function(){
+          $(this).insertAfter(prev_product.find('.arrow-up'));  
+        });
+      }
+    }
+
+    if (product.hasClass('active-product')){
+      var prev_product = $('.active-product');
+      $('.active-product').removeClass('active-product');
+      $('.active-cart').removeClass('active-cart').slideUp('middle',function(){
+        $(this).insertAfter(prev_product.find('.arrow-up'));   
+      });
+    } else {
+      product.addClass('active-product');
+      if (has_prev_product && pos_prev_product == product.offset().top){
+        cart.insertAfter(product.parents('.container')).addClass('active-cart').css('display','block');
+      } else {
+        cart.insertAfter(product.parents('.container')).addClass('active-cart').slideDown('middle');
+        $("html, body").animate({ scrollTop: product.offset().top - 80 }, "middle");
+      }
+
+      init_variants(cart);
+      product_click(cart);
+
+      cart.off('click','.inpage-cart__close').on('click','.inpage-cart__close',function(){
+        var prev_product = $('.active-product');
+        $('.active-product').removeClass('active-product');
+        $('.active-cart').removeClass('active-cart').slideUp('middle',function(){
+          $(this).insertAfter(prev_product.find('.arrow-up'));   
+        });
+      });
+    }
   });
 }
 
@@ -582,4 +634,5 @@ var carousel_setting = function(){
 window.onresize = autoscale_element;
 $(document).ready(autoscale_element);
 $(document).ready(shopping_cart);
+$(document).ready(artist_page);
 $(document).ready(carousel_setting);
