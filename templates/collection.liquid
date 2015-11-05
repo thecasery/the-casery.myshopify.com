@@ -17,7 +17,6 @@
   {% endif %}
 </header>
 
-
 {% if collection.description != blank %}
   <div class="rte rte--header">
     {{ collection.description }}
@@ -26,7 +25,7 @@
 {% endif %}
 {% endcomment %}
 
-{% if collection.title contains 'Magnifier' %}
+{% if collection.title contains 'magnifier' %}
 
   <div class = "wrapper space-on-top">
     {% for product in collection.products %}
@@ -44,14 +43,14 @@
     {% endfor %}
   </div>
 
-{% elsif collection.title contains 'Artist' %}
+{% elsif collection.title contains 'artist' %}
   
   {% include 'artist-collection' %}
 
-{% else %}
+{% elsif collection.title contains 'clear' or collection.title contains 'color' %}
   <div class = "grid__collection">
     {% for product in collection.products %}
-
+    
       {% include 'product-grid-item' %}
 
     {% else %}
@@ -60,6 +59,10 @@
 
     {% endfor %}
   </div>
+{% else %}
+  
+  {% include 'artist-single' %}
+
 {% endif %}
 
 {% if paginate.pages > 1 %}

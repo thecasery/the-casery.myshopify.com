@@ -1,0 +1,86 @@
+<div class='artist-header'>
+  <h1 class='wrapper' style='color:white; padding-top:120px; font-size:60px'>Andrea</h1>
+</div>
+
+<div class='artist-content'>
+  <p class='wrapper artist-intro' style='margin-top:50px; margin-bottom:40px; font-size:16px;'></p>
+  {% for product in collection.products %}
+    {% if product.collections[0].title contains 'artist' %}
+      <div class = 'artist-cart' style='margin-bottom:40px; margin-top:40px;'>
+        <div class = 'inpage-cart__copy-container wrapper'>
+          <div class = 'inpage-cart__left-container'>
+            <img class = 'back-img' src="{{ product.featured_image | img_url: 'large'}}" style='width:100%'/>
+            <div id = "option3" class="option3">
+            </div>
+          </div>
+
+          <div class='inpage-cart__right-container'>
+            <h4 class='uppercase'>{{ product.title }}</h4>
+            <p style='font:15px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
+            <h3 style='margin-top:-10px'>{{ product.price | money }}</h3>
+
+            <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" style='margin-bottom:0;'>
+              <select name="id" id="productSelect" class="product-single__variants">
+                {% for variant in product.variants %}
+
+                    <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.id }} @ {{ variant.option1 }} @ {{ variant.option2 }} @ {{ variant.option3 }} @ {{ variant.image | img_url: 'large' }}</option>
+
+                {% endfor %}
+              </select>
+
+              <hr style='margin-bottom:10px; border-color: #e0e0e0;'/>
+              <div>
+                <img style='display:inline' src="{{ 'favicon.png' | asset_url }}"/>
+                <p style='display:inline'>{{ product.description }}</p>
+              </div>
+              <hr style='margin-top:10px; border: 1px solid #e0e0e0;'/>
+
+              <p style='margin-top:-10px;'>{{ product.options[0] }}:</p>
+              <div style='margin-top:-10px;' id = "option1" class="option1"></div>
+
+              <select style='margin-top:10px;' id = "option2" class="option2"></select>
+              <div id = "option0" class="option0">
+                <span id="Snap" class="Snap"><p>Snap</p></span>
+                <span id="Tough" class="Tough"><p>Tough</p></span>
+              </div>
+              
+              <input type = "hidden" name = "return_to" value = "{{ product.url | within: collection }}"/>
+              <input type="submit" name="add" id="AddToCart" value="LOVE THIS! I'M BUYING NOW!" style='margin-top:15px;margin-bottom:20px;'/>
+
+              {% if settings.social_sharing_products %}
+                
+                {% include 'social-sharing' %}
+                
+              {% endif %}
+            </form>
+          </div>
+        </div>
+      </div>
+      <hr / class='wrapper'>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<div class='mobile-artist-content' style='text-align:center;'>
+  <p class='wrapper artist-intro' style='display:block; margin-top:50px; margin-bottom:40px; font-size:16px;'></p>
+  {% for product in collection.products %}
+    {% if product.collections[0].title contains 'artist' %}
+      <div style='display:block; margin-left:30px; height:500px; width:300px; margin-bottom:30px; border: 1px solid #e0e0e0;'>
+        <div class='artist-name horizontal-center'>
+          <img src="{{ 'favicon.png' | asset_url }}"/>
+          <h3>{{ product.title }}</h3>
+          <p style='display:block; color:#e0e0e0; font-size:16px;'>{{ product.vendor }}</p>
+        </div>
+        <img src="{{ product.featured_image.src | img_url: 'large' }}" style='width:280px; height: 280px;'/>
+
+        <a href='{{ product.url | within: collection }}'><button class='btn uppercase' style='margin-top:5px; margin-bottom:10px;'>love this! I'm buying now!</button></a>
+
+        {% if settings.social_sharing_products %}
+            
+          {% include 'social-sharing' %}
+            
+        {% endif %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

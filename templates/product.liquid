@@ -2,20 +2,63 @@
 
   <meta itemprop="url" content="{{ shop.url }}{{ product.url }}">
   <meta itemprop="image" content="{{ product.featured_image.src | img_url: 'grande' }}">
+  <script src='https://code.jquery.com/ui/1.11.4/jquery-ui.min.js'></script>
+  {{ 'jquery.ui.touch-punch.min.js' | asset_url | script_tag }}
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/cupertino/jquery-ui.css">
   
+  {{ 'magnifier.js' | asset_url | script_tag }}
 
   <div class="space-on-top">
-    {% if product.collections[0].title contains 'Magnifier' %}
-      <script src='https://code.jquery.com/ui/1.11.4/jquery-ui.min.js'></script>
-      <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/cupertino/jquery-ui.css">
+    <div class='mobile-shopping-cart'>
+      <div class = 'inpage-cart__copy-container wrapper'>
+        <div class = 'inpage-cart__left-container'>
+          <img class = 'back-img' src="{{ product.featured_image | img_url: 'large'}}" />
+          <div id='option3' style='display:none;'></div>
+          <ul class="slider-dots" style='position:absolute;'></ul>
+        </div> 
 
+        <div class='inpage-cart__right-container' style='text-align:left'>
+          <h3 style='margin-top:10px; text-transform: uppercase;'>{{ product.title }}</h3>
+          <p style='font:18px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
+          <h3 style='margin-top:-12px'>{{ product.price | money }}</h3>
+
+          <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+            <select name="id" id="productSelect" class="product-single__variants">
+              {% for variant in product.variants %}
+
+                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.id }} @ {{ variant.option1 }} @ {{ variant.option2 }} @ {{ variant.option3 }} @ {{ variant.image | img_url: 'large' }}</option>
+
+              {% endfor %}
+            </select>
+
+            <select id = "option2" class="option2"></select>
+            <div id = "option0" class="option0">
+              <span id="Snap" class="Snap"><p>Snap</p></span>
+              <span id="Tough" class="Tough"><p>Tough</p></span>
+            </div>
+
+            <p style='margin-top:8px;'>Color:</p>
+            <div id = "option1" class="option1"></div>
+
+            <p>{{ product.description }}</p>
+            <input type="submit" name="add" id="AddToCart" value="LOVE THIS! I'M BUYING NOW!" style='width:97%; border:2px outset #e0e0e0;'/>
+          </form>
+        </div>
+      </div>
+    </div>
+    
+    {% if product.collections[0].title contains 'magnifier' %}
       <p class='test'>1</p>
       <div name='magnifier'>
-        <div class='magnifier-wholepic' style=' height:900px; width: 1600px;' name='small picture'>
+        <div class='magnifier-wholepic' style=' height:975px; width: 1600px; display:inline-block;' name='small picture'>
           <img src='https://cdn.shopify.com/s/files/1/0964/6944/files/yosemite.jpg?5049214248501354190)'/>
-          <div class='magnifier-cover' style='width:200px; height:300px; background-color:orange; position:absolute; opacity:0.4;'></div>
+          <div class='magnifier-cover' style='width:200px; height:300px; position:absolute; left: 200px; top:300px; background-color:orange; opacity:0.4;'>
+          </div>
+          <div id='slider' style='width: 500px; position:absolute; left: 200px; top: 900px;'></div>
         </div>
-        <div class='magnifier-preview' name='magnify picture' style="background-image: url('https://cdn.shopify.com/s/files/1/0964/6944/files/yosemite-national-park.jpg?14232523077114399889'); width: 400px; height:600px;"></div>
+        <div class='magnifier-preview' style='width:400px; height:600px; overflow:hidden; display:inline-block'>
+          <img class='magnifier-preview__pic' style='width:3200px; height:1950px;'src='https://cdn.shopify.com/s/files/1/0964/6944/files/yosemite-national-park.jpg?14232523077114399889'/>
+        </div>
       </div>
 
       <div class="wrapper grid__item post-large--one-half">
@@ -48,7 +91,7 @@
           </select>
 
           <button type="submit" name="add" id="AddToCart" class="btn">
-            <span id="AddToCartText">{{ 'products.product.add_to_cart' | t }}</span>
+            <span id="AddToCartText">Confirm and Add to Cart</span>
           </button>
         </form>
 
@@ -57,9 +100,6 @@
         {% endif %}
       </div>
 
-    {% comment %}
-      Belowing is general product, with successful added to cart.
-    {% endcomment %}
     {% else %}
       <div class="wrapper success-add__container">
         <div class="success-add__container-left">

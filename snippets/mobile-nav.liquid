@@ -22,26 +22,6 @@
     {% endif %}
   </li>
   {% endfor %}
-
-  {% if shop.customer_accounts_enabled %}
-    {% if customer %}
-      <li class="mobile-nav__link">
-        <a href="/account">{{ 'layout.customer.account' | t }}</a>
-      </li>
-      <li class="mobile-nav__link">
-        {{ 'layout.customer.log_out' | t | customer_logout_link }}
-      </li>
-    {% else %}
-      <li class="mobile-nav__link">
-        {{ 'layout.customer.log_in' | t | customer_login_link }}
-      </li>
-      {% if shop.customer_accounts_optional %}
-        <li class="mobile-nav__link">
-          {{ 'layout.customer.create_account' | t | customer_register_link }}
-        </li>
-      {% endif %}
-    {% endif %}
-  {% endif %}
   
   <li class="mobile-nav__link">
     {% if settings.header_search_enable %}

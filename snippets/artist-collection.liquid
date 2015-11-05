@@ -1,34 +1,33 @@
-<div class = 'space-on-top'>
-  <h1 class='wrapper'>Limited artist collections</h1>
+<div class='artist-header'>
+  <h1 class='wrapper artist-collection-title'>limited edition</h1>
+  <h3 class='wrapper artist-collection-subtitle'>featured artist collections</h3>
+</div>
+
+<div class='wrapper horizontal-center'>
+  <h3 class='artist-blue-title uppercase'>Artists</h3>
   {% for i in (1..10) %}
     {% capture artist %}artist_{{ i }}{% endcapture %}
-    {% capture artist_tag %}artist_tag_{{ i }}{% endcapture %}
-    {% capture artist_quote %}artist_quote_{{ i }}{% endcapture %}
+    {% capture artist_vendor %}artist_name_{{ i }}{% endcapture %}
     {% capture artist_intro %}artist_intro_{{ i }}{% endcapture %}
     {% capture artist_img %}artist_{{ i }}.jpg{% endcapture %}
     {% if settings[artist] %}
-      <div class='wrapper container' style='display:block'>
-        <div class='left-container' style='display:inline-block; vertical-align:top; width:39%;'>
-          <img src='{{ artist_img | asset_url }}'/>
+      <div class='artist-container'>
+        <div class='artist-name horizontal-center'>
+          <img src="{{ 'favicon.png' | asset_url }}"/>
+          <h3>{{ settings[artist_vendor] }}</h3>
+          <h5 style='display:none;'>{{ settings[artist_intro] }}</h5>
+          <h6 style='display:none;'>{{ artist_img | asset_url }}</h6>
         </div>
-        <div class='right-container' style='display:inline-block; vertical-align:top; width:60%; text-align:left;'>
-          <h1>{{ settings[artist_quote] }}</h1>
-          <hr />
-          <p>{{ settings[artist_intro] }}</p>
-          <hr />
-          <div>
+        <div class='preview-container' style='horizontal-center'>
           {% for product in collection.products %}
-            {% for tag in product.tags %}
-              {% if tag contains settings[artist_tag] %}
-              <div class='artist-works' style='width:100px; height:100px; display:inline-block;'>
-                {% include 'product-grid-item' %}
+            {% if product.vendor contains settings[artist_vendor] %}
+              <div class='artist-works'>
+                <img src="{{ product.featured_image.src | img_url: 'large' }}"/>
               </div>
-              {% endif %}
-            {% endfor %}
+            {% endif %}
           {% endfor %}
-          </div>
         </div>
       </div>
     {% endif %}
-  {% endfor %} 
+  {% endfor %}
 </div>

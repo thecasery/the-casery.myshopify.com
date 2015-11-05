@@ -1057,13 +1057,8 @@
       },
       {
         "type": "text",
-        "id": "artist_tag_1",
-        "label": "Please enter artist's tag name to let theme associate his\/her works"
-      },
-      {
-        "type": "text",
-        "id": "artist_quote_1",
-        "label": "Show artist's tagline or quote"
+        "id": "artist_name_1",
+        "label": "Please enter artist's name to let theme associate his\/her works"
       },
       {
         "type": "textarea",
@@ -1073,9 +1068,9 @@
       {
         "type": "image",
         "id": "artist_1.jpg",
-        "label": "Image",
-        "max-width": 480,
-        "info": "(Recommended) 480 * 480px"
+        "label": "Header Image",
+        "max-width": 2560,
+        "info": "(Recommended) 2560 * 240px"
       },
       {
         "type": "header",
@@ -1088,13 +1083,8 @@
       },
       {
         "type": "text",
-        "id": "artist_tag_2",
-        "label": "Please enter artist's tag name to let theme associate his\/her works"
-      },
-      {
-        "type": "text",
-        "id": "artist_quote_2",
-        "label": "Show artist's tagline or quote"
+        "id": "artist_name_2",
+        "label": "Please enter artist's name to let theme associate his\/her works"
       },
       {
         "type": "textarea",
@@ -1104,9 +1094,9 @@
       {
         "type": "image",
         "id": "artist_2.jpg",
-        "label": "Image",
-        "max-width": 480,
-        "info": "(Recommended) 480 * 480px"
+        "label": "Header Image",
+        "max-width": 2560,
+        "info": "(Recommended) 2560 * 240px"
       },
       {
         "type": "header",
@@ -1119,13 +1109,8 @@
       },
       {
         "type": "text",
-        "id": "artist_tag_3",
-        "label": "Please enter artist's tag name to let theme associate his\/her works"
-      },
-      {
-        "type": "text",
-        "id": "artist_quote_3",
-        "label": "Show artist's tagline or quote"
+        "id": "artist_name_3",
+        "label": "Please enter artist's name to let theme associate his\/her works"
       },
       {
         "type": "textarea",
@@ -1135,9 +1120,9 @@
       {
         "type": "image",
         "id": "artist_3.jpg",
-        "label": "Image",
-        "max-width": 480,
-        "info": "(Recommended) 480 * 480px"
+        "label": "Header Image",
+        "max-width": 2560,
+        "info": "(Recommended) 2560 * 240px"
       },
       {
         "type": "header",
@@ -1150,13 +1135,8 @@
       },
       {
         "type": "text",
-        "id": "artist_tag_4",
-        "label": "Please enter artist's tag name to let theme associate his\/her works"
-      },
-      {
-        "type": "text",
-        "id": "artist_quote_4",
-        "label": "Show artist's tagline or quote"
+        "id": "artist_name_4",
+        "label": "Please enter artist's name to let theme associate his\/her works"
       },
       {
         "type": "textarea",
@@ -1166,9 +1146,9 @@
       {
         "type": "image",
         "id": "artist_4.jpg",
-        "label": "Image",
-        "max-width": 480,
-        "info": "(Recommended) 480 * 480px"
+        "label": "Header Image",
+        "max-width": 2560,
+        "info": "(Recommended) 2560 * 240px"
       },
       {
         "type": "header",
@@ -1181,13 +1161,8 @@
       },
       {
         "type": "text",
-        "id": "artist_tag_5",
-        "label": "Please enter artist's tag name to let theme associate his\/her works"
-      },
-      {
-        "type": "text",
-        "id": "artist_quote_5",
-        "label": "Show artist's tagline or quote"
+        "id": "artist_name_5",
+        "label": "Please enter artist's name to let theme associate his\/her works"
       },
       {
         "type": "textarea",
@@ -1197,9 +1172,9 @@
       {
         "type": "image",
         "id": "artist_5.jpg",
-        "label": "Image",
-        "max-width": 480,
-        "info": "(Recommended) 480 * 480px"
+        "label": "Header Image",
+        "max-width": 2560,
+        "info": "(Recommended) 2560 * 240px"
       },
       {
         "type": "header",
@@ -1212,13 +1187,8 @@
       },
       {
         "type": "text",
-        "id": "artist_tag_6",
-        "label": "Please enter artist's tag name to let theme associate his\/her works"
-      },
-      {
-        "type": "text",
-        "id": "artist_quote_6",
-        "label": "Show artist's tagline or quote"
+        "id": "artist_name_6",
+        "label": "Please enter artist's name to let theme associate his\/her works"
       },
       {
         "type": "textarea",
@@ -1228,9 +1198,9 @@
       {
         "type": "image",
         "id": "artist_6.jpg",
-        "label": "Image",
-        "max-width": 480,
-        "info": "(Recommended) 480 * 480px"
+        "label": "Header Image",
+        "max-width": 2560,
+        "info": "(Recommended) 2560 * 240px"
       },
       {
         "type": "header",
@@ -1243,13 +1213,8 @@
       },
       {
         "type": "text",
-        "id": "artist_tag_7",
-        "label": "Please enter artist's tag name to let theme associate his\/her works"
-      },
-      {
-        "type": "text",
-        "id": "artist_quote_7",
-        "label": "Show artist's tagline or quote"
+        "id": "artist_name_7",
+        "label": "Please enter artist's name to let theme associate his\/her works"
       },
       {
         "type": "textarea",
@@ -1259,9 +1224,9 @@
       {
         "type": "image",
         "id": "artist_7.jpg",
-        "label": "Image",
-        "max-width": 480,
-        "info": "(Recommended) 480 * 480px"
+        "label": "Header Image",
+        "max-width": 2560,
+        "info": "(Recommended) 2560 * 240px"
       },
       {
         "type": "header",
@@ -1274,13 +1239,8 @@
       },
       {
         "type": "text",
-        "id": "artist_tag_8",
-        "label": "Please enter artist's tag name to let theme associate his\/her works"
-      },
-      {
-        "type": "text",
-        "id": "artist_quote_8",
-        "label": "Show artist's tagline or quote"
+        "id": "artist_name_8",
+        "label": "Please enter artist's name to let theme associate his\/her works"
       },
       {
         "type": "textarea",
@@ -1290,9 +1250,9 @@
       {
         "type": "image",
         "id": "artist_8.jpg",
-        "label": "Image",
-        "max-width": 480,
-        "info": "(Recommended) 480 * 480px"
+        "label": "Header Image",
+        "max-width": 2560,
+        "info": "(Recommended) 2560 * 240px"
       },
       {
         "type": "header",
@@ -1305,13 +1265,8 @@
       },
       {
         "type": "text",
-        "id": "artist_tag_9",
-        "label": "Please enter artist's tag name to let theme associate his\/her works"
-      },
-      {
-        "type": "text",
-        "id": "artist_quote_9",
-        "label": "Show artist's tagline or quote"
+        "id": "artist_name_9",
+        "label": "Please enter artist's name to let theme associate his\/her works"
       },
       {
         "type": "textarea",
@@ -1321,9 +1276,9 @@
       {
         "type": "image",
         "id": "artist_9.jpg",
-        "label": "Image",
-        "max-width": 480,
-        "info": "(Recommended) 480 * 480px"
+        "label": "Header Image",
+        "max-width": 2560,
+        "info": "(Recommended) 2560 * 240px"
       },
       {
         "type": "header",
@@ -1336,13 +1291,8 @@
       },
       {
         "type": "text",
-        "id": "artist_tag_10",
-        "label": "Please enter artist's tag name to let theme associate his\/her works"
-      },
-      {
-        "type": "text",
-        "id": "artist_quote_10",
-        "label": "Show artist's tagline or quote"
+        "id": "artist_name_10",
+        "label": "Please enter artist's name to let theme associate his\/her works"
       },
       {
         "type": "textarea",
@@ -1352,9 +1302,9 @@
       {
         "type": "image",
         "id": "artist_10.jpg",
-        "label": "Image",
-        "max-width": 480,
-        "info": "(Recommended) 480 * 480px"
+        "label": "Header Image",
+        "max-width": 2560,
+        "info": "(Recommended) 2560 * 240px"
       }
     ]
   },
