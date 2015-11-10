@@ -5,22 +5,19 @@
 
 <div class='wrapper horizontal-center'>
   <h3 class='artist-blue-title uppercase'>Artists</h3>
-  {% for i in (1..10) %}
-    {% capture artist %}artist_{{ i }}{% endcapture %}
-    {% capture artist_vendor %}artist_name_{{ i }}{% endcapture %}
-    {% capture artist_intro %}artist_intro_{{ i }}{% endcapture %}
-    {% capture artist_img %}artist_{{ i }}.jpg{% endcapture %}
-    {% if settings[artist] %}
+  {% for collection in collections %}
+    {% unless collection.title contains 'Artist' or collection.title contains 'Snap' or collection.title contains 'Tough' or collection.title contains 'Lens' or collection.title contains 'Clear' or collection.title contains 'Accessory' or collection.title contains 'frontpage' %}
       <div class='artist-container'>
         <div class='artist-name horizontal-center'>
           <img src="{{ 'favicon.png' | asset_url }}"/>
-          <h3>{{ settings[artist_vendor] }}</h3>
-          <h5 style='display:none;'>{{ settings[artist_intro] }}</h5>
-          <h6 style='display:none;'>{{ artist_img | asset_url }}</h6>
+          <h4 class='uppercase' style='display:inline'>{{ collection.title }}</h4>
+          <h5 style='display:none;'>{{ collection.description }}</h5>
+          <h6 style='display:none;'>{{ collection.image.src }}</h6>
+          <p id='artist-handle' style='display:none'>{{ collection.handle }}</p>
         </div>
         <div class='preview-container' style='horizontal-center'>
           {% for product in collection.products %}
-            {% if product.vendor contains settings[artist_vendor] %}
+            {% if product.vendor contains collection.title %}
               <div class='artist-works'>
                 <img src="{{ product.featured_image.src | img_url: 'large' }}"/>
               </div>
@@ -28,6 +25,6 @@
           {% endfor %}
         </div>
       </div>
-    {% endif %}
+    {% endunless %}
   {% endfor %}
 </div>

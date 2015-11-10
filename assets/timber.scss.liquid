@@ -103,12 +103,6 @@ $max: max-width;
   }
 }
 
-{% if settings.enable_wide_layout %}
-  $siteWidth: 1340px;
-{% else %}
-  $siteWidth: 1030px;
-{% endif %}
-
 $gutter: 30px;
 $gridGutter: 30px;
 $radius: 2px;
@@ -279,20 +273,20 @@ body {
   background-color: $colorBody;
 }
 
-.wrapper {
-  @include clearfix();
-  max-width: $siteWidth;
+.wrapper{
   margin: 0 auto;
-  padding: 0 ($gridGutter / 2);
+  padding: 0 $gridGutter/2;
+  width: 100%;
+}
 
-  @include at-query ($min, $small) {
-    padding: 0 $gridGutter;
+@media screen and (min-width: 1280px){
+  .wrapper{
+    max-width: 1280px;
   }
 }
 
 .main-content {
   display: block;
-  padding-top: 40px;
   padding-bottom: $gutter * 2;
 }
 

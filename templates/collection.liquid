@@ -25,7 +25,7 @@
 {% endif %}
 {% endcomment %}
 
-{% if collection.title contains 'magnifier' %}
+{% if collection.title contains 'Lens' %}
 
   <div class = "wrapper space-on-top">
     {% for product in collection.products %}
@@ -43,11 +43,11 @@
     {% endfor %}
   </div>
 
-{% elsif collection.title contains 'artist' %}
+{% elsif collection.title contains 'Artist' %}
   
   {% include 'artist-collection' %}
 
-{% elsif collection.title contains 'clear' or collection.title contains 'color' %}
+{% elsif collection.title contains 'Clear' or collection.title contains 'Snap' or collection.title contains 'Tough' or collection.title contains 'Accessory' %}
   <div class = "grid__collection">
     {% for product in collection.products %}
     

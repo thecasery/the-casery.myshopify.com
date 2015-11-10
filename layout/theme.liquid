@@ -41,7 +41,6 @@
 
   {{ '//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js' | script_tag }}
   {{ 'modernizr.min.js' | asset_url | script_tag }}
-  <script src="https://apis.google.com/js/client.js"></script>
 </head>
 
 <body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}" >
@@ -51,6 +50,7 @@
   <!-- The main body is pretty simple, content and a shopping-cart page which might be used in several pages -->
   <main class="main-content" role="main">
     <p id='page-type' style='display:none'>{{ template }}</p>
+    <p id='device-type' style='display:none'></p>
     {{ content_for_layout }}
   </main>
 

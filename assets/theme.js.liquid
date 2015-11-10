@@ -32,11 +32,6 @@ theme.cacheSelectors = function () {
     // Mobile Nav
     $mobileNavTrigger: $('#MobileNavTrigger'),
     $mobileNav: $('#MobileNav'),
-    $mobileSublistTrigger: $('.mobile-nav__sublist-trigger'),
-
-    // Equal height elements
-    $productGridImages: $('.grid-link__image--product'),
-    $featuredGridImages: $('.grid-link__image--collection'),
     
     // Product page
     $productImage: $('#ProductPhotoImg'),
@@ -51,7 +46,6 @@ theme.cacheSelectors = function () {
 theme.init = function () {
   theme.cacheSelectors();
   theme.mobileNav();
-  theme.equalHeights();
   theme.cartPage();
 };
 
@@ -59,31 +53,6 @@ theme.mobileNav = function () {
   theme.cache.$mobileNavTrigger.on('click', function() {
     theme.cache.$mobileNav.slideToggle(220);
   });
-
-  theme.cache.$mobileSublistTrigger.on('click', function(evt) {
-    var $el = $(this);
-
-    // Enable commented out if statement to allow direct clicking on trigger link
-    // if (!$el.hasClass('is-active')) {
-      evt.preventDefault();
-      $el.toggleClass('is-active').next('.mobile-nav__sublist').slideToggle(200);
-    // }
-  });
-};
-
-theme.equalHeights = function () {
-  theme.cache.$w.on('load', resizeElements());
-
-  theme.cache.$w.on('resize',
-    afterResize(function() {
-      resizeElements();
-    }, 250, 'equal-heights')
-  );
-
-  function resizeElements() {
-    theme.cache.$productGridImages.css('height', 'auto').equalHeights();
-    theme.cache.$featuredGridImages.css('height', 'auto').equalHeights();
-  }
 };
 
 theme.cartPage = function () {
@@ -100,80 +69,6 @@ theme.cartPage = function () {
 
 // Initialize theme's JS on docready
 $(theme.init);
-
-/* Belowing is implemented by Yang Wang @thecasery.Inc 2015 */
-
-/* The autoscale element function is used for adjusting picture size and location according to screen size.
- * The container size is set to current screen size.
- * The inside element size is set to 2:1. if it's largger than 2:1, we cut some of the width;
- *   if it's smaller than 2:1, we cut some of the height.
- * 
- * To realize this function, don't forget to set container "overflow:hidden", and use margin to set element position.
- */
-var autoscale_element = function(){
-  var picture_height, picture_width, margin_top, margin_left; 
-  var mobile_device = false;  
-  if (document.documentElement.clientWidth <= 768){
-    mobile_device = true;
-  } else {
-    mobile_device = false;
-  }
-
-  if (mobile_device){
-    picture_width = document.documentElement.clientWidth;
-    picture_height = picture_width;
-
-    $('.autoscale__div').css('height', picture_height);
-    $('.autoscale__div').css('width', picture_width);
-    picture_width = picture_height * 2;
-    margin_left = ($('.autoscale__div').width() - picture_width) / 2;
-    margin_top = 0;
-
-    // This is a side function, just to adjust slider's navigation-bar position
-    $('.slider-nav').css('top', $('.slide-img').height() - 30);
-    $('.slider-nav').css('left', ($('.slide-img').width()-180) / 2);
-  } else {
-    // At this point, pic_width & height are screen size, used to set div size.
-    picture_height = document.documentElement.clientHeight-30;
-    $('.autoscale__div').css('height', picture_height);
-    $('.autoscale__div').css('width', '100%');
-    $('.autoscale__div').css('margin-top','-10px');
-    picture_width = $('.autoscale__div').width();
-
-    // Adjust picture width:height to 2:1
-    if (picture_height < 600 && picture_width < 1200) {
-      picture_height = 600;
-      picture_width = 1200;
-    } else if (picture_height * 2 < picture_width) {
-      picture_height = picture_width / 2;
-    } else {
-      picture_width = picture_height * 2;
-    }
-
-    // calculate margin to adjust picture position, make it at center.
-    margin_top = (document.documentElement.clientHeight - 50 - picture_height) / 2;
-    margin_left = ($('.autoscale__div').width() - picture_width) / 2;
-
-    // This is a side function, just to adjust slider's navigation-bar position
-    $('.slider-nav').css('top', $('.slide-img').height() - 70);
-    $('.slider-nav').css('left', ($('.slide-img').width()-200) / 2);
-  }
-  $('.autoscale__elem').css('height', picture_height);
-  $('.autoscale__elem').css('width', picture_width);
-
-  $('.autoscale__elem').css('margin-left', margin_left);
-  $('.autoscale__elem').css('margin-top', margin_top);
-
-  // Also here's width of inpage-cart to be whole page
-  if ($('.active-cart').hasClass('active-cart')){
-    $('.active-cart').css('width', document.documentElement.clientWidth);
-    if ($('.active-cart').parent().hasClass('grid__product')){
-      $('.active-cart').css('margin-left', 0 - $('.active-product').offset().left - 10);
-    } else {
-      $('.active-cart').css('margin-left', 0);
-    }
-  }
-};
 
 if ((typeof Shopify) == 'undefined') {
   var Shopify = {};
@@ -193,13 +88,13 @@ if ((typeof Shopify) == 'undefined') {
 // Social Media Change: '.back-img' is the share img, 'h1' is product title, '.active-option1' is phone style name
 function change_social_media(product){
   // Facebook
-  product.find('#facebook').attr("href","https://www.facebook.com/dialog/feed?app_id=1516749411980352&display=page&caption=Welcome%20to%20the%20casery&picture=http:"+product.find('.back-img').attr("src")+"&name="+product.find('h1').text()+"&description="+product.find('.active-option1').attr("name")+"&link=http://the-casery.myshopify.com/collections/all&redirect_uri="+window.location.href+"");
+  product.find('#facebook').attr("href","https://www.facebook.com/dialog/feed?app_id=1516749411980352&display=page&caption=Welcome%20to%20the%20casery&picture=http:"+product.find('.back-img').attr("src")+"&name="+product.find('#title').text()+"&description="+product.find('.active-option1').attr("name")+"&link=http://the-casery.myshopify.com/collections/all&redirect_uri="+window.location.href+"");
   // Pinterest
-  product.find('#pinterest').attr("href","https://pinterest.com/pin/create/button/?url=http://the-casery.myshopify.com/collections/all&amp;media=http:"+product.find('.back-img').attr("src")+"&amp;description="+product.find('h1').text()+" ("+product.find('.active-option1').attr("name")+")");
+  product.find('#pinterest').attr("href","https://pinterest.com/pin/create/button/?url=http://the-casery.myshopify.com/collections/all&amp;media=http:"+product.find('.back-img').attr("src")+"&amp;description="+product.find('#title').text()+" ("+product.find('.active-option1').attr("name")+")");
   // Twitter
-  product.find('#twitter').attr("href","https://twitter.com/share?url=http:"+product.find('.back-img').attr("src")+"&amp;text=The Casery - "+product.find('h1').text()+" ("+product.find('.active-option1').attr("name")+")");
+  product.find('#twitter').attr("href","https://twitter.com/share?url=http:"+product.find('.back-img').attr("src")+"&amp;text=The Casery - "+product.find('#title').text()+" ("+product.find('.active-option1').attr("name")+")");
   // Tumblr
-  product.find('#tumblr').attr("href","https://www.tumblr.com/widgets/share/tool?posttype=photo&content="+product.find('.back-img').attr("src")+"&caption="+product.find('h1').text()+" ("+product.find('.active-option1').attr("name")+")&canonicalUrl=http://the-casery.myshopify.com/collections/all");
+  product.find('#tumblr').attr("href","https://www.tumblr.com/widgets/share/tool?posttype=photo&content="+product.find('.back-img').attr("src")+"&caption="+product.find('#title').text()+" ("+product.find('.active-option1').attr("name")+")&canonicalUrl=http://the-casery.myshopify.com/collections/all");
 }
 
 
@@ -289,6 +184,30 @@ function init_option1(product, start_pos, total_options, variants){
   init_option2(product, start_pos, total_options, variants);
 }
 
+// initial option0 value, which is case type
+function init_option0(product, start_pos, total_options, variants){
+  $('.active-option0').removeClass('active-option0');
+  product.find('#option0 div').remove();
+
+  var arr0 = new Array();
+  for (var i = start_pos; i < total_options; i++){
+    var flag0 = true;
+    for (var j = 0; j < arr0.length; j++){
+      if (arr0[j] == variants[i][0]){
+        flag0 = false;
+        break;
+      }
+    }
+    if (flag0){
+      arr0.push(variants[i][0]);
+      product.find('#option0').append("<div id='"+variants[i][0]+"' class='option0-btn'><p>"+variants[i][0]+"</p></div>");
+    }
+  }
+
+  product.find('#option0 .option0-btn').first().addClass('active-option0');
+  init_option2(product, start_pos, total_options, variants);
+}
+
 // initialize all the variants!!
 function init_variants(product){
   var productSelect = product.find('#productSelect');
@@ -302,44 +221,40 @@ function init_variants(product){
     var string = product_options.eq(i).text();
     var t = string.split(' @ ');
     // if there's casetype, then we need to split the first option1 string
-    if (t[1].indexOf(' - ') >= 0){
-      var temp = t[1].split(' - ');
-      t[0] = temp[1];
-      t[1] = temp[0];
+    if (t[1].indexOf('Snap') >= 0 || t[1].indexOf('Tough') >= 0 || t[1].indexOf('Clear') >= 0){
+      t[0] = t[1];
+      t[1] = 'empty';
       casetype = true;
     } else {
-      t[0] = 'NONE';
+      t[0] = 'empty';
+      casetype = false;
     }
     variants.push(t);
   }
+
   // if there's casetype, we need to enable button
   if (casetype){
-    product.find('#option0').css('display','block');
+    init_option0(product, 0, total_options, variants);
+    product.find('#option1').css('display','none');
   } else {
+    init_option1(product, 0, total_options, variants);
     product.find('#option0').css('display','none');
   }
-
-  // reset start_pos for init_option1
-  product.find('#option0 span').first().addClass('active-option0');
-  init_option1(product, 0, total_options, variants);
 }
 
 
 /* Part 2 : Updating */
 // update option0
 function change_option0(option, cart, total_options, variants){
-  var id = option.attr('id');
-
   $('.active-option0').removeClass('active-option0');
   option.addClass('active-option0');
-  if (id.indexOf('Snap') >= 0){
-    init_option1(cart, 0, total_options, variants);
-  }
-  else{
-    var i = 0;
-    for (; i < total_options && variants[i][0].indexOf('Tough') < 0; i++);
-    init_option1(cart, i, total_options, variants);
-  }
+
+  var new_option0_name = option.attr('id');
+  var new_index = 0;
+  for (; new_index < total_options && variants[new_index][0] != new_option0_name; new_index++);
+
+  // initial option2
+  init_option2(cart, new_index, total_options, variants);
 }
 
 // update option1
@@ -424,19 +339,19 @@ function product_click(cart){
     var string = product_options.eq(i).text();
     var t = string.split(' @ ');
     // if there's casetype, then we need to split the first option1 string
-    if (t[1].indexOf(' - ') >= 0){
-      var temp = t[1].split(' - ');
-      t[0] = temp[1];
-      t[1] = temp[0];
+    if (t[1].indexOf('Snap') >= 0 || t[1].indexOf('Tough') >= 0 || t[1].indexOf('Clear') >= 0){
+      t[0] = t[1];
+      t[1] = 'empty';
       casetype = true;
     } else {
-      t[0] = 'NONE';
+      t[0] = 'empty';
+      casetype = false;
     }
     variants.push(t);
   }
 
   /* change value of option 0 */
-  cart.find('#option0').off('click','span').on('click', 'span', function(){
+  cart.find('#option0').off('click','.option0-btn').on('click', '.option0-btn', function(){
     change_option0($(this), cart, total_options, variants);
   });
 
@@ -489,9 +404,14 @@ function product_click(cart){
   }
 }
 
+var inpage_shopping_cart_off = function(){
+  $('.grid__product').off('click','.inpage-cart__close');
+  $('.grid__product').off('click','.grid-link__image-centered');
+  $('.grid__product').off('hover');
+}
 
 /* This is the main function of shopping cart */
-var inpage_shopping_cart = function(){
+var inpage_shopping_cart_on = function(){
   /* Here's main part of animation
    * Besides regular slideUp & Down, we need to check if current product posistion vs. previous product
    * if ==, just change content, no animation
@@ -574,9 +494,8 @@ var inpage_shopping_cart = function(){
 // There might be some bugs
 var artist_page = function(){
   $('.artist-container').off('click').on('click',function(){
-    var name = $(this).find('.artist-name h3').text();
-    var description = $(this).find('.artist-name h3').text();
-    window.location.href = "http://the-casery.myshopify.com/collections/vendors?q="+name+"&intro="+$(this).find('.artist-name h5').text()+"&img="+$(this).find('.artist-name h6').text();
+    var name = $(this).find('#artist-handle').text();
+    window.location.href = "http://the-casery.myshopify.com/collections/" + name;
   });
 }
 
@@ -675,69 +594,226 @@ var carousel_setting = function(){
   });
 }
 
-function urldecode(str) {
-   return decodeURIComponent((str+'').replace(/\+/g, '%20'));
-}
+/* Belowing is implemented by Yang Wang @thecasery.Inc 2015 */
 
-var page_init = function(){
-  var page_type      = $('#page-type').text();
-  var page_url       = window.location.href;     // Returns full URL
-  var page_width     = document.documentElement.clientWidth;
+/* The autoscale element function is used for adjusting picture size and location according to screen size.
+ * The container size is set to current screen size.
+ * The inside element size is set to 2:1. if it's largger than 2:1, we cut some of the width;
+ *   if it's smaller than 2:1, we cut some of the height.
+ * 
+ * To realize this function, don't forget to set container "overflow:hidden", and use margin to set element position.
+ */
+var autoscale_picture = function(){
+  var picture_height, picture_width, margin_top, margin_left; 
+  var mobile_device = false;  
+  if (document.documentElement.clientWidth <= 768){
+    mobile_device = true;
+  } else {
+    mobile_device = false;
+  }
 
-  if (page_url.indexOf('vendors') >= 0){
-    var section = page_url.split('&');
-    var artist_name = urldecode(section[0].split('=')[1]);
-    var artist_intro = urldecode(section[1].split('=')[1]);
-    var artist_img = section[2].split('=')[1];
-    $('.artist-header h1').text(artist_name);
-    $('.artist-intro').text(artist_intro);
-    $('.artist-header').css('background-image',"url("+artist_img+")");
+  if (mobile_device){
+    picture_width = document.documentElement.clientWidth;
+    picture_height = picture_width;
 
-    if (page_width > 768){
+    $('.autoscale__div').css('height', picture_height);
+    $('.autoscale__div').css('width', picture_width);
+    picture_width = picture_height * 2;
+    margin_left = ($('.autoscale__div').width() - picture_width) / 2;
+    margin_top = 0;
+
+    // This is a side function, just to adjust slider's navigation-bar position
+    $('.slider-nav').css('top', $('.slide-img').height() - 30);
+    $('.slider-nav').css('left', ($('.slide-img').width()-180) / 2);
+  } else {
+    // At this point, pic_width & height are screen size, used to set div size.
+    picture_height = document.documentElement.clientHeight-30;
+    $('.autoscale__div').css('height', picture_height);
+    $('.autoscale__div').css('width', '100%');
+    picture_width = $('.autoscale__div').width();
+
+    // Adjust picture width:height to 2:1
+    if (picture_height < 600 && picture_width < 1200) {
+      picture_height = 600;
+      picture_width = 1200;
+    } else if (picture_height * 2 < picture_width) {
+      picture_height = picture_width / 2;
+    } else {
+      picture_width = picture_height * 2;
+    }
+
+    // calculate margin to adjust picture position, make it at center.
+    margin_top = (document.documentElement.clientHeight - 50 - picture_height) / 2;
+    margin_left = ($('.autoscale__div').width() - picture_width) / 2;
+
+    // This is a side function, just to adjust slider's navigation-bar position
+    $('.slider-nav').css('top', $('.slide-img').height() - 70);
+    $('.slider-nav').css('left', ($('.slide-img').width()-200) / 2);
+  }
+  $('.autoscale__elem').css('height', picture_height);
+  $('.autoscale__elem').css('width', picture_width);
+
+  $('.autoscale__elem').css('margin-left', margin_left);
+  $('.autoscale__elem').css('margin-top', margin_top);
+
+  // Also here's width of inpage-cart to be whole page
+  if ($('.active-cart').hasClass('active-cart')){
+    $('.active-cart').css('width', document.documentElement.clientWidth);
+    if ($('.active-cart').parent().hasClass('grid__product')){
+      $('.active-cart').css('margin-left', 0 - $('.active-product').offset().left - 10);
+    } else {
+      $('.active-cart').css('margin-left', 0);
+    }
+  }
+};
+
+var autoscale_element=function(){
+  var page_type           = $('#page-type').text();
+  var current_device_type = $('#device-type').text();
+  var page_width          = document.documentElement.clientWidth;
+
+  if (page_type.indexOf('index') >= 0){
+    autoscale_picture();
+  }
+  if (current_device_type.indexOf('mobile') >= 0 && page_width > 768){
+    $('#device-type').text('desktop');
+  } else if (current_device_type.indexOf('desktop') >= 0 && page_width <= 768){
+    $('#device-type').text('mobile');
+  }
+  
+  if (page_type.indexOf('artist-single') >= 0){
+    if (current_device_type.indexOf('mobile') >= 0 && page_width > 768){
       $('.artist-content').css('display','block');
       $('.mobile-artist-content').css('display','none');
-      var carts = $('.artist-cart');
-      for (var i = 0; i < carts.length; i++){
-        var cart = carts.eq(i);
-        init_variants(cart);
-        product_click(cart);
-      }
-    } else {
+    } else if (current_device_type.indexOf('desktop') >= 0 && page_width <= 768){
       $('.artist-content').css('display','none');
       $('.mobile-artist-content').css('display','block');
     }
-  } else if (page_url.indexOf('artist-collection') >= 0){
-    artist_page();
-  } else if (page_type.indexOf('collection') >= 0 || page_type.indexOf('index') >= 0){
-    if (page_width > 768){
-      $('.trigger__mobile').attr('href', 'javascript:');
-      inpage_shopping_cart();
-    } else {
+  } else if (page_type.indexOf('collection-regular') >= 0 || page_type.indexOf('index') >= 0){
+    if (current_device_type.indexOf('mobile') >= 0 && page_width > 768){
+      $('.trigger__mobile').attr('href','javascript:void(0)');
+      inpage_shopping_cart_on();
+    } else if (current_device_type.indexOf('desktop') >= 0 && page_width <= 768){
+      inpage_shopping_cart_off();
       $('.grid__mobile-info').css('display','block');
       $('.arrow-up').css('display','none');
-    }
 
-    if (page_type.indexOf('index') >= 0){
-      carousel_setting();
-      autoscale_element();
-      window.onresize = autoscale_element;
+      // copy url
+      var trigger = $('.trigger__mobile');
+      for (var i = 0; i < trigger.length; i++){
+        trigger.eq(i).attr('href', trigger.eq(i).find('#mobile_url').text());
+      }
     }
   } else if (page_type.indexOf('product') >= 0){
-    if (page_width > 768){
-      $('.trigger__mobile').attr('href', 'javascript:');
+    if (current_device_type.indexOf('mobile') >= 0 && page_width > 768){
+      $('.trigger__mobile').attr('href', 'javascript:void(0)');
       $('.mobile-shopping-cart').css('display','none');
       $('.success-add__container').css('display','block');
-      inpage_shopping_cart();
-    } else {
+      inpage_shopping_cart_on();
+    } else if (current_device_type.indexOf('desktop') >= 0 && page_width <= 768){
+      inpage_shopping_cart_off();
       $('.grid__mobile-info').css('display','block');
       $('.mobile-shopping-cart').css('display','block');
       $('.success-add__container').css('display','none');
       $('.arrow-up').css('display','none');
 
-      var cart=$('.mobile-shopping-cart');
+      // copy url
+      var trigger = $('.trigger__mobile');
+      for (var i = 0; i < trigger.length; i++){
+        trigger.attr('href', trigger.find('#mobile_url').text());
+      }
+    }
+  }
+}
+
+var page_init = function(){
+  var page_type_ori  = $('#page-type').text();
+  var page_type      = page_type_ori;
+  var page_url       = window.location.href;     // Returns full URL
+  var page_width     = document.documentElement.clientWidth;
+
+  // decide page_type
+  if (page_type_ori.indexOf('collection') >= 0){
+    if (page_url.indexOf('artist') >= 0){
+      page_type = 'artist-all';
+    } else if (page_url.indexOf('snap') >= 0 || page_url.indexOf('clear') >= 0 || page_url.indexOf('tough') >= 0 || page_url.indexOf('accessory') >= 0){
+      page_type = 'collection-regular';
+    } else {
+      page_type = 'artist-single';
+    }
+  } else if (page_type_ori.indexOf('product') >= 0){
+    page_type = 'product';
+  } else if (page_type_ori.indexOf('index') >= 0){
+    page_type = 'index';
+  }
+  $('#page-type').text(page_type);
+
+  // init device type
+  if (page_width > 768){
+    $('#device-type').text('desktop');
+  } else {
+    $('#device-type').text('mobile');
+  }
+
+  // init page_content
+  if (page_type.indexOf('artist-all') >= 0){
+    artist_page();
+  } else if (page_type.indexOf('artist-single') >= 0){
+    // init cart here, although it might not display
+    var carts = $('.artist-cart');
+    for (var i = 0; i < carts.length; i++){
+      var cart = carts.eq(i);
       init_variants(cart);
       product_click(cart);
     }
+
+    if (page_width > 768){
+      $('.artist-content').css('display','block');
+      $('.mobile-artist-content').css('display','none');
+    } else {
+      $('.artist-content').css('display','none');
+      $('.mobile-artist-content').css('display','block');
+    }
+  } else if (page_type.indexOf('collection-regular') >= 0){
+    if (page_width > 768){
+      $('.trigger__mobile').attr('href','javascript:void(0)');
+      inpage_shopping_cart_on();
+    } else {
+      inpage_shopping_cart_off();
+      $('.grid__mobile-info').css('display','block');
+      $('.arrow-up').css('display','none');
+    }
+
+  } else if (page_type.indexOf('product') >= 0){
+    var cart=$('.mobile-shopping-cart');
+    init_variants(cart);
+    product_click(cart);
+
+    if (page_width > 768){
+      $('.trigger__mobile').attr('href', 'javascript:void(0)');
+      $('.mobile-shopping-cart').css('display','none');
+      $('.success-add__container').css('display','block');
+      inpage_shopping_cart_on();
+    } else {
+      inpage_shopping_cart_off();
+      $('.grid__mobile-info').css('display','block');
+      $('.mobile-shopping-cart').css('display','block');
+      $('.success-add__container').css('display','none');
+      $('.arrow-up').css('display','none');
+    }
+  } else if (page_type.indexOf('index') >= 0){
+    if (page_width > 768){
+      $('.trigger__mobile').attr('href','javascript:void(0)');
+      inpage_shopping_cart_on();
+    } else {
+      inpage_shopping_cart_off();
+      $('.grid__mobile-info').css('display','block');
+      $('.arrow-up').css('display','none');
+    }
+
+    carousel_setting();
+    autoscale_picture();
+    window.onresize = autoscale_picture;
   }
 }
 

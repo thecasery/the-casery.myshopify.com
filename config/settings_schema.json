@@ -337,10 +337,26 @@
       {
         "type": "image",
         "id": "favicon.png",
-        "max-width": 16,
-        "max-height": 16,
+        "max-width": 50,
+        "max-height": 50,
         "label": "Custom icon",
-        "info": "16 x 16px .png required"
+        "info": "50 x 50px .png Recommended"
+      },
+      {
+        "type": "image",
+        "id": "header_bar_icon_pc.png",
+        "max-width": 150,
+        "max-height": 30,
+        "label": "Custom icon",
+        "info": "150 x 30px .png Recommended"
+      },
+      {
+        "type": "image",
+        "id": "header_bar_icon_mobile.png",
+        "max-width": 30,
+        "max-height": 30,
+        "label": "Custom icon",
+        "info": "30 x 30px .png Recommended"
       },
       {
         "type": "header",

@@ -18,7 +18,7 @@
         </div> 
 
         <div class='inpage-cart__right-container' style='text-align:left'>
-          <h3 style='margin-top:10px; text-transform: uppercase;'>{{ product.title }}</h3>
+          <h3 id='#title' style='margin-top:10px; text-transform: uppercase;'>{{ product.title }}</h3>
           <p style='font:18px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
           <h3 style='margin-top:-12px'>{{ product.price | money }}</h3>
 
@@ -32,12 +32,9 @@
             </select>
 
             <select id = "option2" class="option2"></select>
-            <div id = "option0" class="option0">
-              <span id="Snap" class="Snap"><p>Snap</p></span>
-              <span id="Tough" class="Tough"><p>Tough</p></span>
-            </div>
+            <div id = "option0" class="option0"></div>
 
-            <p style='margin-top:8px;'>Color:</p>
+            {% if product.options[0] contains 'Color' %}<p style='margin-top:8px;'>Color:</p> {% endif %}
             <div id = "option1" class="option1"></div>
 
             <p>{{ product.description }}</p>

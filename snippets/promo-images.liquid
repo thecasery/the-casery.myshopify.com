@@ -6,7 +6,6 @@
 {% if settings.show_promo_image_4 %}{% assign index = index | plus: 1 %}{% endif %}
 
 {% unless index == 0 %}
-  <h1 style="text-align:center;">Promotion Photo</h1>
   {% for i in (1..4) %}
     {% capture promo_image %}promo_image_{{ i }}.jpg{% endcapture %}
     {% capture promo_image_link %}promo_image_{{ i }}_link{% endcapture %}

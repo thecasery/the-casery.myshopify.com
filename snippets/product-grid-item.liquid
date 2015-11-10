@@ -7,9 +7,7 @@
 {% endunless %}
 
 <!-- "grid__product is a specific grid class for this webpage, developed by Yang. Havn't integrate with original griding system" -->
-{% unless collection.title contains 'artist' and template contains 'collection' %}
 <div class = "grid__product">
-{% endunless %}
   <span class="grid-link__image grid-link__image--product">
     {% if collection.title contains 'artist' and template contains 'collection' %}
       <span class="grid-link__image-centered">
@@ -17,9 +15,10 @@
       </span>
     {% else %}
     <a class='trigger__mobile' href='{{ product.url | within: collection }}'>
+      <p id='mobile_url' style='display:none'>{{ product.url | within: collection }}</p>
       <span class="grid-link__image-centered">
-        <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}"/>
-        <img class='product-img__second' src="{{ product.images[1].src | img_url: 'large' }}" alt="{{ product.images[1].alt | escape }}" style = "display : none"/>
+        <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" style='width:360px; height:350px;'/>
+        <img class='product-img__second' src="{{ product.images[1].src | img_url: 'large' }}" alt="{{ product.images[1].alt | escape }}" style = "display:none; width:360px; height:350px;"/>
       </span>
       <div class='grid__mobile-info' style='display:none; margin-top:5px; margin-bottom:20px;'>
         <p class="grid-link__title">{{ product.title }}</p>
@@ -34,14 +33,14 @@
     <h1 class = 'inpage-cart__close' style='color:#e0e0e0'>X</h1>
     <div class = 'inpage-cart__copy-container wrapper'>
       <div class = 'inpage-cart__left-container'>
-        <img class = 'back-img' src="{{ product.featured_image | img_url: 'large'}}" style='width:100%'/>
+        <img class = 'back-img' src="{{ product.featured_image | img_url: 'large'}}" style='width:100%; max-width: 400px;'/>
         <div id = "option3" class="option3">
         </div>
       </div>
 
       <div class='inpage-cart__right-container'>
-        <h4 style='text-transform: uppercase;'>{{ product.title }}</h4>
-        <p style='font:15px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
+        <h4 id='title' style='text-transform: uppercase;'>{{ product.title }}</h4>
+        <p id='artist' style='font:15px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
         <h3 style='margin-top:-10px'>{{ product.price | money }}</h3>
 
         <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" style='margin-bottom:0;'>
@@ -55,19 +54,16 @@
 
           <hr style='margin-bottom:10px; border-color: #e0e0e0;'/>
           <div>
-            <img style='display:inline' src="{{ 'favicon.png' | asset_url }}"/>
+            <img style='display:inline; width:16px; height:16px;' src="{{ 'favicon.png' | asset_url }}"/>
             <p style='display:inline'>{{ product.description }}</p>
           </div>
           <hr style='margin-top:10px; border: 1px solid #e0e0e0;'/>
 
           <p style='margin-top:-10px;'>{{ product.options[0] }}:</p>
+          <div style='margin-top:-10px; margin-bottom: 10px;'id = "option0" class="option0"></div>
           <div style='margin-top:-10px;' id = "option1" class="option1"></div>
 
           <select style='margin-top:10px;' id = "option2" class="option2"></select>
-          <div id = "option0" class="option0">
-            <span id="Snap" class="Snap"><p>Snap</p></span>
-            <span id="Tough" class="Tough"><p>Tough</p></span>
-          </div>
           
           <input type = "hidden" name = "return_to" value = "{{ product.url | within: collection }}"/>
           <input type="submit" name="add" id="AddToCart" value="LOVE THIS! I'M BUYING NOW!" style='margin-top:15px;margin-bottom:20px;'/>
@@ -81,6 +77,4 @@
       </div>
     </div>
   </div>
-{% unless collection.title contains 'artist' and template contains 'collection' %}
 </div>
-{% endunless %}

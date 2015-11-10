@@ -96,12 +96,6 @@ $max: max-width;
   }
 }
 
-{% if settings.enable_wide_layout %}
-  $siteWidth: 1340px;
-{% else %}
-  $siteWidth: 1030px;
-{% endif %}
-
 $gutter: 30px;
 $gridGutter: 30px;
 $radius: 2px;
@@ -290,15 +284,10 @@ h6 {
 }
 
 .main-content {
-  top: 42px;
 
   .template-index & {
      margin-top: 0;
   }
-}
-
-.space-on-top{
-  padding-top:25px;
 }
 
 .contact-us-form{
@@ -306,10 +295,6 @@ h6 {
 }
 
 @media screen and (max-width: 768px){
-  .main-content {
-    padding-top: 38px;
-  }
-
   .contact-us-form{
     width: 100%;
   }
@@ -322,7 +307,6 @@ h6 {
     &:after {
       content: '';
       display: block;
-      padding-top: $gutter * 2;
       border-bottom: 1px solid $colorBorder;
     }
   }
@@ -347,6 +331,18 @@ h6 {
 
 
 /*================ Module-specific styles ================*/
+/*============== Header-bar =================*/
+/*----------------------- Desktop Version -----------------------*/
+/* Switch to desktop version */
+@media screen and (min-width: 769px){
+  #header-bar__pc{
+    display: block;
+  }
+  #header-bar__mobile{
+    display: none;
+  }
+}
+
 .header-bar {
   @include clearfix();
   font-family: $accentFontStack;
@@ -356,85 +352,72 @@ h6 {
   color: $colorTopBarText;
   padding-top: 2px;
   padding-bottom: 2px;
-  text-align: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
+  margin: 0px;
   width: 100%;
-  z-index: 9999;
+  text-align: left;
+}
 
-  @include at-query($min, $large) {
-    text-align: right;
-    padding-top: 4px;
-    padding-bottom: 4px;
+.header-bar__module {
+  display: inline-block;
+  vertical-align: middle;
+
+  a, span, img{
+    vertical-align: middle;
   }
+}
 
-  a,
-  button {
+.header-bar__favicon{
+  width:13%;
+  min-width: 140px;
+
+  img{
+    vertical-align: middle;
+  }
+}
+
+.header-bar__lists {
+  list-style: none;
+  width: 55%;
+
+  a {
+    text-align: center;
+    display: inline-block;
+    padding: 0;
+    width : 15.8%;
     color: $colorTopBarText;
 
     &:hover,
     &:active,
     &:focus {
-      outline-color: $colorTopBarText;
-    }
-  }
-
-  .inline-list {
-    margin-bottom: 0;
-
-    li {
-      margin-bottom: 0;
+      color: $colorPrimary;
     }
   }
 }
 
-@include at-query($min, $large) {
-  .header-bar__left {
-    text-align: left;
-    width: 68.00%;
-  }
-
-  .header-bar__right {
-    width: 32.00%;
-  }
+.header-bar__link-active{
+  font-weight: bold;
 }
 
-.header-bar__module {
-  margin-bottom: $gutter/2;
+.header-bar__cart{
+  width: 11%;
+  text-align: middle;
 
-  .header-bar__right &:last-child {
-    margin-bottom: 0;
-  }
-
-  @include at-query($min, $large) {
-    display: inline-block;
-    vertical-align: middle;
-    text-align: left;
-    margin-bottom: 0;
-  }
-}
-
-.header-bar__module--list {
-  list-style: none;
-  width : 100%;
-  margin: 0;
-
-  li {
-    display: inline-block;
-    margin: 0;
-    width : 16%;
-
-    a {
-      text-align: center;
-      padding: 0px;
+  a{
+    color: $colorTopBarText;
+    &:hover,
+    &:active,
+    &:focus {
+      color: $colorPrimary;
     }
   }
 }
-
-.cart-page-link {
-  display: inline-block;
+/*-- This is used for alignment of cart and search --*/
+@media screen and (min-width: 1024px){
+  .header-bar__cart{
+    width: 15%;
+    text-align: right;
+    padding-right: 30px;
+  }
 }
 
 .header-bar__cart-icon {
@@ -446,46 +429,112 @@ h6 {
   display: none;
 }
 
-.header-bar__sep {
-  display: none;
-
-  @include at-query($min, $large) {
-    color: $colorTopBarText;
-    opacity: 0.4;
-    display: inline-block;
-    padding: 0 10px;
-  }
-}
-
 .header-bar__search {
   @include clearfix();
   position: relative;
   background-color: #fff;
   border: 0 none;
   border-radius: $radius;
+  width: 13%;
 
   @if ( ($colorTopBar == $colorBody) or ($colorTopBar == rgba(0,0,0,0)) ) {
     border: 1px solid $colorBorder;
-  }
-
-  min-width: 100px;
-
-  @include at-query($min, $large) {
-    max-width: 160px;
-  }
-  
-  @include at-query($max, $medium) {
-    margin: 12px 30px;
-  }
-  
-  @include at-query($max, $small) {
-    margin: 12px 15px;
   }
 
   form,
   input,
   button {
     margin-bottom: 0;
+  }
+
+  .btn,
+  .btn:hover,
+  .btn:focus {
+    background: transparent;
+    color: #555;
+  }
+}
+
+/* -------------------------- Mobile Version ---------------- */
+@media screen and (max-width: 768px){
+  #header-bar__pc{
+    display: none;
+  }
+  #header-bar__mobile{
+    display: block;
+  }
+
+  .header-bar__favicon{
+    width: 49%;
+    text-align: center;
+  }
+
+  .header-bar__dropdown-btn{
+    text-align: left;
+    float: left;
+    width: 25%;
+  }
+
+  .header-bar__cart{
+    text-align: right;
+    width: 24%;
+  }
+
+  .header-bar__search{
+    width:91%;
+    margin:8px auto;
+  }
+}
+
+.cart-count-mobile {
+  &:before {
+    display: inline;
+    content: "(";
+  }
+  &:after {
+    display: inline;
+    content: ")";
+  }
+}
+
+.mobile-nav-trigger {
+  display: block;
+  float: left;
+  background: none;
+  border: 0 none;
+  padding: 0;
+  margin: 0;
+  color: $colorTopBarText;
+
+  .icon {
+    font-size: 1.4em;
+  }
+}
+
+.mobile-nav {
+  display: none;
+  list-style: none;
+  text-align: left;
+  margin: 0;
+
+  li {
+    margin: 0;
+  }
+}
+
+.mobile-nav__link {
+  display: block;
+  border-top: 1px solid $colorTopBarText;
+  border-color: rgba($colorTopBarText, 0.2);
+
+  a {
+    display: block;
+    padding: ($gutter / 2.5) $gutter;
+    font-size: em(15px);
+    font-family: $headerFontStack;
+    font-weight: $headerFontWeight;
+    color: white;
+    text-transform: uppercase;
   }
 }
 
@@ -536,16 +585,6 @@ h6 {
       width: 100%;
       padding-left: 35px;
     }
-  }
-}
-
-
-.header-bar__search {
-  .btn,
-  .btn:hover,
-  .btn:focus {
-    background: transparent;
-    color: #555;
   }
 }
 
@@ -620,37 +659,23 @@ h6 {
   margin-top: 20px;
 }
 
-.active-option0{
-  border:1px solid red;
+.option0 .active-option0{
+  border: 1px solid red;
 }
 
-.Snap{
+.option0-btn{
   display: inline-block;
   width: 80px; 
   border-radius: 5px;
   border: 1px solid #e0e0e0;
+  margin-right: 12px;
   height: 36px;
-  cursor:pointer;
+  cursor: pointer;
   text-align: center;
-}
 
-.Snap p{
-  padding-top: 6px;
-}
-
-.Tough{
-  display: inline-block;
-  width: 80px;
-  margin-left: 12px;
-  border-radius: 5px;
-  border: 1px solid #e0e0e0;
-  height: 36px;
-  cursor:pointer;
-  text-align: center;
-}
-
-.Tough p{
-  padding-top: 6px;
+  p {
+    padding-top: 6px;
+  }
 }
 
 @media screen and (max-width:768px){
@@ -903,141 +928,6 @@ $badgeSize: 60px;
   padding-top: 0;
 }
 
-.mobile-nav-trigger,
-.mobile-cart-page-link {
-  font-weight: bold;
-
-  .icon {
-    position: relative;
-    top: -1px;
-    vertical-align: middle;
-    padding-right: 4px;
-  }
-}
-
-.mobile-nav-trigger {
-  display: block;
-  float: left;
-  background: none;
-  border: 0 none;
-  padding: 0;
-  margin: 0;
-
-  .icon {
-    font-size: 1.4em;
-  }
-}
-
-.mobile-cart-page-link {
-  display: block;
-  float: right;
-
-  .header-bar__cart-icon {
-    font-size: 1.4em;
-  }
-
-  .cart-count {
-    &:before {
-      display: inline;
-      content: "(";
-    }
-    &:after {
-      display: inline;
-      content: ")";
-    }
-  }
-}
-
-.mobile-nav {
-  display: none;
-  list-style: none;
-  text-align: left;
-  margin: 0;
-
-  li {
-    margin: 0;
-  }
-}
-
-.mobile-nav__link {
-  display: block;
-  border-top: 1px solid $colorTopBarText;
-  border-color: rgba($colorTopBarText, 0.2);
-
-  /*================ Can't always control anchor markup to add a class ================*/
-  > a {
-    display: block;
-    padding: ($gutter / 2.5) ($gutter / 2);
-    font-size: em(15px);
-    font-family: $headerFontStack;
-    font-weight: $headerFontWeight;
-    text-transform: uppercase;
-
-    @include at-query ($min, $small) {
-      padding-left: $gutter;
-      padding-right: $gutter;
-    }
-  }
-}
-
-.mobile-nav__sublist-expand,
-.mobile-nav__sublist-contract {
-  display: inline-block;
-  font-size: 0.6em;
-  vertical-align: middle;
-  margin: -2px 0 0 4px;
-}
-
-.mobile-nav__sublist-contract {
-  display: none;
-}
-
-.mobile-nav__sublist-trigger.is-active {
-  .mobile-nav__sublist-contract {
-    display: inline-block;
-  }
-
-  .mobile-nav__sublist-expand {
-    display: none;
-  }
-}
-
-.mobile-nav__sublist {
-  list-style: none;
-  margin: 0;
-  display: none;
-  background-color: $colorBody;
-
-  .mobile-nav__sublist {
-    margin-left: $gutter / 2;
-
-    .mobile-nav__sublist-link a {
-      border-top: none;
-    }
-  }
-}
-
-.mobile-nav__sublist-link {
-  a {
-    display: block;
-    padding: ($gutter / 2.5) ($gutter / 2);
-    color: $colorNavText;
-    font-size: em(15px);
-    font-family: $headerFontStack;
-    border-top: 1px solid $colorBorder;
-
-    @include at-query ($min, $small) {
-      padding-left: $gutter;
-      padding-right: $gutter;
-    }
-
-    &:hover {
-      opacity: 1;
-      color: $colorPrimary;
-    }
-  }
-}
-
 /*================ Module | Promo images ================*/
 
 .promo-images .grid__item {
@@ -1187,13 +1077,13 @@ $badgeSize: 60px;
   background-image: url(https://cdn.shopify.com/s/files/1/0964/6944/files/ArtistPage_Header_TEMP.jpg?3197037681459096038); 
   background-repeat: no-repeat; 
   background-size: cover; 
-  height: 220px;
+  height: 250px;
 }
 
 .artist-collection-title{
   color: white;
-  padding-top: 40px;
-  font-size: 70px;
+  padding-top: 80px;
+  font-size: 60px;
 }
 
 .artist-collection-subtitle{
@@ -1207,7 +1097,7 @@ $badgeSize: 60px;
   margin-bottom:70px;
   width: 100%; 
   font-size: 24px; 
-  color: #00B3EF;
+  color: #F95951;
 }
 
 .artist-container{
