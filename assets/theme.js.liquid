@@ -497,6 +497,11 @@ var artist_page = function(){
     var name = $(this).find('#artist-handle').text();
     window.location.href = "http://the-casery.myshopify.com/collections/" + name;
   });
+
+  $('.artist-container-pc').off('click').on('click',function(){
+    var name = $(this).find('#artist-handle').text();
+    window.location.href = "http://the-casery.myshopify.com/collections/" + name;
+  });
 }
 
 // slider
@@ -615,22 +620,26 @@ var autoscale_picture = function(){
   if (mobile_device){
     picture_width = document.documentElement.clientWidth;
     picture_height = picture_width;
-
     $('.autoscale__div').css('height', picture_height);
     $('.autoscale__div').css('width', picture_width);
-    picture_width = picture_height * 2;
-    margin_left = ($('.autoscale__div').width() - picture_width) / 2;
-    margin_top = 0;
+
+    if (picture_height * 2 < picture_width) {
+      picture_height = picture_width / 2;
+    } else {
+      picture_width = picture_height * 2;
+    }
+    margin_top = ($('.autoscale__div').height() - picture_height) / 2;
+    margin_left = (document.documentElement.clientWidth - picture_width) / 2;
 
     // This is a side function, just to adjust slider's navigation-bar position
     $('.slider-nav').css('top', $('.slide-img').height() - 30);
     $('.slider-nav').css('left', ($('.slide-img').width()-180) / 2);
   } else {
     // At this point, pic_width & height are screen size, used to set div size.
-    picture_height = document.documentElement.clientHeight-30;
+    picture_height = document.documentElement.clientHeight;
+    picture_width = document.documentElement.clientWidth;
     $('.autoscale__div').css('height', picture_height);
-    $('.autoscale__div').css('width', '100%');
-    picture_width = $('.autoscale__div').width();
+    $('.autoscale__div').css('width', picture_width);
 
     // Adjust picture width:height to 2:1
     if (picture_height < 600 && picture_width < 1200) {
@@ -643,8 +652,8 @@ var autoscale_picture = function(){
     }
 
     // calculate margin to adjust picture position, make it at center.
-    margin_top = (document.documentElement.clientHeight - 50 - picture_height) / 2;
-    margin_left = ($('.autoscale__div').width() - picture_width) / 2;
+    margin_top = (document.documentElement.clientHeight - picture_height) / 2;
+    margin_left = (document.documentElement.clientWidth - picture_width) / 2;
 
     // This is a side function, just to adjust slider's navigation-bar position
     $('.slider-nav').css('top', $('.slide-img').height() - 70);
@@ -813,8 +822,9 @@ var page_init = function(){
 
     carousel_setting();
     autoscale_picture();
-    window.onresize = autoscale_picture;
   }
+
+  window.onresize = autoscale_picture;
 }
 
 $(document).ready(page_init);

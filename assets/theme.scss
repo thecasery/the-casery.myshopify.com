@@ -1141,7 +1141,24 @@ $badgeSize: 60px;
   vertical-align: middle;
 }
 
+.space-on-top{
+  margin-top:20px;
+}
 
+.front-pg-img-description{
+  display: block;
+  position: absolute;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+@media screen and (max-width: 768px){
+  .front-pg-img-description{
+    display: block;
+    position: static;
+    text-align:center;
+  }
+}
 
 
 

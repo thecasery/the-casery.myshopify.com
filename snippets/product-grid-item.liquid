@@ -17,8 +17,8 @@
     <a class='trigger__mobile' href='{{ product.url | within: collection }}'>
       <p id='mobile_url' style='display:none'>{{ product.url | within: collection }}</p>
       <span class="grid-link__image-centered">
-        <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" style='width:360px; height:350px;'/>
-        <img class='product-img__second' src="{{ product.images[1].src | img_url: 'large' }}" alt="{{ product.images[1].alt | escape }}" style = "display:none; width:360px; height:350px;"/>
+        <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" style='width:360px;'/>
+        <img class='product-img__second' src="{{ product.images[1].src | img_url: 'large' }}" alt="{{ product.images[1].alt | escape }}" style = "display:none; width:360px;"/>
       </span>
       <div class='grid__mobile-info' style='display:none; margin-top:5px; margin-bottom:20px;'>
         <p class="grid-link__title">{{ product.title }}</p>

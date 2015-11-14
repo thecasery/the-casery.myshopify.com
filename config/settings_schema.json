@@ -722,84 +722,6 @@
         "type": "text",
         "id": "slide_3_alt",
         "label": "Alt text"
-      },
-      {
-        "type": "header",
-        "content": "Slide 4"
-      },
-      {
-        "type": "checkbox",
-        "id": "slide_4",
-        "label": "Enable"
-      },
-      {
-        "type": "image",
-        "id": "slide_4.jpg",
-        "label": "Image",
-        "max-width": 2560,
-        "info": "(Required) 2560 * 1280px"
-      },
-      {
-        "type": "text",
-        "id": "slide_4_link",
-        "label": "Link URL"
-      },
-      {
-        "type": "text",
-        "id": "slide_4_alt",
-        "label": "Alt text"
-      },
-      {
-        "type": "header",
-        "content": "Slide 5"
-      },
-      {
-        "type": "checkbox",
-        "id": "slide_5",
-        "label": "Enable"
-      },
-      {
-        "type": "image",
-        "id": "slide_5.jpg",
-        "label": "Image",
-        "max-width": 2560,
-        "info": "(Required) 2560 * 1280px"
-      },
-      {
-        "type": "text",
-        "id": "slide_5_link",
-        "label": "Link URL"
-      },
-      {
-        "type": "text",
-        "id": "slide_5_alt",
-        "label": "Alt text"
-      },
-      {
-        "type": "header",
-        "content": "Slide 6"
-      },
-      {
-        "type": "checkbox",
-        "id": "slide_6",
-        "label": "Enable"
-      },
-      {
-        "type": "image",
-        "id": "slide_6.jpg",
-        "label": "Image",
-        "max-width": 2560,
-        "info": "(Required) 2560 * 1280px"
-      },
-      {
-        "type": "text",
-        "id": "slide_6_link",
-        "label": "Link URL"
-      },
-      {
-        "type": "text",
-        "id": "slide_6_alt",
-        "label": "Alt text"
       }
     ]
   },
@@ -822,13 +744,18 @@
       },
       {
         "type": "text",
-        "id": "promo_image_1_link",
-        "label": "Links to"
+        "id": "promo_image_1_header",
+        "label": "Section header"
       },
       {
         "type": "text",
-        "id": "promo_image_1_alt",
-        "label": "Alt text"
+        "id": "promo_image_1_intro",
+        "label": "Section introduction"
+      },
+      {
+        "type": "text",
+        "id": "promo_image_1_link",
+        "label": "Href Links to"
       },
       {
         "type": "header",
@@ -846,13 +773,18 @@
       },
       {
         "type": "text",
-        "id": "promo_image_2_link",
-        "label": "Links to"
+        "id": "promo_image_2_header",
+        "label": "Section header"
       },
       {
         "type": "text",
-        "id": "promo_image_2_alt",
-        "label": "Alt text"
+        "id": "promo_image_2_intro",
+        "label": "Section introduction"
+      },
+      {
+        "type": "text",
+        "id": "promo_image_2_link",
+        "label": "Href Links to"
       },
       {
         "type": "header",
@@ -870,13 +802,18 @@
       },
       {
         "type": "text",
-        "id": "promo_image_3_link",
-        "label": "Links to"
+        "id": "promo_image_3_header",
+        "label": "Section header"
       },
       {
         "type": "text",
-        "id": "promo_image_3_alt",
-        "label": "Alt text"
+        "id": "promo_image_3_intro",
+        "label": "Section introduction"
+      },
+      {
+        "type": "text",
+        "id": "promo_image_3_link",
+        "label": "Href Links to"
       },
       {
         "type": "header",
@@ -894,13 +831,47 @@
       },
       {
         "type": "text",
-        "id": "promo_image_4_link",
-        "label": "Links to"
+        "id": "promo_image_4_header",
+        "label": "Section header"
       },
       {
         "type": "text",
-        "id": "promo_image_4_alt",
-        "label": "Alt text"
+        "id": "promo_image_4_intro",
+        "label": "Section introduction"
+      },
+      {
+        "type": "text",
+        "id": "promo_image_4_link",
+        "label": "Href Links to"
+      },
+      {
+        "type": "header",
+        "content": "Image 5"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_promo_image_5",
+        "label": "Enable"
+      },
+      {
+        "type": "image",
+        "id": "promo_image_5.jpg",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "promo_image_5_header",
+        "label": "Section header"
+      },
+      {
+        "type": "text",
+        "id": "promo_image_5_intro",
+        "label": "Section introduction"
+      },
+      {
+        "type": "text",
+        "id": "promo_image_5_link",
+        "label": "Href Links to"
       }
     ]
   },
@@ -1056,271 +1027,6 @@
         "type": "checkbox",
         "id": "collections_center_grid_link",
         "label": "Center text below product images"
-      }
-    ]
-  },
-  {
-    "name": "Artist Collection",
-    "settings": [
-      {
-        "type": "header",
-        "content": "Artist 1"
-      },
-      {
-        "type": "checkbox",
-        "id": "artist_1",
-        "label": "Enable"
-      },
-      {
-        "type": "text",
-        "id": "artist_name_1",
-        "label": "Please enter artist's name to let theme associate his\/her works"
-      },
-      {
-        "type": "textarea",
-        "id": "artist_intro_1",
-        "label": "Artist's introduction"
-      },
-      {
-        "type": "image",
-        "id": "artist_1.jpg",
-        "label": "Header Image",
-        "max-width": 2560,
-        "info": "(Recommended) 2560 * 240px"
-      },
-      {
-        "type": "header",
-        "content": "Artist 2"
-      },
-      {
-        "type": "checkbox",
-        "id": "artist_2",
-        "label": "Enable"
-      },
-      {
-        "type": "text",
-        "id": "artist_name_2",
-        "label": "Please enter artist's name to let theme associate his\/her works"
-      },
-      {
-        "type": "textarea",
-        "id": "artist_intro_2",
-        "label": "Artist's introduction"
-      },
-      {
-        "type": "image",
-        "id": "artist_2.jpg",
-        "label": "Header Image",
-        "max-width": 2560,
-        "info": "(Recommended) 2560 * 240px"
-      },
-      {
-        "type": "header",
-        "content": "Artist 3"
-      },
-      {
-        "type": "checkbox",
-        "id": "artist_3",
-        "label": "Enable"
-      },
-      {
-        "type": "text",
-        "id": "artist_name_3",
-        "label": "Please enter artist's name to let theme associate his\/her works"
-      },
-      {
-        "type": "textarea",
-        "id": "artist_intro_3",
-        "label": "Artist's introduction"
-      },
-      {
-        "type": "image",
-        "id": "artist_3.jpg",
-        "label": "Header Image",
-        "max-width": 2560,
-        "info": "(Recommended) 2560 * 240px"
-      },
-      {
-        "type": "header",
-        "content": "Artist 4"
-      },
-      {
-        "type": "checkbox",
-        "id": "artist_4",
-        "label": "Enable"
-      },
-      {
-        "type": "text",
-        "id": "artist_name_4",
-        "label": "Please enter artist's name to let theme associate his\/her works"
-      },
-      {
-        "type": "textarea",
-        "id": "artist_intro_4",
-        "label": "Artist's introduction"
-      },
-      {
-        "type": "image",
-        "id": "artist_4.jpg",
-        "label": "Header Image",
-        "max-width": 2560,
-        "info": "(Recommended) 2560 * 240px"
-      },
-      {
-        "type": "header",
-        "content": "Artist 5"
-      },
-      {
-        "type": "checkbox",
-        "id": "artist_5",
-        "label": "Enable"
-      },
-      {
-        "type": "text",
-        "id": "artist_name_5",
-        "label": "Please enter artist's name to let theme associate his\/her works"
-      },
-      {
-        "type": "textarea",
-        "id": "artist_intro_5",
-        "label": "Artist's introduction"
-      },
-      {
-        "type": "image",
-        "id": "artist_5.jpg",
-        "label": "Header Image",
-        "max-width": 2560,
-        "info": "(Recommended) 2560 * 240px"
-      },
-      {
-        "type": "header",
-        "content": "Artist 6"
-      },
-      {
-        "type": "checkbox",
-        "id": "artist_6",
-        "label": "Enable"
-      },
-      {
-        "type": "text",
-        "id": "artist_name_6",
-        "label": "Please enter artist's name to let theme associate his\/her works"
-      },
-      {
-        "type": "textarea",
-        "id": "artist_intro_6",
-        "label": "Artist's introduction"
-      },
-      {
-        "type": "image",
-        "id": "artist_6.jpg",
-        "label": "Header Image",
-        "max-width": 2560,
-        "info": "(Recommended) 2560 * 240px"
-      },
-      {
-        "type": "header",
-        "content": "Artist 7"
-      },
-      {
-        "type": "checkbox",
-        "id": "artist_7",
-        "label": "Enable"
-      },
-      {
-        "type": "text",
-        "id": "artist_name_7",
-        "label": "Please enter artist's name to let theme associate his\/her works"
-      },
-      {
-        "type": "textarea",
-        "id": "artist_intro_7",
-        "label": "Artist's introduction"
-      },
-      {
-        "type": "image",
-        "id": "artist_7.jpg",
-        "label": "Header Image",
-        "max-width": 2560,
-        "info": "(Recommended) 2560 * 240px"
-      },
-      {
-        "type": "header",
-        "content": "Artist 8"
-      },
-      {
-        "type": "checkbox",
-        "id": "artist_8",
-        "label": "Enable"
-      },
-      {
-        "type": "text",
-        "id": "artist_name_8",
-        "label": "Please enter artist's name to let theme associate his\/her works"
-      },
-      {
-        "type": "textarea",
-        "id": "artist_intro_8",
-        "label": "Artist's introduction"
-      },
-      {
-        "type": "image",
-        "id": "artist_8.jpg",
-        "label": "Header Image",
-        "max-width": 2560,
-        "info": "(Recommended) 2560 * 240px"
-      },
-      {
-        "type": "header",
-        "content": "Artist 9"
-      },
-      {
-        "type": "checkbox",
-        "id": "artist_9",
-        "label": "Enable"
-      },
-      {
-        "type": "text",
-        "id": "artist_name_9",
-        "label": "Please enter artist's name to let theme associate his\/her works"
-      },
-      {
-        "type": "textarea",
-        "id": "artist_intro_9",
-        "label": "Artist's introduction"
-      },
-      {
-        "type": "image",
-        "id": "artist_9.jpg",
-        "label": "Header Image",
-        "max-width": 2560,
-        "info": "(Recommended) 2560 * 240px"
-      },
-      {
-        "type": "header",
-        "content": "Artist 10"
-      },
-      {
-        "type": "checkbox",
-        "id": "artist_10",
-        "label": "Enable"
-      },
-      {
-        "type": "text",
-        "id": "artist_name_10",
-        "label": "Please enter artist's name to let theme associate his\/her works"
-      },
-      {
-        "type": "textarea",
-        "id": "artist_intro_10",
-        "label": "Artist's introduction"
-      },
-      {
-        "type": "image",
-        "id": "artist_10.jpg",
-        "label": "Header Image",
-        "max-width": 2560,
-        "info": "(Recommended) 2560 * 240px"
       }
     ]
   },

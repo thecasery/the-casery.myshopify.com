@@ -4,21 +4,25 @@
 {% if settings.show_promo_image_2 %}{% assign index = index | plus: 1 %}{% endif %}
 {% if settings.show_promo_image_3 %}{% assign index = index | plus: 1 %}{% endif %}
 {% if settings.show_promo_image_4 %}{% assign index = index | plus: 1 %}{% endif %}
+{% if settings.show_promo_image_5 %}{% assign index = index | plus: 1 %}{% endif %}
 
 {% unless index == 0 %}
-  {% for i in (1..4) %}
+  {% for i in (1..5) %}
     {% capture promo_image %}promo_image_{{ i }}.jpg{% endcapture %}
     {% capture promo_image_link %}promo_image_{{ i }}_link{% endcapture %}
-    {% capture promo_image_alt %}promo_image_{{ i }}_alt{% endcapture %}
+    {% capture promo_image_header %}promo_image_{{ i }}_header{% endcapture %}
+    {% capture promo_image_intro %}promo_image_{{ i }}_intro{% endcapture %}
     {% capture show_promo_image %}show_promo_image_{{ i }}{% endcapture %}
 
     {% if settings[show_promo_image] %}
-    
-    <div class = 'autoscale__div' style = "overflow:hidden;">
-      <a href="{{ settings[promo_image_link] }}">
-        <img class = 'autoscale__elem' src="{{ promo_image | asset_url }}">
-      </a>
-    </div>
+      <div id='front-pg-img-description-{{i}}' class='front-pg-img-description'>
+        <h1 class='uppercase'>{{ settings[promo_image_header] }}</h1>
+        <p>{{ settings[promo_image_intro] }}</p>
+        <a href='{{ settings[promo_image_link] }}'>Shop Now</a>
+      </div>
+      <div id='front-pg-img-{{i}}' class='autoscale__div' style="overflow:hidden;">
+        <img class='autoscale__elem' src="{{ promo_image | asset_url }}">
+      </div>
     {% endif %}
   {% endfor %}
 
