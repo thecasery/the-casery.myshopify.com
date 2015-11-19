@@ -171,20 +171,3 @@
  {% assign string_length = gallery_ids.size | minus: 1 %}
  {% assign gallery_ids = gallery_ids | slice: 0,string_length %}
  {% if gallery_ids != '' %}<div style='display:none;' class='woyc_gallery_ids'>&g={{ gallery_ids }}</div>{% endif %}</div>
-
-<div style="display:none;" class="woyc_wrapper"><div style="display:none;" class="woyc_barcode_holder">
-	{% for variant in product.variants %}
-		<div class="{{variant.id}}">{{variant.barcode}}</div>
-	{% endfor %}
-</div>
-
-{% assign gallery_ids = '' %}
- {% for tag in product.tags %}
-   {% if tag contains 'gallery_id_' %}
-     {% assign gallery_id = tag | replace: 'gallery_id_','' | append: ',' %}
-     {% assign gallery_ids = gallery_ids | append: gallery_id %}
-   {% endif %}
- {% endfor %}
- {% assign string_length = gallery_ids.size | minus: 1 %}
- {% assign gallery_ids = gallery_ids | slice: 0,string_length %}
- {% if gallery_ids != '' %}<div style='display:none;' class='woyc_gallery_ids'>&g={{ gallery_ids }}</div>{% endif %}</div>

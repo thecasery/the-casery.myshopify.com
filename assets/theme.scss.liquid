@@ -350,8 +350,8 @@ h6 {
   font-weight: 400;
   background-color: $colorTopBar;
   color: $colorTopBarText;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   margin: 0px;
   width: 100%;
   text-align: left;
@@ -734,7 +734,7 @@ h6 {
   border-left:18px solid transparent;
   border-right:18px solid transparent;
   border-bottom:18px solid #e0e0e0;
-  padding-top: 40px;
+  padding-top: 20px;
   margin-bottom: 1px;
   display: inline-block;
   opacity: 0;
@@ -1128,10 +1128,12 @@ $badgeSize: 60px;
 
 .artist-works{
   display:inline-block; 
-  margin: 0px 4px 6px 4px;
+  margin: 0px 2px 6px 2px;
+  width: 19%;
   img {
-    width:300px; 
-    height:300px;
+    width: 100%;
+    max-width:250px; 
+    max-height:250px;
   }
 }
 
@@ -1144,6 +1146,15 @@ $badgeSize: 60px;
 }
 
 @media screen and (max-width:768px){
+  .artist-works{
+    margin: 0px 4px 6px 4px;
+    width: auto;
+    img {
+      width: 130px;
+      height: 130px;
+    }
+  }
+
   .artist-all-pc{
     display:none;
   }
@@ -1218,23 +1229,23 @@ $badgeSize: 60px;
 
 #front-pg-img-description-1{
   left: 20%;
-  top: 40%;
+  top: 45%;
 }
 #front-pg-img-description-2{
   left: 10%;
-  top: 160%;
+  top: 165%;
 }
 #front-pg-img-description-3{
   left: 50%;
-  top: 240%;
+  top: 245%;
 }
 #front-pg-img-description-4{
   left: 10%;
-  top: 340%;
+  top: 345%;
 }
 #front-pg-img-description-5{
   left: 30%;
-  top: 405%;
+  top: 410%;
 }
 
 @media screen and (max-width: 768px){

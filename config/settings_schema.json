@@ -142,14 +142,24 @@
             "group": "Sans-serif"
           },
           {
-            "value": "'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+            "value": "'Trebuchet MS', Helvetica, Arial, sans-serif",
+            "label": "Trebuchet MS",
+            "group": "Sans-serif"
+          },
+          {
+            "value": "'Helvetica Neue', Arial, Helvetica, sans-serif",
             "label": "Helvetica Neue",
             "group": "Sans-serif"
           },
           {
-            "value": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
-            "label": "Arial",
-            "group": "Sans-serif"
+            "value": "Google_Abel_400,700_serif",
+            "label": "Abel",
+            "group": "Serif | Google Web Fonts"
+          },
+          {
+            "value": "Google_Armata_400,700_serif",
+            "label": "Armata",
+            "group": "Serif | Google Web Fonts"
           }
         ]
       },
@@ -195,14 +205,24 @@
             "group": "Sans-serif"
           },
           {
-            "value": "'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+            "value": "'Trebuchet MS', Helvetica, Arial, sans-serif",
+            "label": "Trebuchet MS",
+            "group": "Sans-serif"
+          },
+          {
+            "value": "'Helvetica Neue', Arial, Helvetica, sans-serif",
             "label": "Helvetica Neue",
             "group": "Sans-serif"
           },
           {
-            "value": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
-            "label": "Arial",
-            "group": "Sans-serif"
+            "value": "Google_Abel_400,700_serif",
+            "label": "Abel",
+            "group": "Serif | Google Web Fonts"
+          },
+          {
+            "value": "Google_Armata_400,700_serif",
+            "label": "Armata",
+            "group": "Serif | Google Web Fonts"
           }
         ]
       },
@@ -249,14 +269,24 @@
             "group": "Sans-serif"
           },
           {
-            "value": "'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+            "value": "'Trebuchet MS', Helvetica, Arial, sans-serif",
+            "label": "Trebuchet MS",
+            "group": "Sans-serif"
+          },
+          {
+            "value": "'Helvetica Neue', Arial, Helvetica, sans-serif",
             "label": "Helvetica Neue",
             "group": "Sans-serif"
           },
           {
-            "value": "Arial, 'Helvetica Neue', Helvetica, sans-serif",
-            "label": "Arial",
-            "group": "Sans-serif"
+            "value": "Google_Abel_400,700_serif",
+            "label": "Abel",
+            "group": "Serif | Google Web Fonts"
+          },
+          {
+            "value": "Google_Armata_400,700_serif",
+            "label": "Armata",
+            "group": "Serif | Google Web Fonts"
           }
         ]
       },
@@ -454,17 +484,6 @@
         "id": "social_youtube_link",
         "label": "YouTube",
         "info": "https:\/\/www.youtube.com\/user\/shopify"
-      },
-      {
-        "type": "checkbox",
-        "id": "footer_contact_enable",
-        "label": "Show contact information"
-      },
-      {
-        "type": "textarea",
-        "id": "footer_contact_text",
-        "label": "Contact text",
-        "info": "Use basic HTML to format text"
       },
       {
         "type": "checkbox",

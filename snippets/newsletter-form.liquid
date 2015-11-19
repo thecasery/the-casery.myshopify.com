@@ -8,36 +8,16 @@
    - http://docs.shopify.com/support/configuration/store-customization/where-do-i-get-my-mailchimp-form-action
 
 {% endcomment %}
-{% if settings.newsletter_form_action != blank %}
-  {% assign form_action = settings.newsletter_form_action %}
-{% else %}
-  {% assign form_action = '#' %}
-{% endif %}
-
-{% comment %}
-  This is GG, because JQuery doesn't support cross domain $.post (we could submit data, but we cannot get response)
-  So~ Start with getJSON (10/13/2015)
-{% endcomment %}
-<script>
-$(document).ready(function(){
-  var form = $('#email-form');
-  form.submit(function(){
-    $.post("http://thecasery.com/shopify-submission.php", 
-      {email:$('#email').val()},
-      function(result){
-      },
-      "text"
-    ).fail(function() {
-      alert("Your email has been uploaded successfully!");
-      $('#email').val('');
-    });
-
-    return false;
-  });
-});
-</script>
-
-<form id = "email-form" class="small--hide" method="post">
-  <input id="email" type ="email" autocorrect="on" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}"/>
-  <input id="subscribe" type="submit" class="btn" value="{{ 'general.newsletter_form.submit' | t }}"/>
-</form>
+{% form 'customer' %}
+  <input type="hidden" id="contact_tags" name="contact[tags]" value="prospect,newsletter"/>
+  <input type="text" id="contact_email" name="contact[email]" placeholder='john@gmail.com'/>
+  <style>
+    @media screen and (max-width: 768px){
+      #contact_email{
+        width: 80%;
+        margin:10px auto;
+      }
+    }
+  </style>
+  <input type='submit' style='width:100px;' value='Subscribe'/>
+{% endform %}

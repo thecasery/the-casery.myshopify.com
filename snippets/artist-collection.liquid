@@ -11,14 +11,14 @@
         <div class='artist-name horizontal-center' style='color:black'>
           <img src="{{ 'favicon.png' | asset_url }}"/>
           <h2 class='uppercase' style='display:inline'>{{ collection.title }}</h2>
-          <div class='goto-artist' style='padding:5px 10px; margin: 10px auto; width:200px; border:1px solid #e0e0e0; cursor:pointer;'>Visit Artist's Page</div>
+          <div class='goto-artist' style='margin:0 auto; width:200px; border:1px solid #e0e0e0; cursor:pointer;'><p style='margin:5px 0;' onmouseover="this.style.color='#F95923';" onmouseout="this.style.color='#000000';">Visit Artist's Page</p></div>
           <p id='artist-handle' style='display:none'>{{ collection.handle }}</p>
         </div>
-        <div style='horizontal-center'>
+        <div class='horizontal-center'>
           {% for product in collection.products %}
             {% if product.vendor contains collection.title %}
               <div class='artist-works'>
-                <img src="{{ product.featured_image.src | img_url: 'large' }}"/>
+                <img style='cursor:pointer;' src="{{ product.featured_image.src | img_url: 'large' }}"/>
               </div>
             {% endif %}
           {% endfor %}

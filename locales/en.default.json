@@ -256,8 +256,8 @@
       "social_title": "Follow Us",
       "social_platform": "{{ name }} on {{ platform }}",
       "contact_title": "Contact Us",
-      "newsletter_title": "Newsletter",
-      "newsletter_caption": "Sign up for the latest news, offers and styles",
+      "newsletter_title": "Subscription",
+      "newsletter_caption": "Sign up for exclusive discounts",
       "copyright": "Copyright"
     }
   },
@@ -265,7 +265,7 @@
     "general": {
       "from_html": "From {{ price }}",
       "share_title": "Share this Product",
-      "related_products_title": "More from this collection"
+      "related_products_title": "Similar Products"
     },
     "product": {
       "sold_out": "Sold Out",

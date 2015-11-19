@@ -453,6 +453,8 @@ var inpage_shopping_cart_on = function(){
 
     // slide down new cart
     if (current_activate){
+      var cart = $(this).parents('.grid__product').find('.inpage-cart');
+
       $(this).parents('.grid__product').find('.arrow-up').animate({opacity : 1}, 'middle');
       $(this).parents('.grid__product').addClass('active-product');
       if (different_product && prev_pos == $(this).parents('.grid__product').offset().top){
@@ -464,13 +466,12 @@ var inpage_shopping_cart_on = function(){
       $('.active-cart').css("width", document.documentElement.clientWidth);
       $('.active-cart').css("margin-left", 0 - $('.active-product').offset().left - 10);
       if (prev_pos == $('.active-product').offset().top){
-        $("html, body").animate({ scrollTop: prev_pos - 80 }, 0);
+        $("html, body").animate({ scrollTop: cart.offset().top - 80 }, 'middle');
       } else if (prev_pos < $('.active-product').offset().top){
-        $("html, body").animate({ scrollTop: prev_pos + 280}, "middle");
+        $("html, body").animate({ scrollTop: cart.offset().top - 735}, "middle");
       } else {
-        $("html, body").animate({ scrollTop: $('.active-product').offset().top - 80}, "middle");
+        $("html, body").animate({ scrollTop: cart.offset().top - 80}, "middle");
       }
-      var cart = $(this).parents('.grid__product').find('.inpage-cart');
       init_variants(cart);
       product_click(cart);
 

@@ -125,7 +125,7 @@ $breakpoint-has-push:  ('medium', 'medium-down', 'large', 'post-large', 'wide');
 $breakpoint-has-pull:  ('medium', 'medium-down', 'large', 'post-large', 'wide');
 
 /*================ Color variables ================*/
-$colorPrimary: #f95951;
+$colorPrimary: #f95940;
 $colorSecondary: #bbbbbb;
 
 // Button colors
@@ -189,16 +189,16 @@ $passwordPageUseBgImage: true;
 
 
 // Body Font
-$bodyFontStack: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$bodyFontStack: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 $baseFontSize: 14px;
 
 // Header Font
-$headerFontStack: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$headerFontStack: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 $headerFontWeight: 700;
-$headerBaseFontSize: 32px;
+$headerBaseFontSize: 36px;
 
 // Navigation and buttons
-$accentFontStack: 'HelveticaNeue', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+$accentFontStack: 'Helvetica Neue', Arial, Helvetica, sans-serif;
 $accentFontWeight: 400;
 $accentFontSize: 14px;
 
@@ -308,8 +308,8 @@ h6 {
   font-weight: 400;
   background-color: $colorTopBar;
   color: $colorTopBarText;
-  padding-top: 2px;
-  padding-bottom: 2px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   margin: 0px;
   width: 100%;
   text-align: left;
@@ -692,7 +692,7 @@ h6 {
   border-left:18px solid transparent;
   border-right:18px solid transparent;
   border-bottom:18px solid #e0e0e0;
-  padding-top: 40px;
+  padding-top: 20px;
   margin-bottom: 1px;
   display: inline-block;
   opacity: 0;
@@ -1086,14 +1086,40 @@ $badgeSize: 60px;
 
 .artist-works{
   display:inline-block; 
-  margin: 0px 4px 6px 4px;
+  margin: 0px 2px 6px 2px;
+  width: 19%;
   img {
-    width:130px; 
-    height:130px;
+    width: 100%;
+    max-width:250px; 
+    max-height:250px;
   }
 }
 
+.artist-all-pc{
+  display:block;
+}
+
+.artist-all-mobile{
+  display:none;
+}
+
 @media screen and (max-width:768px){
+  .artist-works{
+    margin: 0px 4px 6px 4px;
+    width: auto;
+    img {
+      width: 130px;
+      height: 130px;
+    }
+  }
+
+  .artist-all-pc{
+    display:none;
+  }
+  .artist-all-mobile{
+    display:block;
+  }
+
   .artist-header{
     height: 180px;
   }
@@ -1149,14 +1175,50 @@ $badgeSize: 60px;
   display: block;
   position: absolute;
   text-align: center;
-  background-color: rgba(255, 255, 255, 0.7);
+  background-color: rgba(255, 255, 255, 0.8);
+  width: 500px;
+  margin: 0 auto;
+  padding: 40px;
+
+  h1, p{
+    color: black; 
+  }
+}
+
+#front-pg-img-description-1{
+  left: 20%;
+  top: 45%;
+}
+#front-pg-img-description-2{
+  left: 10%;
+  top: 165%;
+}
+#front-pg-img-description-3{
+  left: 50%;
+  top: 245%;
+}
+#front-pg-img-description-4{
+  left: 10%;
+  top: 345%;
+}
+#front-pg-img-description-5{
+  left: 30%;
+  top: 410%;
 }
 
 @media screen and (max-width: 768px){
   .front-pg-img-description{
+    padding: 0;
+    width: 92%;
+    margin: 0 auto;
+    max-width: 500px;
     display: block;
     position: static;
     text-align:center;
+
+    h1{
+      font-size: 26px;
+    }
   }
 }
 

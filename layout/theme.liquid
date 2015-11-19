@@ -9,6 +9,7 @@
   <!-- Basic page needs ================================================== -->
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="google-site-verification" content="T2IlUM70xXSsnsJ2ghZncUOwoDQNyq19HadYjfbkZGk" />
 
   {% if settings.favicon_enable %}
   <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
@@ -58,7 +59,7 @@
 
     <div class="wrapper">
 
-      <div class="grid-uniform ">
+      <div class="grid-uniform">
 
         {% comment %}
           Calculate the number of footer columns shown
@@ -74,9 +75,6 @@
           {% assign num_footer_columns = num_footer_columns | plus: 1 %}
         {% endif %}
         {% if settings.footer_social_enable %}
-          {% assign num_footer_columns = num_footer_columns | plus: 1 %}
-        {% endif %}
-        {% if settings.footer_contact_enable %}
           {% assign num_footer_columns = num_footer_columns | plus: 1 %}
         {% endif %}
         {% if settings.footer_newsletter_enable %}
@@ -148,13 +146,6 @@
           </div>
         {% endif %}
 
-        {% if settings.footer_contact_enable %}
-          <div class="grid__item {{ footer_column_width }}">
-            <h4> <a href = "http://the-casery.myshopify.com/pages/contact-us">{{ 'layout.footer.contact_title' | t }}</a></h4>
-            <div class="rte">{{ settings.footer_contact_text }}</div>
-          </div>
-        {% endif %}
-
         {% if settings.footer_newsletter_enable %}
           <div class="grid__item {{ footer_column_width }}">
             <h4>{{ 'layout.footer.newsletter_title' | t }}</h4>
@@ -171,24 +162,6 @@
           <p class="site-footer__links">{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }}, {{ shop.name | link_to: '/' }}.</p>
         </div>
       </div>
-      
-      {% unless shop.enabled_payment_types == empty %}
-      <div class="grid">        
-         <div class="grid__item text-center">
-           <ul class="inline-list payment-icons">
-             {% for type in shop.enabled_payment_types %}
-               <li>
-                 <span class="icon-fallback-text">
-                   <span class="icon icon-{{type}}" aria-hidden="true"></span>
-                   <span class="fallback-text">{{ type | replace: '_', ' ' }}</span>
-                 </span>
-               </li>
-             {% endfor %}
-           </ul>
-         </div>        
-       </div>
-       {% endunless %}
-
     </div>
 
   </footer>

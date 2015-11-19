@@ -1,30 +1,3 @@
-{% paginate collection.products by 24 %}
-
-{% comment %}
-<header class="section-header section-header--large">
-
-  <h1 class="section-header__title{% if settings.collections_tags_enable or settings.collections_sort_enable %} section-header__title--left{% endif %}">{{ collection.title }}</h1>
-
-  {% if settings.collections_tags_enable or settings.collections_sort_enable %}
-  <div class="section-header__link--right">
-    {% if settings.collections_tags_enable %}
-      {% include 'collection-tags' %}
-    {% endif %}
-    {% if settings.collections_sort_enable %}
-      {% include 'collection-sorting' %}
-    {% endif %}
-  </div>
-  {% endif %}
-</header>
-
-{% if collection.description != blank %}
-  <div class="rte rte--header">
-    {{ collection.description }}
-  </div>
-  <hr class="hr--clear hr--small">
-{% endif %}
-{% endcomment %}
-
 {% if collection.title contains 'Lens' %}
 
   <div class = "wrapper space-on-top">
@@ -48,29 +21,29 @@
   {% include 'artist-collection' %}
 
 {% elsif collection.title contains 'Clear' or collection.title contains 'Snap' or collection.title contains 'Tough' or collection.title contains 'Accessory' %}
-  <div class = "grid__collection">
-    {% for product in collection.products %}
-    
-      {% include 'product-grid-item' %}
+  {% paginate collection.products by 24 %}
+    <div class = "grid__collection">
+      {% for product in collection.products %}
+      
+        {% include 'product-grid-item' %}
 
-    {% else %}
+      {% else %}
 
-      <h1 style = 'text-align:center'>Oops.. No products!</h1>
+        <h1 style = 'text-align:center'>Oops.. No products!</h1>
 
-    {% endfor %}
-  </div>
+      {% endfor %}
+    </div>
+    {% if paginate.pages > 1 %}
+      <hr class="hr--clear">
+
+      <div class="text-center">
+        {% include 'pagination-custom' %}
+      </div>
+    {% endif %}
+
+  {% endpaginate %}
 {% else %}
   
   {% include 'artist-single' %}
 
 {% endif %}
-
-{% if paginate.pages > 1 %}
-  <hr class="hr--clear">
-
-  <div class="text-center">
-    {% include 'pagination-custom' %}
-  </div>
-{% endif %}
-
-{% endpaginate %}

@@ -20,6 +20,9 @@
       {{ form.errors | default_errors }}
 
       {% assign name_attr = 'contact.form.name' | t | handle %}
+      <iframe frameborder="0" style="border:0; width: 100%;"
+src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJAXRcThe7woARm7U6fefgYAI&key=AIzaSyDmbZmEv7tJQevzt1mk6hPXzg2H4Y0RCsQ" allowfullscreen></iframe>
+
       <label for="ContactFormName" class="label--hidden">{{ 'contact.form.name' | t }}</label>
       <input type="text" id="ContactFormName" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.name' | t }}" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}">
 

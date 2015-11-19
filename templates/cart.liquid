@@ -47,7 +47,26 @@
                     More image size options at:
                       - http://docs.shopify.com/themes/filters/product-img-url
                   {% endcomment %}
-                  <img src="{{ item | img_url: 'medium' }}" alt="{{ item.title | escape }}">
+                  {% assign custom_case = false %}
+                  {% for p in item.properties %}
+                    {% unless p.last == blank %}
+                      {% if p.first == 'thumb' %}
+                        {% assign custom_case = true %}
+                      {% endif %}
+                    {% endunless %}
+                  {% endfor %}
+
+                  {% if custom_case == true %}
+                    {% for p in item.properties %}
+                      {% unless p.last == blank %}
+                        {% if p.first == 'thumb' %}
+                          <img src="{{ p.last }}" alt="{{ item.product.title }}" />
+                        {% endif %}
+                      {% endunless %}
+                    {% endfor %}
+                  {% else %}
+                    <img src="{{ item | img_url: 'middle' }}" alt="{{ item.title }}" />
+                  {% endif %}
                 </a>
               </div>
 
