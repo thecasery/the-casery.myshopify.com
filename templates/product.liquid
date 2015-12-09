@@ -7,124 +7,66 @@
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/cupertino/jquery-ui.css">
   
   {{ 'magnifier.js' | asset_url | script_tag }}
+  <!-- Basic information here 
+    option 0 is phone type;
+    option 1 is case type;
+    option 2 is color;
+    option 3 is picture;
+  -->
+  <div class='product-container wrapper' style='margin-top:50px;'>
+    <div class ='product-container-left'>
+      <div id='option3' class='option3'></div>
+      <img class ='back-img' src="{{ product.featured_image | img_url: 'large'}}" />
+      <ul class="slider-dots"></ul>
+    </div> 
 
-  <div class="space-on-top">
-    <div class='mobile-shopping-cart'>
-      <div class = 'inpage-cart__copy-container wrapper'>
-        <div class = 'inpage-cart__left-container'>
-          <img class = 'back-img' src="{{ product.featured_image | img_url: 'large'}}" />
-          <div id='option3' style='display:none;'></div>
-          <ul class="slider-dots" style='position:absolute;'></ul>
-        </div> 
-
-        <div class='inpage-cart__right-container' style='text-align:left'>
-          <h3 id='#title' style='margin-top:10px; text-transform: uppercase;'>{{ product.title }}</h3>
-          <p style='font:18px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
-          
-          <select id = "option2" class="option2"></select>
-          <div id = "option0" class="option0"></div>
-
-          {% if product.options[0] contains 'Color' %}<p style='margin-top:8px;'>Color:</p> {% endif %}
-          <div id = "option1" class="option1"></div>
-
-          <p>{{ product.description }}</p>
-
-          <form style='position: fixed; z-index: 100; bottom: 0; left: 0; margin:0; width: 100%; background-color:white;' action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
-            <select style='vertical-align:middle;'name="id" id="productSelect" class="product-single__variants">
-              {% for variant in product.variants %}
-
-                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.id }} @ {{ variant.option1 }} @ {{ variant.option2 }} @ {{ variant.option3 }} @ {{ variant.image | img_url: 'large' }}</option>
-
-              {% endfor %}
-            </select>
-            <h3 style='display:inline-block; width:49%; text-align:center; vertical-align:middle; margin:10px auto;'>{{ product.price | money }}</h3>
-            <input type="submit" name="add" id="AddToCart" value="ADD TO CART" style='width:49%; vertical-align:middle; display:inline-block;'/>
-          </form>
-        </div>
+    <div class='product-container-right' style='text-align:left'>
+      <h3 id='#title' style='margin-top:10px; text-transform: uppercase;'>{{ product.title }} {{ product.type }} Case</h3>
+      <p style='font:18px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
+      <h3 class='product-pc-money'></h3>
+      <!--
+      <div class='product-pc-description'>
+        <hr style='margin-bottom:10px; border-color: #e0e0e0;'/>
+        <img style='display:inline; width:16px; height:16px;' src="{{ 'favicon.png' | asset_url }}"/>
+        <p style='display:inline'>{{ product.description }}</p>
+        <hr style='margin-top:10px; border: 1px solid #e0e0e0;'/>
       </div>
-    </div>
-    
-    {% if product.collections[0].title contains 'Lens' %}
-      <p class='test'>1</p>
-      <div name='magnifier'>
-        <div class='magnifier-wholepic' style=' height:975px; width: 1600px; display:inline-block;' name='small picture'>
-          <img src='https://cdn.shopify.com/s/files/1/0964/6944/files/yosemite.jpg?5049214248501354190)'/>
-          <div class='magnifier-cover' style='width:200px; height:300px; position:absolute; left: 200px; top:300px; background-color:orange; opacity:0.4;'>
-          </div>
-          <div id='slider' style='width: 500px; position:absolute; left: 200px; top: 900px;'></div>
-        </div>
-        <div class='magnifier-preview' style='width:400px; height:600px; overflow:hidden; display:inline-block'>
-          <img class='magnifier-preview__pic' style='width:3200px; height:1950px;'src='https://cdn.shopify.com/s/files/1/0964/6944/files/yosemite-national-park.jpg?14232523077114399889'/>
-        </div>
-      </div>
+      -->
 
-      <div class="wrapper grid__item post-large--one-half">
-        <h1 itemprop="name">{{ product.title }}</h1>
-        <div class="product-single__prices">
-          <span id="ProductPrice" class="product-single__price" itemprop="price">
-            {{ product.price | money }}
-          </span>
-
-          {% if product.compare_at_price > product.price %}
-            <s id="ComparePrice" class="product-single__sale-price">
-              {{ product.compare_at_price_max | money }}
-            </s>
+      <!-- This is color -->
+      <div id = "option2" class="option2"></div>
+      <!-- This is phone type -->
+      <select id = "option0" class="option0">
+        {% for similar_product in collections.all.products %}
+          {% if similar_product.title == product.title %}
+            <option {% if similar_product.type == product.type %} selected='selected' {% endif %} value='{{ shop.url }}{{ similar_product.url }}'>{{ similar_product.type }}</option>
           {% endif %}
-        </div>
+        {% endfor %}
+      </select>
 
-        <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
-          <select name="id" id="productSelect" class="product-single__variants">
-            {% for variant in product.variants %}
-              {% if variant.available %}
+      <!-- This is case type -->
+      <div id = "option1" class="option1"></div>
 
-                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money_with_currency }}</option>
-
-              {% else %}
-                <option disabled="disabled">
-                  {{ variant.title }} - {{ 'products.product.sold_out' | t }}
-                </option>
-              {% endif %}
-            {% endfor %}
-          </select>
-
-          <button type="submit" name="add" id="AddToCart" class="btn">
-            <span id="AddToCartText">Confirm and Add to Cart</span>
-          </button>
-        </form>
-
-        {% if settings.social_sharing_products %}
-          {% include 'social-sharing' %}
-        {% endif %}
+      <div class='product-mobile-description'>
+        <p>{{ product.description }}</p>
       </div>
+      {% if settings.social_sharing_products %}
+          
+        {% include 'social-sharing' %}
+          
+      {% endif %}
+      <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
+        <select name="id" id="productSelect" class="product-single__variants">
+          {% for variant in product.variants %}
 
-    {% else %}
-      <div class="wrapper success-add__container">
-        <div class="success-add__container-left">
-          <div class="success-add__itemcontainer">
-            <div id="item-yes" class="success-add__item">
-              <h1>✓</h1>
-            </div>
-            <div id="item-img" class="success-add__item">
-              <img id="item-subimg" src="{{ product.featured_image | img_url:'small'}}"/>
-            </div>
-            <div id="item-add" class="success-add__item">
-              <h4>Added to Cart</h4>
-            </div>
-          </div>
-          <div id="item-total" class="success-add__item">
-            <h4>Cart subtotal ({{ cart.item_count }} {{ cart.item_count | pluralize: 'Item', 'Items' }}): {{ cart.total_price | money }}</h4>
-          </div>
-        </div>
-        <div class="success-add__container-right">
-          <div id = "continue-shopping" class="success-add__item">
-            <a href="{{ product.collections[0].url }}"><button class = 'btn--secondary'>Continue Shopping</button></a>
-          </div>
-          <div id = "process-checkout" class="success-add__item">
-            <a href='/cart'><button class = 'btn'>Procceed to Checkout</button></a>
-          </div>
-        </div>
-      </div>
-    {% endif %}
+            <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.option1 }} @ {{ variant.option2 }} @ {{ variant.option3 }} @ {{ variant.image | img_url: 'large' }} @ {{ variant.price | money }}</option>
+
+          {% endfor %}
+        </select>
+        <h3 class='product-mobile-money'>{{ product.selected_variant.price | money }}</h3>
+        <input type="submit" name="add" id="AddToCart" value="ADD TO CART" style='width:265px;'/>
+      </form>
+    </div>
   </div>
 
   <hr/ class = "divider">
@@ -145,7 +87,7 @@
     <div class="section-header section-header--medium">
       <h4 class="section-header__title">Accessories</h4>
     </div>
-    <div class = "grid__collection">
+    <div class = "collection-regular">
       {% for product in acc_products limit: number_of_products_to_fetch %}
         {% unless forloop.last %}
           {% include 'product-grid-item' %}
@@ -154,37 +96,3 @@
     </div>
   {% endif %}
 </div>
-
-<div style="display:none;" class="woyc_wrapper"><div style="display:none;" class="woyc_barcode_holder">
-	{% for variant in product.variants %}
-		<div class="{{variant.id}}">{{variant.barcode}}</div>
-	{% endfor %}
-</div>
-
-{% assign gallery_ids = '' %}
- {% for tag in product.tags %}
-   {% if tag contains 'gallery_id_' %}
-     {% assign gallery_id = tag | replace: 'gallery_id_','' | append: ',' %}
-     {% assign gallery_ids = gallery_ids | append: gallery_id %}
-   {% endif %}
- {% endfor %}
- {% assign string_length = gallery_ids.size | minus: 1 %}
- {% assign gallery_ids = gallery_ids | slice: 0,string_length %}
- {% if gallery_ids != '' %}<div style='display:none;' class='woyc_gallery_ids'>&g={{ gallery_ids }}</div>{% endif %}</div>
-
-<div style="display:none;" class="woyc_wrapper"><div style="display:none;" class="woyc_barcode_holder">
-	{% for variant in product.variants %}
-		<div class="{{variant.id}}">{{variant.barcode}}</div>
-	{% endfor %}
-</div>
-
-{% assign gallery_ids = '' %}
- {% for tag in product.tags %}
-   {% if tag contains 'gallery_id_' %}
-     {% assign gallery_id = tag | replace: 'gallery_id_','' | append: ',' %}
-     {% assign gallery_ids = gallery_ids | append: gallery_id %}
-   {% endif %}
- {% endfor %}
- {% assign string_length = gallery_ids.size | minus: 1 %}
- {% assign gallery_ids = gallery_ids | slice: 0,string_length %}
- {% if gallery_ids != '' %}<div style='display:none;' class='woyc_gallery_ids'>&g={{ gallery_ids }}</div>{% endif %}</div>

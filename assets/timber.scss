@@ -108,8 +108,8 @@ $gridGutter: 30px;
 $radius: 2px;
 
 $small: 480px;
-$medium: 768px;
-$large: 769px;
+$medium: 767px;
+$large: 768px;
 
 
 $viewportIncrement: 1px;
@@ -193,17 +193,17 @@ $passwordPageUseBgImage: true;
 
 
 // Body Font
-$bodyFontStack: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+$bodyFontStack: "Open Sans", "HelveticaNeue", "Helvetica Neue", sans-serif;
 $baseFontSize: 14px;
 
 // Header Font
-$headerFontStack: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-$headerFontWeight: 700;
+$headerFontStack: "Open Sans", "HelveticaNeue", "Helvetica Neue", sans-serif;
+$headerFontWeight: 400,700;
 $headerBaseFontSize: 36px;
 
 // Navigation and buttons
-$accentFontStack: 'Helvetica Neue', Arial, Helvetica, sans-serif;
-$accentFontWeight: 400;
+$accentFontStack: "Open Sans", "HelveticaNeue", "Helvetica Neue", sans-serif;
+$accentFontWeight: 400,700;
 $accentFontSize: 14px;
 
 /*================ Global | Normalize ================*/
@@ -1202,7 +1202,7 @@ select {
           appearance: none;
   background-position: right center;
   background: {
-    image: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/ico-select.svg?11673651722449831326');
+    image: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/ico-select.svg?8364877292317807511');
     repeat: no-repeat;
     position: right 10px center;
     color: #fff;
@@ -1386,11 +1386,11 @@ label.error {
 /*================ Partials | Icons ================*/
 @font-face {
   font-family: 'icons';
-  src: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.eot?11673651722449831326');
-  src: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.eot?11673651722449831326#iefix') format("embedded-opentype"),
-       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.woff?11673651722449831326') format("woff"),
-       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.ttf?11673651722449831326') format("truetype"),
-       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.svg?11673651722449831326#timber-icons') format("svg");
+  src: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.eot?8364877292317807511');
+  src: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.eot?8364877292317807511#iefix') format("embedded-opentype"),
+       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.woff?8364877292317807511') format("woff"),
+       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.ttf?8364877292317807511') format("truetype"),
+       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.svg?8364877292317807511#timber-icons') format("svg");
   font-weight: normal;
   font-style: normal;
 }

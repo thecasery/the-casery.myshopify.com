@@ -1,0 +1,18 @@
+<div class="grid">
+
+  <div class="grid__item post-large--two-thirds push--post-large--one-sixth">
+
+    <div class="section-header">
+      <h1 class="section-header--title">{{ page.title }}</h1>
+    </div>
+    <div class="rte" style="text-align:center">
+      {{ page.content }}
+	  </div>
+
+  	<a href='{{ shop.url }}/collections/men/{{ page.title | handleize }}'><div style='width:49.5%; display:inline-block; border:1px solid orange; height: 300px; margin: 20px 0px;'>Boys</div></a>
+  	<a href='{{ shop.url }}/collections/women/{{ page.title | handleize }}'><div style='width:49.5%; display:inline-block; border:1px solid orange; height: 300px; margin: 20px 0px;'>Girls</div></a>
+  	<a href='{{ shop.url }}/collections/artist/{{ page.title | handleize }}'><div style='width:49.5%; display:inline-block; border:1px solid orange; height: 300px; margin: 20px 0px;'>Artists</div></a>
+  	<a href='{{ shop.url }}/collections/custom'><div style='width:49.5%; display:inline-block; border:1px solid orange; height: 300px; margin: 20px 0px;'>Custom</div></a>
+  </div>
+
+</div>

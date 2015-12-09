@@ -24,7 +24,7 @@
     {% assign grid_item_width = 'medium-down--one-half post-large--one-fifth' %}
 {% endcase %}
 
-<div class = "grid__collection">
+<div class = "collection-regular">
 
   {% for product in collections[featured].products limit: total_products %}
     {% include 'product-grid-item' %}

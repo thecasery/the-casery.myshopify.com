@@ -1,80 +1,22 @@
-{% unless grid_item_width %}
-  {% assign grid_item_width = 'wide--one-sixth large--one-quarter medium-down--one-half' %}
-{% endunless %}
-
-{% unless current_collection == blank %}
-  {% assign current_collection = collection %}
-{% endunless %}
-
 <!-- "grid__product is a specific grid class for this webpage, developed by Yang. Havn't integrate with original griding system" -->
 <div class = "grid__product">
-  <span class="grid-link__image grid-link__image--product">
-    {% if collection.title contains 'artist' and template contains 'collection' %}
-      <span class="grid-link__image-centered">
-        <img style='width:100px; height:100px;' src="{{ product.featured_image.src | img_url: 'small' }}" alt="{{ product.featured_image.alt | escape }}"/>
-      </span>
-    {% else %}
-    <a class='trigger__mobile' href='{{ product.url | within: collection }}'>
-      <p id='mobile_url' style='display:none'>{{ product.url | within: collection }}</p>
-      <span class="grid-link__image-centered">
-        <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" style='width:360px;'/>
-        <img class='product-img__second' src="{{ product.images[1].src | img_url: 'large' }}" alt="{{ product.images[1].alt | escape }}" style = "display:none; width:360px;"/>
-      </span>
-      <div class='grid__mobile-info' style='display:none; margin-top:5px; margin-bottom:20px;'>
-        <p class="grid-link__title">{{ product.title }}</p>
-        <p class="grid-link__title grid-link__vendor">{{ product.vendor }}</p>
-      </div>
-    </a>
-    {% endif %}
+  <span class="grid-link__image-centered">
+    <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" style=' cursor:pointer;' title='{{ product.url | within: collection }}'/>
   </span>
-  <div class="arrow-up"></div>
-  <!-- Shopping cart add button -->
-  <div class = 'inpage-cart' style = "display:none">
-    <h1 class = 'inpage-cart__close' style='color:#e0e0e0'>X</h1>
-    <div class = 'inpage-cart__copy-container wrapper'>
-      <div class = 'inpage-cart__left-container'>
-        <img class = 'back-img' src="{{ product.featured_image | img_url: 'large'}}" style='width:100%; max-width: 400px;'/>
-        <div id = "option3" class="option3">
-        </div>
-      </div>
+  <select name="id" id="productSelect" class="product-single__variants">
+    {% for variant in product.variants %}
 
-      <div class='inpage-cart__right-container'>
-        <h4 id='title' style='text-transform: uppercase;'>{{ product.title }}</h4>
-        <p id='artist' style='font:15px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
-        <h3 style='margin-top:-10px'>{{ product.price | money }}</h3>
+      <option {% if variant.title == product.featured_image.variants[0].title %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.option1 }} @ {{ variant.option2 }} @ {{ variant.option3 }} @ {{ variant.image | img_url: 'large' }} @ {{ variant.price | money }}</option>
 
-        <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" style='margin-bottom:0;'>
-          <select name="id" id="productSelect" class="product-single__variants">
-            {% for variant in product.variants %}
-
-                <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.id }} @ {{ variant.option1 }} @ {{ variant.option2 }} @ {{ variant.option3 }} @ {{ variant.image | img_url: 'large' }}</option>
-
-            {% endfor %}
-          </select>
-
-          <hr style='margin-bottom:10px; border-color: #e0e0e0;'/>
-          <div>
-            <img style='display:inline; width:16px; height:16px;' src="{{ 'favicon.png' | asset_url }}"/>
-            <p style='display:inline'>{{ product.description }}</p>
-          </div>
-          <hr style='margin-top:10px; border: 1px solid #e0e0e0;'/>
-
-          <p style='margin-top:-10px;'>{{ product.options[0] }}:</p>
-          <div style='margin-top:-10px; margin-bottom: 10px;'id = "option0" class="option0"></div>
-          <div style='margin-top:-10px;' id = "option1" class="option1"></div>
-
-          <select style='margin-top:10px;' id = "option2" class="option2"></select>
-          
-          <input type = "hidden" name = "return_to" value = "{{ product.url | within: collection }}"/>
-          <input type="submit" name="add" id="AddToCart" value="ADD TO CART" style='margin-top:15px;margin-bottom:20px;'/>
-
-          {% if settings.social_sharing_products %}
-            
-            {% include 'social-sharing' %}
-            
-          {% endif %}
-        </form>
-      </div>
-    </div>
+    {% endfor %}
+  </select>
+  <div id='option2' class='option2' style='display:none;'>
+  </div>
+  <div class='grid__mobile-info'>
+    <p id='color-number' class="grid-link__title"></p>
+    <hr style='border-color:#b0b0b0; margin-top:-5px; margin-bottom:4px;'/>
+    <p class="grid-link__title">{{ product.title }}</p>
+    <p class="grid-link__title grid-link__vendor">{{ collection.title }} {{ product.type }} Case</p>
+    <p id='grid__product-money' class="grid-link__meta"></p>
   </div>
 </div>

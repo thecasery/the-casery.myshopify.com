@@ -1,35 +1,190 @@
-{% if collection.title contains 'Lens' %}
-
-  <div class = "wrapper space-on-top">
-    {% for product in collection.products %}
-      <div class="grid__item {{grid_item_width}}{% if sold_out %} sold-out{% endif %}{% if on_sale %} on-sale{% endif %}">
-        <a href="{{ product.url | within: collection }}" class="grid-link{% if settings.collections_center_grid_link %} text-center{% endif %}">
-          <span class="grid-link__image grid-link__image--product">
-            <span class="grid-link__image-centered">
-              <img src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}">
-            </span>
-          </span>
-        </a>
-      </div>
-    {% else %}
-      <h1 style = 'text-align:center'>Oops.. No products!</h1>
-    {% endfor %}
-  </div>
-
-{% elsif collection.title contains 'Artist' %}
-  
-  {% include 'artist-collection' %}
-
-{% elsif collection.title contains 'Clear' or collection.title contains 'Snap' or collection.title contains 'Tough' or collection.title contains 'Accessory' %}
+{% if collection.title contains 'Men' or collection.title contains 'Women' or collection.title contains 'Accessory' or collection.title contains 'Artist' %}
   {% paginate collection.products by 24 %}
-    <div class = "grid__collection">
+    <div class = 'space-on-top wrapper'>
+      <div class='text-left' style='display:inline-block; width:49%;'>
+        {% unless collection.title contains 'Accessory' %}
+          <select id='phone-filter' style='display:inline-block; width: 150px;'>
+            {% for product_type in collection.all_types %}
+              <option value='{{ collection.url }}/{{ product_type | handleize }}' {% if current_tags contains product_type %}selected = 'selected'{% endif %}>{{ product_type }}</option>
+            {% endfor %}
+          </select>
+          <select id='collection-filter' style='display:inline-block; width: 150px;'>
+            {% for link in linklists.collections.links %}
+              <option value='{{ link.url }}' {% if link.title contains collection.title %}selected = 'selected'{% endif %}>{{ link.title }}</option>
+            {% endfor %}
+          </select>
+          <select id='case-filter' style='display:inline-block; width: 150px;'>
+            <option>Featured</option>
+            <option value='Clear' {% if current_tags contains 'Clear' %} selected='selected'{% endif %}>Clear</option>
+            <option value='Slim' {% if current_tags contains 'Slim' %} selected='selected'{% endif %}>Slim</option>
+            <option value='Protector' {% if current_tags contains 'Protector' %} selected='selected'{% endif %}>Protector</option>
+          </select>
+
+          <!-- Change of filter value -->
+          <script>
+            function jump_to_product_page(image){
+              var variant = image.parents('.grid__product').find('#productSelect').val();
+              var url = image.attr('title');
+              url = url + '?variant=' + variant;
+              window.location.href = url;
+            }
+
+            function init_thumbnails(product, start_pos, total_options, variants){
+              $('.active-option2').removeClass('active-option2');
+              product.find('#option2 div').remove();
+
+              var arr2 = new Array();
+              var i = 0;
+              for (; i < total_options && variants[i][0] != variants[start_pos][0]; i++);
+              for (; i < total_options && variants[i][0] == variants[start_pos][0]; i++){
+                var flag2 = true;
+                for (var j = 0; j < arr2.length; j++){
+                  if (arr2[j] == variants[i][1]){
+                    flag2 = false;
+                    break;
+                  }
+                }
+                if (flag2 && variants[i][1] != 'Null'){
+                  arr2.push(variants[i][1]);
+                  product.find('#option2').append("<div class='option2-outer-container' name='"+variants[i][1]+"' onmouseover=\"this.style.cursor='hand'\"><img style='width:88px; height:88px;' src='"+variants[i][3]+"'/></div>");
+                }
+              }
+
+              // reset start_pos for init_option2
+              var j = 0;
+              for (; j < arr2.length && arr2[j] != variants[start_pos][1]; j++);
+              product.find('#option2 .option2-outer-container img').eq(j).addClass('active-option2');
+              product.find('#productSelect').get(0).selectedIndex = start_pos;
+              product.find('#grid__product-money').text(variants[start_pos][4]);
+              // set color number
+              if (arr2.length <= 1){
+                product.find('#color-number').text('1 Color');
+              } else {
+                product.find('#color-number').text(arr2.length + ' Colors');
+              }
+            }
+
+            function init_grid_product(product){
+              var productSelect = product.find('#productSelect');
+              var product_options = productSelect.find('option');
+              var total_options = product_options.length;
+              var variants = new Array();
+
+              // string split, I use ' @ ' to seperate different options
+              for (var i = 0; i < total_options; i++){
+                var string = product_options.eq(i).text();
+                var t = string.split(' @ ');
+
+                variants.push(t);
+              }
+
+              var i = 0;
+              if ($('#case-filter').val() == 'Clear'){
+              } else if ($('#case-filter').val() == 'Slim'){
+                for (; i < total_options && variants[i][0] != 'Slim'; i++);
+              } else if ($('#case-filter').val() == 'Protector'){
+                for (; i < total_options && variants[i][0] != 'Protector'; i++);
+              } else if ($('#case-filter').val() == 'Featured'){
+                var img_url = product.find('.product-img').attr('src');
+                for (; i < total_options && variants[i][3] != img_url; i++);
+              }
+              product.find('.product-img').attr('src', variants[i][3]);
+              init_thumbnails(product, i, total_options, variants);
+
+              product.find('#option2').off('mouseover','.option2-outer-container').on('mouseover','.option2-outer-container',function(){
+                product.find('.product-img').attr('src', $(this).find('img').attr('src'));
+                change_thumbnail($(this), product, total_options, variants);
+              });
+
+              product.find('#option2').off('click','.option2-outer-container').on('click','.option2-outer-container',function(){
+                jump_to_product_page($(this).parents('.grid__product').find('.product-img'));
+              });
+            }
+
+            function change_thumbnail(option, product, total_options, variants){
+              // remove all active-image class which highlight the border, and we need to remove previous
+              $('.active-option2').removeClass('active-option2');
+              option.find('img').addClass('active-option2');
+
+              // After pre-set, find the first index that have the same picture url, that is the start of variant.option1
+              var new_option2_name = option.attr("name");
+              var current_index = product.find('#productSelect').get(0).selectedIndex;
+
+              var new_index = 0;
+              for (; new_index < total_options && variants[new_index][0] != variants[current_index][0]; new_index ++);
+              for (; new_index < total_options && variants[new_index][0] == variants[current_index][0] && variants[new_index][1] != new_option2_name; new_index++);
+
+              // initial option3
+              product.find('#productSelect').get(0).selectedIndex = new_index;
+              product.find('#grid__product-money').text(variants[new_index][4]);
+            }
+
+            $(document).ready(function(){
+              // default image
+              var products = $('.grid__product');
+              for (var i = 0; i < products.length; i++){
+                init_grid_product(products.eq(i));
+              }
+
+              $('#collection-filter').bind('change',function(){
+                var collection_link = $(this).val();
+                window.location.href = collection_link;
+              });
+
+              $('#phone-filter').bind('change',function(){
+                var product_type = $(this).val();
+                window.location.href = product_type;
+              });
+
+              $('#case-filter').unbind('change').bind('change',function(){
+                if ($(this).val() == 'Featured'){
+                  window.location.href = $('#phone-filter').val();
+                } else {
+                  window.location.href = $('#phone-filter').val() + '+' + $(this).val();
+                }
+              });
+
+              $('.product-img').off('click').on('click',function(){
+                jump_to_product_page($(this));
+              });
+
+              $('.product-img').off('mouseover').on('mouseover',function(){
+                var product = $(this).parents('.grid__product');
+                product.find('#option2').css('display','block');
+              });
+
+              $('.grid__product').off('mouseenter').on('mouseenter',function(){
+                var product = $(this);
+                var l = product.offset().left;
+                var t = product.offset().top;
+                $('<div id="test" style="height:385px; width:300px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+                product.addClass('active-grid__product');
+                product.css('left', l);
+                product.css('top', t);
+              });
+
+              $('.grid__product').off('mouseleave').on('mouseleave',function(){
+                var product = $(this);
+                product.find('#option2').css('display','none');
+                product.removeClass('active-grid__product');
+                $('#test').remove();
+              });
+            });
+          </script>
+        {% endunless %}
+      </div>
+      <div class='text-right' style='display:inline-block; width:50%;'>
+        {% include 'collection-sorting' %}
+      </div>
+    </div>
+    <div class = "collection-regular wrapper">
       {% for product in collection.products %}
       
         {% include 'product-grid-item' %}
 
       {% else %}
 
-        <h1 style = 'text-align:center'>Oops.. No products!</h1>
+        <h1 class = 'text-center'>Oops.. No products!</h1>
 
       {% endfor %}
     </div>

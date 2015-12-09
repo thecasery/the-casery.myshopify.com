@@ -7,6 +7,24 @@
 {% if settings.show_promo_image_5 %}{% assign index = index | plus: 1 %}{% endif %}
 
 {% unless index == 0 %}
+  <div class='autoscale__div' style='margin-bottom:4px;'>
+    {% capture promo_image %}promo_image_5.jpg{% endcapture %}
+    {% capture promo_image_link %}promo_image_5_link{% endcapture %}
+    <img class='autoscale__elem' src='{{ promo_image | asset_url }}'/>
+  </div>
+
+  {% for i in (1..4) %}
+    {% capture promo_image %}promo_image_{{ i }}.jpg{% endcapture %}
+    {% capture promo_image_link %}promo_image_{{ i }}_link{% endcapture %}
+    <div class='autoscale__sub-div'>
+      <img class='autoscale__sub-elem' src='{{ promo_image | asset_url }}'/>
+    </div>
+  {% endfor %}
+
+
+
+
+  {% comment %}
   {% for i in (1..5) %}
     {% capture promo_image %}promo_image_{{ i }}.jpg{% endcapture %}
     {% capture promo_image_link %}promo_image_{{ i }}_link{% endcapture %}
@@ -16,14 +34,14 @@
 
     {% if settings[show_promo_image] %}
       <div id='front-pg-img-description-{{i}}' class='front-pg-img-description'>
-        <h1 class='uppercase' style='letter-spacing:5px; font-weight:300;'>{{ settings[promo_image_header] }}</h1>
-        <p>{{ settings[promo_image_intro] }}</p>
-        <a style='font-size:20px;' href='{{ settings[promo_image_link] }}'>Shop Now</a>
+        <h1 class='uppercase' style='font-weight: 500; letter-spacing: -0.8px;'>{{ settings[promo_image_header] }}</h1>
+        <p >{{ settings[promo_image_intro] }}</p>
+        <a href='{{ settings[promo_image_link] }}'>Shop Now</a>
       </div>
-      <div id='front-pg-img-{{i}}' class='autoscale__div' style="overflow:hidden;">
+      <div id='front-pg-img-{{i}}' class='autoscale__div'>
         <img class='autoscale__elem' src="{{ promo_image | asset_url }}">
       </div>
     {% endif %}
   {% endfor %}
-
+  {% endcomment %}
 {% endunless %}

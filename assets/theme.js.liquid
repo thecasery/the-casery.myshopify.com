@@ -107,26 +107,27 @@ function init_option3(product, start_pos, total_options, variants){
   product.find('.dot').remove();
 
   var arr3 = new Array();
-  for (var i = start_pos; i < total_options && variants[i][0] == variants[start_pos][0] && variants[i][1] == variants[start_pos][1] && variants[i][2] == variants[start_pos][2]; i++){
+  for (var i = start_pos; i < total_options && variants[i][0] == variants[start_pos][0] && variants[i][1] == variants[start_pos][1]; i++){
     var flag3 = true;
     for (var j = 0; j < arr3.length; j++){
-      if (arr3[j] == variants[i][3]){
+      if (arr3[j] == variants[i][2]){
         flag3 = false;
         break;
       }
     }
     if (flag3){
-      arr3.push(variants[i][3]);
-      product.find('#option3').append("<div class='thumbnail-img'><img style='display:inline; width:18%;' src='"+variants[i][4]+"' /></div>");
-      if (document.documentElement.clientWidth <= 768){
+      arr3.push(variants[i][2]);
+      product.find('#option3').append("<div class='thumbnail-img'><img style='display:block; width:100%;' src='"+variants[i][3]+"' /></div>");
+      if (document.documentElement.clientWidth <= 767){
         product.find('.slider-dots').append('<li class="dot">&bull;</li>');
       }
     }
   }
+
   // reset '.back-img', '.active-option3', reset social media
   product.find('#option3 img').first().addClass("active-option3");
   product.find('.back-img').attr("src", $('.active-option3').attr("src"));
-  if (document.documentElement.clientWidth <= 768){
+  if (document.documentElement.clientWidth <= 767){
     product.find('.dot').first().addClass('active-dot');
     product.find('.slider-dots').css('left',$('.back-img').offset().left + ($('.back-img').width() - $('.slider-dots').width() + 10) / 2);
     product.find('.slider-dots').css('top',$('.back-img').offset().top + $('.back-img').height() - 50);
@@ -136,75 +137,63 @@ function init_option3(product, start_pos, total_options, variants){
 
 // initial option2 value, which is phone type
 function init_option2(product, start_pos, total_options, variants){
-  product.find('#option2 option').remove();
+  // remove previous image
+  $('.active-option2').removeClass('active-option2');
+  product.find('#option2 div').remove();
+
   var arr2 = new Array();
-  for (var i = start_pos; i < total_options && variants[i][0] == variants[start_pos][0] && variants[i][1] == variants[start_pos][1]; i++){
+  var i = 0;
+  for (; i < total_options && variants[i][0] != variants[start_pos][0]; i++);
+  for (; i < total_options && variants[i][0] == variants[start_pos][0]; i++){
     var flag2 = true;
     for (var j = 0; j < arr2.length; j++){
-      if (arr2[j] == variants[i][2]){
+      if (arr2[j] == variants[i][1]){
         flag2 = false;
         break;
       }
     }
-    if (flag2){
-      arr2.push(variants[i][2]);
-      product.find('#option2').append("<option value='"+i+"'>"+variants[i][2]+"</option>");
+    if (flag2 && variants[i][1] != 'Null'){
+      arr2.push(variants[i][1]);
+      product.find('#option2').append("<div class='option2-outer-container' name='"+variants[i][1]+"' onmouseover=\"this.style.cursor='hand'\"><img style='width:88px; height:88px;' src='"+variants[i][3]+"'/></div>");
     }
   }
 
-  // reset start_pos for init_option3, reset selectIndex for hidden select & option2 select
+  // reset start_pos for init_option2
+  var j = 0;
+  for (; j < arr2.length && arr2[j] != variants[start_pos][1]; j++);
+  product.find('#option2 .option2-outer-container img').eq(j).addClass('active-option2');
   product.find('#productSelect').get(0).selectedIndex = start_pos;
-  product.find('#option2').get(0).selectedIndex = 0; 
+  
+  // change money and init option3
+  product.find('.product-pc-money').text(variants[start_pos][4]);
+  product.find('.product-mobile-money').text(variants[start_pos][4]);
   init_option3(product, start_pos, total_options, variants);
 }
 
-// initial option1 value, which is phone style
+// initial option1 value, which is case type
 function init_option1(product, start_pos, total_options, variants){
-  // remove previous image
   $('.active-option1').removeClass('active-option1');
   product.find('#option1 div').remove();
 
   var arr1 = new Array();
-  for (var i = start_pos; i < total_options && variants[i][0] == variants[start_pos][0]; i++){
+  for (var i = 0; i < total_options; i++){
     var flag1 = true;
     for (var j = 0; j < arr1.length; j++){
-      if (arr1[j] == variants[i][1]){
+      if (arr1[j] == variants[i][0]){
         flag1 = false;
         break;
       }
     }
     if (flag1){
-      arr1.push(variants[i][1]);
-      product.find('#option1').append("<div class='option1-outer-container' name='"+variants[i][1]+"' onmouseover=\"this.style.cursor='hand'\"><div style='background-color:"+variants[i][1]+"; width:25px; height:25px;'></div></div>");
+      arr1.push(variants[i][0]);
+      product.find('#option1').append("<div id='"+variants[i][0]+"' class='option1-btn'><p>"+variants[i][0]+"</p></div>");
     }
   }
 
-  // reset start_pos for init_option2
-  product.find('#option1 .option1-outer-container').first().addClass('active-option1');
-  init_option2(product, start_pos, total_options, variants);
-}
-
-// initial option0 value, which is case type
-function init_option0(product, start_pos, total_options, variants){
-  $('.active-option0').removeClass('active-option0');
-  product.find('#option0 div').remove();
-
-  var arr0 = new Array();
-  for (var i = start_pos; i < total_options; i++){
-    var flag0 = true;
-    for (var j = 0; j < arr0.length; j++){
-      if (arr0[j] == variants[i][0]){
-        flag0 = false;
-        break;
-      }
-    }
-    if (flag0){
-      arr0.push(variants[i][0]);
-      product.find('#option0').append("<div id='"+variants[i][0]+"' class='option0-btn'><p>"+variants[i][0]+"</p></div>");
-    }
-  }
-
-  product.find('#option0 .option0-btn').first().addClass('active-option0');
+  var i = 0, j = 0;
+  for (; i < total_options && variants[i][0] != variants[start_pos][0]; i++);
+  for (; j < arr1.length && arr1[j] != variants[start_pos][0]; j++);
+  product.find('#option1 .option1-btn').eq(j).addClass('active-option1');
   init_option2(product, start_pos, total_options, variants);
 }
 
@@ -214,40 +203,31 @@ function init_variants(product){
   var product_options = productSelect.find('option');
   var total_options = product_options.length;
   var variants = new Array();
-  var casetype = false;
 
   // string split, I use ' @ ' to seperate different options
   for (var i = 0; i < total_options; i++){
     var string = product_options.eq(i).text();
     var t = string.split(' @ ');
-    // if there's casetype, then we need to split the first option1 string
-    if (t[1].indexOf('Snap') >= 0 || t[1].indexOf('Tough') >= 0 || t[1].indexOf('Clear') >= 0){
-      t[0] = t[1];
-      t[1] = 'empty';
-      casetype = true;
-    } else {
-      t[0] = 'empty';
-      casetype = false;
-    }
+
     variants.push(t);
   }
 
-  // if there's casetype, we need to enable button
-  if (casetype){
-    init_option0(product, 0, total_options, variants);
-    product.find('#option1').css('display','none');
-  } else {
-    init_option1(product, 0, total_options, variants);
-    product.find('#option0').css('display','none');
-  }
+  init_option1(product, product.find('#productSelect').get(0).selectedIndex, total_options, variants);
 }
 
 
 /* Part 2 : Updating */
 // update option0
-function change_option0(option, cart, total_options, variants){
-  $('.active-option0').removeClass('active-option0');
-  option.addClass('active-option0');
+function change_option0(product){
+  var new_phone_type_url = product.find('#option0').val();
+
+  window.location.href = new_phone_type_url;
+}
+
+// update option1
+function change_option1(option, cart, total_options, variants){
+  $('.active-option1').removeClass('active-option1');
+  option.addClass('active-option1');
 
   var new_option0_name = option.attr('id');
   var new_index = 0;
@@ -257,31 +237,24 @@ function change_option0(option, cart, total_options, variants){
   init_option2(cart, new_index, total_options, variants);
 }
 
-// update option1
-function change_option1(option, cart, total_options, variants){
-    // remove all active-image class which highlight the border, and we need to remove previous
-    $('.active-option1').removeClass('active-option1');
-    option.addClass('active-option1');
-
-    // After pre-set, find the first index that have the same picture url, that is the start of variant.option1
-    var new_option1_name = option.attr("name");
-    var current_index = cart.find('#productSelect').get(0).selectedIndex;
-
-    var new_index = 0;
-    for (; new_index < total_options && variants[new_index][0] != variants[current_index][0]; new_index ++);
-    for (; new_index < total_options && variants[new_index][0] == variants[current_index][0] && variants[new_index][1] != new_option1_name; new_index++);
-
-    // initial option2
-    init_option2(cart, new_index, total_options, variants);
-}
-
 // update option2
 function change_option2(option, cart, total_options, variants){
-  // find new index
-  var new_index = cart.find('#option2').val();
-  cart.find('#productSelect').get(0).selectedIndex = new_index;
+  // remove all active-image class which highlight the border, and we need to remove previous
+  $('.active-option2').removeClass('active-option2');
+  option.find('img').addClass('active-option2');
+
+  // After pre-set, find the first index that have the same picture url, that is the start of variant.option1
+  var new_option2_name = option.attr("name");
+  var current_index = cart.find('#productSelect').get(0).selectedIndex;
+
+  var new_index = 0;
+  for (; new_index < total_options && variants[new_index][0] != variants[current_index][0]; new_index ++);
+  for (; new_index < total_options && variants[new_index][0] == variants[current_index][0] && variants[new_index][1] != new_option2_name; new_index++);
 
   // initial option3
+  cart.find('#productSelect').get(0).selectedIndex = new_index;
+  cart.find('.product-pc-money').text(variants[new_index][4]);
+  cart.find('.product-mobile-money').text(variants[new_index][4]);
   init_option3(cart, new_index, total_options, variants);
 }
 
@@ -332,43 +305,34 @@ function product_click(cart){
   var product_options = productSelect.find('option');
   var total_options = product_options.length;
   var variants = new Array();
-  var casetype = false;
 
   // string split, I use ' @ ' to seperate different options
   for (var i = 0; i < total_options; i++){
     var string = product_options.eq(i).text();
     var t = string.split(' @ ');
-    // if there's casetype, then we need to split the first option1 string
-    if (t[1].indexOf('Snap') >= 0 || t[1].indexOf('Tough') >= 0 || t[1].indexOf('Clear') >= 0){
-      t[0] = t[1];
-      t[1] = 'empty';
-      casetype = true;
-    } else {
-      t[0] = 'empty';
-      casetype = false;
-    }
+
     variants.push(t);
   }
 
   /* change value of option 0 */
-  cart.find('#option0').off('click','.option0-btn').on('click', '.option0-btn', function(){
-    change_option0($(this), cart, total_options, variants);
+  // don't forget to off everything before register new event, to avoid multiple calls
+  cart.find('#option0').unbind('change').change(function(){
+    change_option0(cart);
   });
 
   /* change value of option 1 */
-  cart.find('#option1').off('click','.option1-outer-container').on('click', '.option1-outer-container', function(){
+  cart.find('#option1').off('click','.option1-btn').on('click', '.option1-btn', function(){
     change_option1($(this), cart, total_options, variants);
   });
 
-  /* change value of option2 */
-  // don't forget to off everything before register new event, to avoid multiple calls
-  cart.find('#option2').unbind('change').change(function(){
+  /* change value of option 2 */
+  cart.find('#option2').off('click','.option2-outer-container').on('click', '.option2-outer-container', function(){
     change_option2($(this), cart, total_options, variants);
   });
 
-  /* change value of option3 */
+  /* change value of option 3 */
   //This is easy, just image change. But note that JQuery 1.7+ use 'on' method to replace bind, delegate, etc.
-  if (document.documentElement.clientWidth > 768){
+  if (document.documentElement.clientWidth > 767){
     cart.find('#option3').off('click','img').on('click','img',function(){
       change_option3($(this), cart, total_options, variants);
     });
@@ -402,93 +366,6 @@ function product_click(cart){
       yDown = null; 
     });
   }
-}
-
-var inpage_shopping_cart_off = function(){
-  $('.grid__product').off('click','.inpage-cart__close');
-  $('.grid__product').off('click','.grid-link__image-centered');
-  $('.grid__product').off('hover');
-}
-
-/* This is the main function of shopping cart */
-var inpage_shopping_cart_on = function(){
-  /* Here's main part of animation
-   * Besides regular slideUp & Down, we need to check if current product posistion vs. previous product
-   * if ==, just change content, no animation
-   * if <>, the screen should animate accordingly
-   * BTW, current_activate is used to determine whether a new cart should be slide down;
-   * different_product is used to detect whether two product are the same
-  */
-  // When user clicking close button at top-right of slide-down cart
-  $('.grid__product').off('click','.inpage-cart__close').on('click','.inpage-cart__close',function(){
-    $('.active-product').find('.arrow-up').animate({opacity : 0}, 'middle');
-    $('.active-cart').removeClass('active-cart').slideUp('middle');
-    $("html, body").animate({ scrollTop: $('.active-product').offset().top - 80 }, 'middle');
-    $('.active-product').removeClass('active-product');
-  });
-
-  $('.grid__product').off('click','.grid-link__image-centered').on('click','.grid-link__image-centered',function(){
-    var current_activate, different_product = false;
-    var prev_pos;
-    if ($(this).parents('.grid__product').hasClass('active-product')){
-      current_activate = false;
-    }
-    else{
-      current_activate = true;
-      if ($('.active-product').hasClass('active-product')){
-        prev_pos = $('.active-product').offset().top;
-        different_product = true;
-      } else {
-        prev_pos = $(this).parents('.grid__product').offset().top;
-      }
-    }
-    // slide up previous cart
-    $('.active-product').find('.arrow-up').animate({opacity : 0}, 'middle');
-    $('.active-product').removeClass('active-product');
-    if (different_product && prev_pos == $(this).parents('.grid__product').offset().top){
-      $('.active-cart').removeClass('active-cart').css('display','none');
-    } else {
-      $('.active-cart').removeClass('active-cart').slideUp('middle');
-    }
-
-    // slide down new cart
-    if (current_activate){
-      var cart = $(this).parents('.grid__product').find('.inpage-cart');
-
-      $(this).parents('.grid__product').find('.arrow-up').animate({opacity : 1}, 'middle');
-      $(this).parents('.grid__product').addClass('active-product');
-      if (different_product && prev_pos == $(this).parents('.grid__product').offset().top){
-        $(this).parents('.grid__product').find('.inpage-cart').addClass('active-cart').css('display','block');
-      } else {
-        $(this).parents('.grid__product').find('.inpage-cart').addClass('active-cart').slideDown("middle");
-      }
-      // screen scroll
-      $('.active-cart').css("width", document.documentElement.clientWidth);
-      $('.active-cart').css("margin-left", 0 - $('.active-product').offset().left - 10);
-      if (prev_pos == $('.active-product').offset().top){
-        $("html, body").animate({ scrollTop: cart.offset().top - 80 }, 'middle');
-      } else if (prev_pos < $('.active-product').offset().top){
-        $("html, body").animate({ scrollTop: cart.offset().top - 735}, "middle");
-      } else {
-        $("html, body").animate({ scrollTop: cart.offset().top - 80}, "middle");
-      }
-      init_variants(cart);
-      product_click(cart);
-
-      /* Small change on slide-down cart alignment */
-      cart.css("width", document.documentElement.clientWidth);
-      cart.css("margin-left", 0 - cart.parent().offset().left);
-    }
-  });
-
-  // When user hovering product, change picture
-  $('.grid__product').hover(function(){
-    $(this).find('.product-img').css('display','none');
-    $(this).find('.product-img__second').css('display','block');
-  }, function(){
-    $(this).find('.product-img__second').css('display','none');
-    $(this).find('.product-img').css('display','block');
-  });
 }
 
 /* artist_page animation*/
@@ -612,7 +489,7 @@ var carousel_setting = function(){
 var autoscale_picture = function(){
   var picture_height, picture_width, margin_top, margin_left; 
   var mobile_device = false;  
-  if (document.documentElement.clientWidth <= 768){
+  if (document.documentElement.clientWidth <= 767){
     mobile_device = true;
   } else {
     mobile_device = false;
@@ -637,7 +514,7 @@ var autoscale_picture = function(){
     $('.slider-nav').css('left', ($('.slide-img').width()-180) / 2);
   } else {
     // At this point, pic_width & height are screen size, used to set div size.
-    picture_height = document.documentElement.clientHeight;
+    picture_height = document.documentElement.clientHeight - 300;
     picture_width = document.documentElement.clientWidth;
     $('.autoscale__div').css('height', picture_height);
     $('.autoscale__div').css('width', picture_width);
@@ -653,7 +530,7 @@ var autoscale_picture = function(){
     }
 
     // calculate margin to adjust picture position, make it at center.
-    margin_top = (document.documentElement.clientHeight - picture_height) / 2;
+    margin_top = (document.documentElement.clientHeight - picture_height - 300) / 2;
     margin_left = (document.documentElement.clientWidth - picture_width) / 2;
 
     // This is a side function, just to adjust slider's navigation-bar position
@@ -678,62 +555,6 @@ var autoscale_picture = function(){
 };
 
 var autoscale_element=function(){
-  var page_type           = $('#page-type').text();
-  var current_device_type = $('#device-type').text();
-  var page_width          = document.documentElement.clientWidth;
-
-  if (page_type.indexOf('index') >= 0){
-    autoscale_picture();
-  }
-  if (current_device_type.indexOf('mobile') >= 0 && page_width > 768){
-    $('#device-type').text('desktop');
-  } else if (current_device_type.indexOf('desktop') >= 0 && page_width <= 768){
-    $('#device-type').text('mobile');
-  }
-  
-  if (page_type.indexOf('artist-single') >= 0){
-    if (current_device_type.indexOf('mobile') >= 0 && page_width > 768){
-      $('.artist-content').css('display','block');
-      $('.mobile-artist-content').css('display','none');
-    } else if (current_device_type.indexOf('desktop') >= 0 && page_width <= 768){
-      $('.artist-content').css('display','none');
-      $('.mobile-artist-content').css('display','block');
-    }
-  } else if (page_type.indexOf('collection-regular') >= 0 || page_type.indexOf('index') >= 0){
-    if (current_device_type.indexOf('mobile') >= 0 && page_width > 768){
-      $('.trigger__mobile').attr('href','javascript:void(0)');
-      inpage_shopping_cart_on();
-    } else if (current_device_type.indexOf('desktop') >= 0 && page_width <= 768){
-      inpage_shopping_cart_off();
-      $('.grid__mobile-info').css('display','block');
-      $('.arrow-up').css('display','none');
-
-      // copy url
-      var trigger = $('.trigger__mobile');
-      for (var i = 0; i < trigger.length; i++){
-        trigger.eq(i).attr('href', trigger.eq(i).find('#mobile_url').text());
-      }
-    }
-  } else if (page_type.indexOf('product') >= 0){
-    if (current_device_type.indexOf('mobile') >= 0 && page_width > 768){
-      $('.trigger__mobile').attr('href', 'javascript:void(0)');
-      $('.mobile-shopping-cart').css('display','none');
-      $('.success-add__container').css('display','block');
-      inpage_shopping_cart_on();
-    } else if (current_device_type.indexOf('desktop') >= 0 && page_width <= 768){
-      inpage_shopping_cart_off();
-      $('.grid__mobile-info').css('display','block');
-      $('.mobile-shopping-cart').css('display','block');
-      $('.success-add__container').css('display','none');
-      $('.arrow-up').css('display','none');
-
-      // copy url
-      var trigger = $('.trigger__mobile');
-      for (var i = 0; i < trigger.length; i++){
-        trigger.attr('href', trigger.find('#mobile_url').text());
-      }
-    }
-  }
 }
 
 var page_init = function(){
@@ -759,7 +580,7 @@ var page_init = function(){
   $('#page-type').text(page_type);
 
   // init device type
-  if (page_width > 768){
+  if (page_width > 767){
     $('#device-type').text('desktop');
   } else {
     $('#device-type').text('mobile');
@@ -777,7 +598,7 @@ var page_init = function(){
       product_click(cart);
     }
 
-    if (page_width > 768){
+    if (page_width > 767){
       $('.artist-content').css('display','block');
       $('.mobile-artist-content').css('display','none');
     } else {
@@ -785,46 +606,26 @@ var page_init = function(){
       $('.mobile-artist-content').css('display','block');
     }
   } else if (page_type.indexOf('collection-regular') >= 0){
-    if (page_width > 768){
-      $('.trigger__mobile').attr('href','javascript:void(0)');
-      inpage_shopping_cart_on();
-    } else {
-      inpage_shopping_cart_off();
-      $('.grid__mobile-info').css('display','block');
-      $('.arrow-up').css('display','none');
-    }
-
   } else if (page_type.indexOf('product') >= 0){
-    var cart=$('.mobile-shopping-cart');
-    init_variants(cart);
-    product_click(cart);
+    var product=$('.product-container');
+    init_variants(product);
+    product_click(product);
 
-    if (page_width > 768){
-      $('.trigger__mobile').attr('href', 'javascript:void(0)');
-      $('.mobile-shopping-cart').css('display','none');
-      $('.success-add__container').css('display','block');
-      inpage_shopping_cart_on();
-    } else {
-      inpage_shopping_cart_off();
-      $('.grid__mobile-info').css('display','block');
-      $('.mobile-shopping-cart').css('display','block');
-      $('.success-add__container').css('display','none');
-      $('.arrow-up').css('display','none');
-    }
   } else if (page_type.indexOf('index') >= 0){
-    if (page_width > 768){
-      $('.trigger__mobile').attr('href','javascript:void(0)');
-      inpage_shopping_cart_on();
-    } else {
-      inpage_shopping_cart_off();
-      $('.grid__mobile-info').css('display','block');
-      $('.arrow-up').css('display','none');
-    }
 
     carousel_setting();
     autoscale_picture();
   }
 
+  $('.header-bar__link').off('mouseover').on('mouseover',function(){
+    $(this).find('.header-bar__sublink').css('display','block');
+  });
+
+  $('.header-bar__link').off('mouseleave').on('mouseleave',function(){
+    $(this).find('.header-bar__sublink').css('display','none');
+  });
+
+  $('#device-width').text(document.documentElement.clientWidth);
   window.onresize = autoscale_picture;
 }
 

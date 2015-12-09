@@ -77,7 +77,7 @@
 
                 {% unless item.variant.title contains 'Default' %}
                   <br>
-                  <small class="variant_title">{{ item.variant.option1 }} / {{ item.variant.option2 }} - {{ item.product.type }}</small>
+                  <small class="variant_title">{{ item.product.type }} / {{ item.variant.option1 }} - {{ item.variant.option2 }}</small>
                 {% endunless %}
                 {% if settings.cart_vendor_enable %}
                   <p>{{ item.vendor }}</p>

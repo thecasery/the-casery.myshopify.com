@@ -7,7 +7,30 @@
 
     <div class='header-bar__module header-bar__lists'>
       {% for link in linklists.main-menu.links %}
-        <a href="{{ link.url }}" class="{% if link.active %}header-bar__link-active{% endif %}">{{ link.title }}</a>
+        {% assign child_list_handle = link.title | handleize %}
+        <!-- Case 1: The link contains a sublink-list -->
+        {% if linklists[child_list_handle].links != blank %}
+          <div class='header-bar__link'>
+            <a>
+              {{ link.title }}
+              <span class="icon-fallback-text">
+                <span class="icon icon-arrow-down" aria-hidden="true"></span>
+              </span>
+            </a>
+            <div class='header-bar__sublink' style='background-color:black; display:none; position:absolute; text-align:left; padding-left:20px; padding-top: 10px; z-index:9999;'>
+              {% for childlink in linklists[child_list_handle].links %}
+                <div style='height:50px; width:200px;'>
+                  <a href="{{ childlink.url }}" class="{% if childlink.active %}header-bar__link-active{% endif %}">{{ childlink.title }}</a>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        <!-- Case 2: Regular link -->
+        {% else %}
+          <div class='header-bar__link'>
+            <a href="{{ link.url }}" class="{% if link.active %}header-bar__link-active{% endif %}">{{ link.title }}</a>
+          </div>
+        {% endif %}
       {% endfor %}
     </div>
         
@@ -19,12 +42,6 @@
         <span class="{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span>
       </a>
     </div>
-
-    {% if settings.header_search_enable %}
-      <div class="header-bar__module header-bar__search">
-        {% include 'search-bar' with 'header' %}
-      </div>
-    {% endif %}
   </div>
 
   <!-- This is mobile version (Dropdown Menu, favicon, cart) -->
