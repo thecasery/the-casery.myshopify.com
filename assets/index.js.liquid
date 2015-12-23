@@ -1,0 +1,167 @@
+// slider
+var next_pic = function(){
+  $('.slide-img').stop(true, true);
+  var currentSlide = $('.active-img'),
+      currentDot = $('.active-dot'),
+      nextDot = currentDot.next();
+      nextSlide = currentSlide.next();
+  if (nextDot.length == 0){
+      nextSlide = $('.slide-img').first();
+      nextDot = $('.dot').first();
+  }
+  
+  // animation: The front_slide is crutial, fix the position of the small number picture.
+  // Otherwise, the small element cannot on top of large number element.
+  var front_slide = (currentSlide.index() < nextSlide.index()) ? (currentSlide) : (nextSlide);
+  front_slide.css("position", "absolute");
+
+  nextSlide.addClass('active-img').fadeIn("slow", function(){
+      currentSlide.removeClass('active-img').css("display","none");
+      front_slide.css("position","static");
+  });
+  
+  currentDot.removeClass('active-dot');
+  nextDot.addClass('active-dot');
+}
+
+var prev_pic = function(){
+  $('.slide-img').stop(true, true);
+  var currentSlide = $('.active-img'),
+      currentDot = $('.active-dot'),
+      prevDot = currentDot.prev();
+      prevSlide = currentSlide.prev();
+  if (prevDot.length == 0){
+      prevSlide = $('.slide-img').last();
+      prevDot = $('.dot').last();
+  }
+  
+  //animation
+  var front_slide = (currentSlide.index() < prevSlide.index()) ? (currentSlide) : (prevSlide);
+  front_slide.css("position", "absolute");
+  prevSlide.addClass('active-img').fadeIn("slow", function(){
+    currentSlide.removeClass('active-img').css("display","none");
+    front_slide.css("position","static");
+  });
+  
+  currentDot.removeClass('active-dot');
+  prevDot.addClass('active-dot');
+}
+
+// click on dot to change pictures
+var change_pic = function(){
+  $('.slide-img').stop(true, true);
+  var currentSlide = $('.active-img'),
+      currentDot = $('.active-dot'),
+      nextDot = currentDot,
+      nextSlide = currentSlide;
+
+  if ($(this).hasClass('active-dot')) return;
+
+  // index technique, very important
+  var index = $(this).index();
+  nextDot = $('.dot').eq(index);
+  nextSlide = $('.slide-img').eq(index);
+
+  //animation
+  var front_slide = (currentSlide.index() < nextSlide.index()) ? (currentSlide) : (nextSlide);
+  front_slide.css("position", "absolute");
+  nextSlide.addClass('active-img').fadeIn("slow", function(){
+    currentSlide.removeClass('active-img').css("display","none");
+    front_slide.css("position","static");
+  });
+  
+  currentDot.removeClass('active-dot');
+  nextDot.addClass('active-dot');
+}
+
+var carousel_setting = function(){
+  // Initialization of first image and dot, interval time
+  $(".dot").first().addClass('active-dot');
+  $(".slide-img").first().css("display","block");
+  $(".slide-img").first().addClass('active-img');
+
+  var speed = {{ settings.slider_home_rate }};
+  var auto_slide = setInterval(next_pic, speed);
+
+  $('.arrow-next').click(next_pic);
+  $('.arrow-prev').click(prev_pic);
+  $('.dot').click(change_pic);
+  $('.slider-nav').hover(function(){
+    clearInterval(auto_slide);
+  }, function(){
+    auto_slide = setInterval(next_pic, speed);
+  });
+}
+
+/* Belowing is implemented by Yang Wang @thecasery.Inc 2015 */
+
+/* The autoscale element function is used for adjusting picture size and location according to screen size.
+ * The container size is set to current screen size.
+ * The inside element size is set to 2:1. if it's largger than 2:1, we cut some of the width;
+ *   if it's smaller than 2:1, we cut some of the height.
+ * 
+ * To realize this function, don't forget to set container "overflow:hidden", and use margin to set element position.
+ */
+var autoscale_picture = function(){
+  var picture_height, picture_width, margin_top, margin_left; 
+  var mobile_device = false;  
+  if (document.documentElement.clientWidth <= 767){
+    mobile_device = true;
+  } else {
+    mobile_device = false;
+  }
+
+  if (mobile_device){
+    picture_width = document.documentElement.clientWidth;
+    picture_height = picture_width;
+    $('.autoscale__div').css('height', picture_height);
+    $('.autoscale__div').css('width', picture_width);
+
+    if (picture_height * 2.78 < picture_width) {
+      picture_height = picture_width / 2.78;
+    } else {
+      picture_width = picture_height * 2.78;
+    }
+    margin_top = ($('.autoscale__div').height() - picture_height) / 2;
+    margin_left = (document.documentElement.clientWidth - picture_width) / 2;
+
+    // This is a side function, just to adjust slider's navigation-bar position
+    $('.slider-nav').css('top', $('.slide-img').height() - 30);
+    $('.slider-nav').css('left', ($('.slide-img').width()-180) / 2);
+  } else {
+    // At this point, pic_width & height are screen size, used to set div size.
+    picture_height = document.documentElement.clientHeight - 300;
+    picture_width = document.documentElement.clientWidth;
+    $('.autoscale__div').css('height', picture_height);
+    $('.autoscale__div').css('width', picture_width);
+
+    // Adjust picture width:height to 2:1
+    if (picture_height < 431 && picture_width < 1200) {
+      picture_height = 431;
+      picture_width = 1200;
+    } else if (picture_height * 2.78 < picture_width) {
+      picture_height = picture_width / 2.78;
+    } else {
+      picture_width = picture_height * 2.78;
+    }
+
+    // calculate margin to adjust picture position, make it at center.
+    margin_top = (document.documentElement.clientHeight - picture_height - 300) / 2;
+    margin_left = (document.documentElement.clientWidth - picture_width) / 2;
+
+    // This is a side function, just to adjust slider's navigation-bar position
+    $('.slider-nav').css('top', $('.slide-img').height() - 70);
+    $('.slider-nav').css('left', ($('.slide-img').width()-200) / 2);
+  }
+  $('.autoscale__elem').css('height', picture_height);
+  $('.autoscale__elem').css('width', picture_width);
+
+  $('.autoscale__elem').css('margin-left', margin_left);
+  $('.autoscale__elem').css('margin-top', margin_top);
+};
+
+$(document).ready(function(){
+	carousel_setting();
+  autoscale_picture();
+  window.onresize = autoscale_picture;
+});

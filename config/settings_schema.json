@@ -1004,11 +1004,6 @@
       },
       {
         "type": "checkbox",
-        "id": "product_quantity_enable",
-        "label": "Show quantity selector"
-      },
-      {
-        "type": "checkbox",
         "id": "product_related_enable",
         "label": "Enable related products"
       }

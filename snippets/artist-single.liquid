@@ -1,86 +1,76 @@
-<div style="background-image: url('{{ collection.image.src | img_url : 'master' }}'); background-repeat: no-repeat; background-size: cover; height: 250px;">
+<!-- Single Artist Page -->
+<div class='artist-banner' style="background-image: url('{{ collection.image | collection_img_url : 'master' }}');">
 </div>
 
-<div class='wrapper artist-content'>
-  <h1 class='' style='margin-top:50px; font-size:45px; color:#b0b0b0;'>{{ collection.title }}</h1>
-  <p class='artist-intro' style='margin-top:-20px; margin-bottom:40px; font-size:16px;'>{{ collection.description }}</p>
-  {% for product in collection.products %}
-    {% if product.collections[0].title contains 'Artist' %}
-      <div class = 'artist-cart' style='margin-bottom:40px; margin-top:40px;'>
-        <div class = 'inpage-cart__copy-container'>
-          <div class = 'inpage-cart__left-container'>
-            <img class = 'back-img' src="{{ product.featured_image | img_url: 'large'}}" style='width:100%'/>
-            <div id = "option3" class="option3">
-            </div>
-          </div>
+<div class='wrapper'>
+  <h1 class='artist-name'>{{ collection.title }}</h1>
+  <p class='artist-intro'>{{ collection.description }}</p>
 
-          <div class='inpage-cart__right-container'>
-            <h4 id='title' class='uppercase'>{{ product.title }}</h4>
-            <p style='font:15px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
-            <h3 style='margin-top:-10px'>{{ product.price | money }}</h3>
+  <div id='phone-filter__trigger' class='collection-filter__trigger'></div>
+  <ul id='phone-filter' class='collection-filter__list'>
+    {% for product_type in collection.all_types %}
+      <li data-url='/{{ product_type | handleize }}' class='{% if current_tags contains product_type %} current-phone-type active {% endif %}'>{{ product_type }}</li>
+    {% endfor %}
+  </ul>
 
-            <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm" style='margin-bottom:0;'>
-              <select name="id" id="productSelect" class="product-single__variants">
-                {% for variant in product.variants %}
+  <div class = "collection-content">
+    {% for product in collection.products %}
+      <a href='{{ product.url | within: collection }}'>
+        <div class = "grid__product" onmouseover="this.style.border='1px solid #d0d0d0';" onmouseout="this.style.border='0px';">
+          <span class="grid-link__image-centered">
+            <img class='grid__product-image' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}"/>
+          </span>
 
-                    <option {% if variant == product.selected_or_first_available_variant %} selected="selected" {% endif %} data-sku="{{ variant.sku }}" value="{{ variant.id }}">{{ variant.id }} @ {{ variant.option1 }} @ {{ variant.option2 }} @ {{ variant.option3 }} @ {{ variant.image | img_url: 'large' }}</option>
-
-                {% endfor %}
-              </select>
-
-              <hr style='margin-bottom:10px; border-color: #e0e0e0;'/>
-              <div>
-                <img style='display:inline' src="{{ 'favicon.png' | asset_url }}"/>
-                <p style='display:inline'>{{ product.description }}</p>
-              </div>
-              <hr style='margin-top:10px; border: 1px solid #e0e0e0;'/>
-
-              <p style='margin-top:-10px;'>{{ product.options[0] }}:</p>
-              <div style='margin-top:-10px; margin-bottom: 10px;'id = "option0" class="option0"></div>
-              <div style='margin-top:-10px;' id = "option1" class="option1"></div>
-
-              <select style='margin-top:10px;' id = "option2" class="option2"></select>
-              
-              <input type = "hidden" name = "return_to" value = "{{ product.url | within: collection }}"/>
-              <input type="submit" name="add" id="AddToCart" value="ADD TO CART" style='margin-top:15px;margin-bottom:20px;'/>
-
-              {% if settings.social_sharing_products %}
-                
-                {% include 'social-sharing' %}
-                
-              {% endif %}
-            </form>
+          <div class='grid__mobile-info'>
+            <p class="grid-link__title">{{ product.title }}</p>
+            <p class="grid-link__title grid-link__vendor">{{ product.vendor }} - {{ product.type }}</p>
+            <p id='grid__product-money' class="grid-link__meta">{{ product.price | money }}</p>
           </div>
         </div>
-      </div>
-      <hr / class='wrapper'>
-    {% endif %}
-  {% endfor %}
+      </a>
+    {% else %}
+
+      <h1 class = 'text-center'>Oops.. No products!</h1>
+
+    {% endfor %}
+  </div>
 </div>
 
-<div class='wrapper mobile-artist-content' style='text-align:center;'>
-  <h1 class='' style='margin-top:50px; font-size:45px; color:#b0b0b0;'>{{ collection.title }}</h1>
-  <p class='artist-intro' style='display:block; margin-top:50px; margin-bottom:40px; font-size:16px;'>{{ collection.description }}</p>
-  {% for product in collection.products %}
-    {% if product.collections[0].title contains 'Artist' %}
-    <a href='{{ product.url | within: collection }}'>
-      <div style='display:inline-block; height:500px; width:300px; margin:20px auto; border: 1px solid #e0e0e0;'>
-        <div class='artist-name horizontal-center'>
-          <img src="{{ 'favicon.png' | asset_url }}"/>
-          <h3 id='title'>{{ product.title }}</h3>
-          <p style='display:block; color:#c0c0c0; font-size:16px;'>{{ product.vendor }}</p>
-        </div>
-        <img src="{{ product.featured_image.src | img_url: 'large' }}" style='width:280px; height: 280px;'/>
+<script type='text/javascript'>
+  // change phone type
+  $(document).ready(function(){
+    var initial_phone_type = $('.current-phone-type').text();
+    if (initial_phone_type.length < 1){
+      $('#phone-filter__trigger').text('Choose Phone');
+    } else {
+      $('#phone-filter__trigger').text(initial_phone_type);
+    }
 
-        <button class='btn uppercase' style='margin:10px auto; width:60%'>ADD TO CART</button>
+    $('.collection-filter__trigger').unbind('click').bind('click',function(){
+      var filter = $(this).next();
+      filter.css('left', $(this).offset().left);
 
-        {% if settings.social_sharing_products %}
-            
-          {% include 'social-sharing' %}
-            
-        {% endif %}
-      </div>
-    </a>
-    {% endif %}
-  {% endfor %}
-</div>
+      if ($('.active-filter').hasClass('active-filter') && !filter.hasClass('active-filter')){
+        $('.active-filter').removeClass('active-filter').slideUp(200);
+      }
+
+      if ($('.active-filter').hasClass('active-filter')){
+        filter.removeClass('active-filter').slideUp(200);
+      } else {
+        filter.addClass('active-filter').slideDown(200);
+      }
+    });
+
+    $('#phone-filter li').unbind('click').bind('click',function(){
+      $('#phone-filter__trigger').text($(this).text());
+
+      window.location.href = '{{ shop.url }}/{{ collection.url }}' + $(this).attr('data-url');
+    });
+  });
+
+  $(document).off('click').on('click',function(e){
+    if (!$(e.target).next().hasClass('active-filter')){
+      $('.active-filter').removeClass('active-filter').slideUp(200);
+    }
+  });
+</script>

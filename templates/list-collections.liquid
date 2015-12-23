@@ -1,17 +1,184 @@
+<script>
+// poster picture position
+function post_position(){
+  var width = document.documentElement.clientWidth;
+  if (width > 768){
+    var div_width;
+    if (width > 1200){
+      div_width = 500;
+    } else {
+      div_width = width / 2.2;
+    }
+
+    $('#post-pic-div').css('width', div_width);
+    $('#post-pic-div').css('left', div_width * 1.1 + $('#left-content').offset().left);
+    $('#post-pic-div').css('top', 300);
+  } else {
+    $('#post-pic-div').css('width','100%');
+  }
+}
+
+$(document).ready(function(){
+  // Email submission
+  $('#email-form').submit(function(){
+    $.post("http://thecasery.com/submission.php", 
+      {email:$('#contact-email').val()},
+      function(result){
+          alert(result);
+          $('#contact-email').val('');
+      },
+      "text"
+    );
+    return false;
+  });
+
+  post_position();
+});
+
+// position and size of picture
+$(window).resize(post_position);
+</script>
+
+<style>
+#left-content{
+  display: inline-block;
+  width: 50%;
+  text-align: left;
+}
+#logo-div{
+  margin-top: 100px;
+  width: 600px;
+}
+#post-pic-div{
+  position: absolute;
+  z-index: 0;
+}
+#logo{
+  margin-left: -10px;
+  width: 100%;
+}
+#title{
+  margin-top: 50px;
+  color: #f95940; 
+  font-size: 48px;
+}
+#description{
+  margin-top: 30px;
+  width: 80%;
+  text-transform: uppercase;
+}
+#email-descrip{
+  margin-top: 50px;
+  font-size: 14px;
+  color: black;
+}
+#contact-email{
+  display: inline-block; 
+  vertical-align: top; 
+  width: 180px;
+}
+#submit-btn{
+  width: 90px; 
+  margin-left: 6px; 
+  vertical-align: top; 
+  display: inline-block;
+}
+#post-pic{
+  width: 100%;
+}
+@media screen and (max-width: 767px){
+  #left-content{
+    width: 100%;
+    text-align: center;
+  }
+  #logo-div{
+    margin-top: 30px;
+    width: 100%;
+  }
+  #title{
+    font-size: 40px;
+    margin-top: 40px;
+    margin-bottom: 25px;
+  }
+  #description{
+    margin: 0 auto;
+  }
+  #email-descrip{
+    margin-top: 30px;
+    font-size: 12px;
+  }
+  #post-pic-div{
+    position: static;
+    width: 100%;
+  }
+}
+</style>
+<div class='wrapper'>
+  <div id='left-content'>
+    <div id='logo-div'>
+      <img id='logo' src='https://cdn.shopify.com/s/files/1/0964/6944/files/CaseryLogoForComingSoonPage.jpg?11249105504324110124' />
+    </div>
+    <div id='post-pic-div'>
+      <img id='post-pic' src='https://cdn.shopify.com/s/files/1/0964/6944/files/CaseImagesForComingSoonPage.jpg?11249105504324110124'/>
+    </div>
+    <h1 id='title'>COMING SOON</h1>
+    <p id='description'>We are feverishly working on bringing you the coolest customization experience ever. Give us your email and we'll notify you when we are done.</p>
+
+    <p id='email-descrip'>Leave your email and get 50% off of your first order!</p>
+    <form id ="email-form" class="form-inline" method="post">
+      <input type="text" id="contact-email" name="contact[email]" placeholder='john@gmail.com'/>
+      <input id="submit-btn" type="submit" class="btn btn-default"/>
+    </form>
+
+    <ul class="inline-list social-icons" style='margin-top:-20px; margin-bottom:200px;'>
+      {% if settings.social_instagram_link != blank %}
+        <li>
+          <a class="icon-fallback-text" href="{{ settings.social_instagram_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Instagram' }}" style="color: #dddddd;" onmouseover="this.style.color='#F95923';" onmouseout="this.style.color='#dddddd';">
+            <span class="icon icon-instagram" aria-hidden="true"></span>
+            <span class="fallback-text">Instagram</span>
+          </a>
+        </li>
+      {% endif %}
+      {% if settings.social_twitter_link != blank %}
+        <li>
+          <a class="icon-fallback-text" href="{{ settings.social_twitter_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Twitter' }}" style="color: #dddddd;" onmouseover="this.style.color='#F95923';" onmouseout="this.style.color='#dddddd';">
+            <span class="icon icon-twitter" aria-hidden="true"></span>
+            <span class="fallback-text">Twitter</span>
+          </a>
+        </li>
+      {% endif %}
+      {% if settings.social_facebook_link != blank %}
+        <li>
+          <a class="icon-fallback-text" href="{{ settings.social_facebook_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Facebook' }}" style="color: #dddddd;" onmouseover="this.style.color='#F95923';" onmouseout="this.style.color='#dddddd';">
+            <span class="icon icon-facebook" aria-hidden="true"></span>
+            <span class="fallback-text">Facebook</span>
+          </a>
+        </li>
+      {% endif %}
+      {% if settings.social_pinterest_link != blank %}
+        <li>
+          <a class="icon-fallback-text" href="{{ settings.social_pinterest_link }}" title="{{ 'layout.footer.social_platform' | t: name: shop.name, platform: 'Pinterest' }}" style="color: #dddddd;" onmouseover="this.style.color='#F95923';" onmouseout="this.style.color='#dddddd';">
+            <span class="icon icon-pinterest" aria-hidden="true"></span>
+            <span class="fallback-text">Pinterest</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </div>
+</div>
 {% comment %}
   Loop through each collection, except 'frontpage'
+  <header class="section-header space-on-top">
+    <h1 class="section-header__title">{{ 'collections.general.title' | t }}</h1>
+  </header>
+
+  <div class="grid-uniform">
+    {% for collection in collections %}
+      {% unless collection.handle == 'frontpage' %}
+        {% assign collection_item_width = 'medium-down--one-half large--one-third wide--one-quarter' %}
+        {% assign featured = collection.handle %}
+        {% include 'collection-grid-item' %}
+      {% endunless %}
+    {% endfor %}
+  </div>
 {% endcomment %}
-
-<header class="section-header">
-  <h1 class="section-header__title">{{ 'collections.general.title' | t }}</h1>
-</header>
-
-<div class="grid-uniform">
-  {% for collection in collections %}
-    {% unless collection.handle == 'frontpage' %}
-      {% assign collection_item_width = 'medium-down--one-half large--one-third wide--one-quarter' %}
-      {% assign featured = collection.handle %}
-      {% include 'collection-grid-item' %}
-    {% endunless %}
-  {% endfor %}
-</div>

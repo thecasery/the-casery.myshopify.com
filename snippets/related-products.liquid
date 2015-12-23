@@ -11,21 +11,39 @@
   {% endfor %}
 {% endif %}
 
-{% if collection and collection.products_count > 1 %}
+{% assign current_product = product %}
+{% assign t = 0 %}
+{% for product in collection.products %}
+  {% if product.type == current_product.type and product.handle != current_product.handle %}
+    {% assign t = t | plus: 1 %}
+    {% break %}
+  {% endif %}
+{% endfor %}
+
+{% if t > 0 %}
   <hr class="hr--clear hr--small">
   <div class="section-header section-header--medium">
     <h4 class="section-header__title">{{ 'products.general.related_products_title' | t }}</h4>
   </div>
-  <div class = "collection-regular">
-    {% assign current_product = product %}
-    {% assign current_product_found = false %}
-    {% for product in collection.products limit: number_of_products_to_fetch %}
-      {% if product.handle == current_product.handle %}
-        {% assign current_product_found = true %}
-      {% else %}
-        {% unless current_product_found == false and forloop.last %}
-          {% include 'product-grid-item' %}
-        {% endunless %}
+  <div class = "collection-content">
+    {% assign i = 0 %}
+    {% for product in collection.products %}
+      {% if product.handle == current_product.handle or i > 3 %}
+      {% elsif product.type == current_product.type %}
+        {% assign i = i | plus: 1 %}
+        <a href='{{ product.url }}'>
+          <div class="grid__product" onmouseover="this.style.border='1px solid #d0d0d0';" onmouseout="this.style.border='0px';">
+            <span class="grid-link__image-centered">
+              <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" style=' cursor:pointer;'/>
+            </span>
+
+            <div class='grid__mobile-info text-center'>
+              <p class="grid-link__title">{{ product.title }}</p>
+              <p class="grid-link__title grid-link__vendor">{{ product.vendor }} - {{ product.type }}</p>
+              <p id='grid__product-money' class="grid-link__meta">{{ product.price | money }}</p>
+            </div>
+          </div>
+        </a>
       {% endif %}
     {% endfor %}
   </div>

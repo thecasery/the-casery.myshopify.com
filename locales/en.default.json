@@ -100,12 +100,12 @@
       "browse": "Browse by",
       "all_tags": "All",
       "featured": "Featured",
-      "best_selling": "Best Selling",
+      "best_selling": "Popular",
       "az": "Alphabetically, A-Z",
       "za": "Alphabetically, Z-A",
-      "price_ascending": "Price, low to high",
-      "price_descending": "Price, high to low",
-      "date_descending": "Date, new to old",
+      "price_ascending": "Price: $-$$",
+      "price_descending": "Price: $$-$",
+      "date_descending": "Latest",
       "date_ascending": "Date, old to new"
     }
   },

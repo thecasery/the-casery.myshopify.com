@@ -1,7 +1,7 @@
 <!-- "grid__product is a specific grid class for this webpage, developed by Yang. Havn't integrate with original griding system" -->
 <div class = "grid__product">
   <span class="grid-link__image-centered">
-    <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" style=' cursor:pointer;' title='{{ product.url | within: collection }}'/>
+    <img class='grid__product-image' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" data-url='{{ product.url | within: collection }}'/>
   </span>
   <select name="id" id="productSelect" class="product-single__variants">
     {% for variant in product.variants %}
@@ -10,13 +10,17 @@
 
     {% endfor %}
   </select>
-  <div id='option2' class='option2' style='display:none;'>
+  <div id='grid__product-thumbnail' class='grid__product-thumbnail'>
   </div>
-  <div class='grid__mobile-info'>
+  <div class='grid__product-info'>
     <p id='color-number' class="grid-link__title"></p>
-    <hr style='border-color:#b0b0b0; margin-top:-5px; margin-bottom:4px;'/>
-    <p class="grid-link__title">{{ product.title }}</p>
-    <p class="grid-link__title grid-link__vendor">{{ collection.title }} {{ product.type }} Case</p>
+    <hr class='grid__product-hr'/>
+    <p class="grid-link__title">{{ product.title | truncate: 35 }}</p>
+    {% if collection.title contains 'Artist'%}
+      <a href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/iphone-6s'><p class="grid-link__title grid-link__vendor">{{ product.vendor }}</p></a>
+    {% else %}
+      <p class="grid-link__title grid-link__vendor">{{ product.type }} Case</p>
+    {% endif %}
     <p id='grid__product-money' class="grid-link__meta"></p>
   </div>
 </div>

@@ -50,9 +50,6 @@
 
   <!-- The main body is pretty simple, content and a shopping-cart page which might be used in several pages -->
   <main class="main-content" role="main">
-    <p id='page-type' style='display:none'>{{ template }}</p>
-    <p id='device-type' style='display:none'></p>
-    <p id='device-width' style='display:none'></p>
     {{ content_for_layout }}
   </main>
 
@@ -116,7 +113,7 @@
         {% if settings.footer_quicklinks_enable %}
           <div class="grid__item {{ footer_column_width }}">
             {% unless num_footer_columns == 1 %}
-            <h4>{{ 'layout.footer.linklist_title' | t }}</h4>
+            <h4 class='uppercase'>{{ linklists[settings.footer_quicklinks_linklist].title }}</h4>
             {% endunless %}
             <ul class="site-footer__links{% if num_footer_columns == 1 %} inline-list{% endif %}">
               {% for link in linklists[settings.footer_quicklinks_linklist].links %}
@@ -128,7 +125,7 @@
         
         {% if settings.footer_second_menu_enable %}
           <div class="grid__item {{ footer_column_width }}">
-            <h4>{{ linklists[settings.footer_second_menu].title }}</h4>
+            <h4 class='uppercase'>{{ linklists[settings.footer_second_menu].title }}</h4>
             <ul class="site-footer__links">
               {% for link in linklists[settings.footer_second_menu].links %}
                 <li><a href="{{ link.url }}">{{ link.title }}</a></li>
@@ -139,7 +136,7 @@
 
         {% if settings.footer_social_enable %}
           <div class="grid__item {{ footer_column_width }}">
-            <h4>{{ 'layout.footer.social_title' | t }}</h4>
+            <h4 class='uppercase'>{{ 'layout.footer.social_title' | t }}</h4>
               {% comment %}
                 Loop through the social network links
               {% endcomment %}
@@ -149,7 +146,7 @@
 
         {% if settings.footer_newsletter_enable %}
           <div class="grid__item {{ footer_column_width }}">
-            <h4>{{ 'layout.footer.newsletter_title' | t }}</h4>
+            <h4 class='uppercase'>{{ 'layout.footer.newsletter_title' | t }}</h4>
             <p>{{ 'layout.footer.newsletter_caption' | t }}</p>
             {% include 'newsletter-form' %}
           </div>
@@ -178,6 +175,5 @@
   {{ 'fastclick.min.js' | asset_url | script_tag }}
   {{ 'timber.js' | asset_url | script_tag }}
   {{ 'theme.js' | asset_url | script_tag }}
-
 </body>
 </html>

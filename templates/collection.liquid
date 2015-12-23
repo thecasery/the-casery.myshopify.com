@@ -1,202 +1,97 @@
-{% if collection.title contains 'Men' or collection.title contains 'Women' or collection.title contains 'Accessory' or collection.title contains 'Artist' %}
+{% comment %}
+  There're 3 different collection types in collection page.
+  1. Regular collection. Including 'Men', 'Women', 'Artist'. 3 filters, 1 sort function and regular 'grid-product-item'
+  2. Single Artist collection. Including artist banner, name, introduction and simplify 'grid-product-item'
+  3. Accessory collection. Including accessory banner and simplify 'grid-product-item'
+{% endcomment %}
+
+{% if collection.title contains 'Men' or collection.title contains 'Women' or collection.title contains 'Artist' %}
   {% paginate collection.products by 24 %}
-    <div class = 'space-on-top wrapper'>
-      <div class='text-left' style='display:inline-block; width:49%;'>
-        {% unless collection.title contains 'Accessory' %}
-          <select id='phone-filter' style='display:inline-block; width: 150px;'>
+    {{ 'collection.js' | asset_url | script_tag }}
+
+    <div class='wrapper'>
+      <div class='collection-header'>
+        <div class='banner'>
+          <img src="{{ collection.image | collection_img_url : 'master' }}"/>
+        </div>
+
+        <div class='filter'>
+          <div id='phone-filter__trigger' class='collection-filter__trigger'></div>
+          <ul id='phone-filter' class='collection-filter__list'>
             {% for product_type in collection.all_types %}
-              <option value='{{ collection.url }}/{{ product_type | handleize }}' {% if current_tags contains product_type %}selected = 'selected'{% endif %}>{{ product_type }}</option>
+              <li data-url='/{{ product_type | handleize }}' class='{% if current_tags contains product_type %} current-phone-type active {% endif %}'>{{ product_type }}</li>
             {% endfor %}
-          </select>
-          <select id='collection-filter' style='display:inline-block; width: 150px;'>
-            {% for link in linklists.collections.links %}
-              <option value='{{ link.url }}' {% if link.title contains collection.title %}selected = 'selected'{% endif %}>{{ link.title }}</option>
+          </ul>
+
+          <div id='collection-filter__trigger' class='collection-filter__trigger'></div>
+          <ul id='collection-filter' class='collection-filter__list'>
+            {% for link in linklists.collection-types.links %}
+              <li data-url='{{ link.url }}' class='{% if link.title contains collection.title %} current-collection-type active {% endif %}'>{{ link.title }}</li>
             {% endfor %}
-          </select>
-          <select id='case-filter' style='display:inline-block; width: 150px;'>
-            <option>Featured</option>
-            <option value='Clear' {% if current_tags contains 'Clear' %} selected='selected'{% endif %}>Clear</option>
-            <option value='Slim' {% if current_tags contains 'Slim' %} selected='selected'{% endif %}>Slim</option>
-            <option value='Protector' {% if current_tags contains 'Protector' %} selected='selected'{% endif %}>Protector</option>
-          </select>
+          </ul>
 
-          <!-- Change of filter value -->
-          <script>
-            function jump_to_product_page(image){
-              var variant = image.parents('.grid__product').find('#productSelect').val();
-              var url = image.attr('title');
-              url = url + '?variant=' + variant;
-              window.location.href = url;
-            }
+          <div id='case-filter__trigger' class='collection-filter__trigger'></div>
+          <ul id='case-filter' class='collection-filter__list'>
+            <li data-url='' class="{% unless current_tags contains 'Clear' or current_tags contains 'Slim' or current_tags contains 'Protector' %} current-case-type active {% endunless %}">All Cases</li>
+            <li data-url='+Clear' class="{% if current_tags contains 'Clear' %} current-case-type active {% endif %}">Clear</li>
+            <li data-url='+Slim' class="{% if current_tags contains 'Slim' %} current-case-type active {% endif %}">Slim</li>
+            <li data-url='+Protector' class="{% if current_tags contains 'Protector' %} current-case-type active {% endif %}">Protector</li>
+          </ul>
 
-            function init_thumbnails(product, start_pos, total_options, variants){
-              $('.active-option2').removeClass('active-option2');
-              product.find('#option2 div').remove();
-
-              var arr2 = new Array();
-              var i = 0;
-              for (; i < total_options && variants[i][0] != variants[start_pos][0]; i++);
-              for (; i < total_options && variants[i][0] == variants[start_pos][0]; i++){
-                var flag2 = true;
-                for (var j = 0; j < arr2.length; j++){
-                  if (arr2[j] == variants[i][1]){
-                    flag2 = false;
-                    break;
-                  }
-                }
-                if (flag2 && variants[i][1] != 'Null'){
-                  arr2.push(variants[i][1]);
-                  product.find('#option2').append("<div class='option2-outer-container' name='"+variants[i][1]+"' onmouseover=\"this.style.cursor='hand'\"><img style='width:88px; height:88px;' src='"+variants[i][3]+"'/></div>");
-                }
-              }
-
-              // reset start_pos for init_option2
-              var j = 0;
-              for (; j < arr2.length && arr2[j] != variants[start_pos][1]; j++);
-              product.find('#option2 .option2-outer-container img').eq(j).addClass('active-option2');
-              product.find('#productSelect').get(0).selectedIndex = start_pos;
-              product.find('#grid__product-money').text(variants[start_pos][4]);
-              // set color number
-              if (arr2.length <= 1){
-                product.find('#color-number').text('1 Color');
-              } else {
-                product.find('#color-number').text(arr2.length + ' Colors');
-              }
-            }
-
-            function init_grid_product(product){
-              var productSelect = product.find('#productSelect');
-              var product_options = productSelect.find('option');
-              var total_options = product_options.length;
-              var variants = new Array();
-
-              // string split, I use ' @ ' to seperate different options
-              for (var i = 0; i < total_options; i++){
-                var string = product_options.eq(i).text();
-                var t = string.split(' @ ');
-
-                variants.push(t);
-              }
-
-              var i = 0;
-              if ($('#case-filter').val() == 'Clear'){
-              } else if ($('#case-filter').val() == 'Slim'){
-                for (; i < total_options && variants[i][0] != 'Slim'; i++);
-              } else if ($('#case-filter').val() == 'Protector'){
-                for (; i < total_options && variants[i][0] != 'Protector'; i++);
-              } else if ($('#case-filter').val() == 'Featured'){
-                var img_url = product.find('.product-img').attr('src');
-                for (; i < total_options && variants[i][3] != img_url; i++);
-              }
-              product.find('.product-img').attr('src', variants[i][3]);
-              init_thumbnails(product, i, total_options, variants);
-
-              product.find('#option2').off('mouseover','.option2-outer-container').on('mouseover','.option2-outer-container',function(){
-                product.find('.product-img').attr('src', $(this).find('img').attr('src'));
-                change_thumbnail($(this), product, total_options, variants);
-              });
-
-              product.find('#option2').off('click','.option2-outer-container').on('click','.option2-outer-container',function(){
-                jump_to_product_page($(this).parents('.grid__product').find('.product-img'));
-              });
-            }
-
-            function change_thumbnail(option, product, total_options, variants){
-              // remove all active-image class which highlight the border, and we need to remove previous
-              $('.active-option2').removeClass('active-option2');
-              option.find('img').addClass('active-option2');
-
-              // After pre-set, find the first index that have the same picture url, that is the start of variant.option1
-              var new_option2_name = option.attr("name");
-              var current_index = product.find('#productSelect').get(0).selectedIndex;
-
-              var new_index = 0;
-              for (; new_index < total_options && variants[new_index][0] != variants[current_index][0]; new_index ++);
-              for (; new_index < total_options && variants[new_index][0] == variants[current_index][0] && variants[new_index][1] != new_option2_name; new_index++);
-
-              // initial option3
-              product.find('#productSelect').get(0).selectedIndex = new_index;
-              product.find('#grid__product-money').text(variants[new_index][4]);
-            }
-
-            $(document).ready(function(){
-              // default image
-              var products = $('.grid__product');
-              for (var i = 0; i < products.length; i++){
-                init_grid_product(products.eq(i));
-              }
-
-              $('#collection-filter').bind('change',function(){
-                var collection_link = $(this).val();
-                window.location.href = collection_link;
-              });
-
-              $('#phone-filter').bind('change',function(){
-                var product_type = $(this).val();
-                window.location.href = product_type;
-              });
-
-              $('#case-filter').unbind('change').bind('change',function(){
-                if ($(this).val() == 'Featured'){
-                  window.location.href = $('#phone-filter').val();
-                } else {
-                  window.location.href = $('#phone-filter').val() + '+' + $(this).val();
-                }
-              });
-
-              $('.product-img').off('click').on('click',function(){
-                jump_to_product_page($(this));
-              });
-
-              $('.product-img').off('mouseover').on('mouseover',function(){
-                var product = $(this).parents('.grid__product');
-                product.find('#option2').css('display','block');
-              });
-
-              $('.grid__product').off('mouseenter').on('mouseenter',function(){
-                var product = $(this);
-                var l = product.offset().left;
-                var t = product.offset().top;
-                $('<div id="test" style="height:385px; width:300px; display:inline-block; background-color:white;"></div>').insertBefore(product);
-                product.addClass('active-grid__product');
-                product.css('left', l);
-                product.css('top', t);
-              });
-
-              $('.grid__product').off('mouseleave').on('mouseleave',function(){
-                var product = $(this);
-                product.find('#option2').css('display','none');
-                product.removeClass('active-grid__product');
-                $('#test').remove();
-              });
-            });
-          </script>
-        {% endunless %}
+        </div>
+        <div class='sort'>
+          <div id='collection-sort__trigger' class='collection-filter__trigger'></div>
+          <ul id='collection-sort' class='collection-filter__list'>
+            <li data-url="?sort_by=best-selling">{{ 'collections.sorting.best_selling' | t }}</li>
+            <li data-url="?sort_by=created-descending">{{ 'collections.sorting.date_descending' | t }}</li>
+          </ul>
+        </div>
       </div>
-      <div class='text-right' style='display:inline-block; width:50%;'>
-        {% include 'collection-sorting' %}
+
+      <div class='collection-content'>
+        {% for product in collection.products %}
+        
+          {% include 'product-grid-item' %}
+
+        {% else %}
+
+          <h1 class = 'text-center'>Oops.. No products!</h1>
+
+        {% endfor %}
       </div>
+
+      {% if paginate.pages > 1 %}
+        <hr class="hr--clear">
+
+        <div class="text-center">
+          {% include 'pagination-custom' %}
+        </div>
+      {% endif %}
     </div>
-    <div class = "collection-regular wrapper">
-      {% for product in collection.products %}
-      
-        {% include 'product-grid-item' %}
-
-      {% else %}
-
-        <h1 class = 'text-center'>Oops.. No products!</h1>
-
-      {% endfor %}
-    </div>
-    {% if paginate.pages > 1 %}
-      <hr class="hr--clear">
-
-      <div class="text-center">
-        {% include 'pagination-custom' %}
-      </div>
-    {% endif %}
-
   {% endpaginate %}
+{% elsif collection.title contains 'Accessory'%}
+  {% for product in collection.products %}
+    <div class = "collection-regular wrapper">
+      <a href='{{ product.url | within: collection }}'>
+        <div class = "grid__product" onmouseover="this.style.border='1px solid #d0d0d0';" onmouseout="this.style.border='0px';">
+          <span class="grid-link__image-centered">
+            <img class='grid__product-image' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}"/>
+          </span>
+
+          <div class='grid__mobile-info'>
+            <p class="grid-link__title">{{ product.title }}</p>
+            <p id='grid__product-money' class="grid-link__meta">{{ product.price | money }}</p>
+          </div>
+        </div>
+      </a>
+    </div>
+  {% else %}
+  
+    <div style='width:100%; overflow:hidden;'>
+      <img style='width:100%; margin-top:-10%; margin-bottom:-10px;'src = 'http://virtualrealitybrisbane.com/wp-content/uploads/2015/01/COMING-SOON-FRAME.jpg'/>
+    </div>
+
+  {% endfor %}
 {% else %}
   
   {% include 'artist-single' %}

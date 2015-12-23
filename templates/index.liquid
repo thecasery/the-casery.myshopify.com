@@ -1,3 +1,5 @@
+{{ 'index.js' | asset_url | script_tag }}
+
 {% if settings.home_section_1 != blank %}
   {% include settings.home_section_1 %}
 {% endif %}

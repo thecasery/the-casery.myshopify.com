@@ -1,0 +1,269 @@
+/* This is version 2.0 of collection.js, by Yang Wang, The Casery Inc. 2015.12.22
+ *
+ * Collection.js mainly contains 2 major functions, which are Filter and Thumbnails.
+ *  For Filters, it includes filter initialization and update. Note that although we try to keep 
+ *  other filters' value when we change one filter, other product might not have same filter options.
+ *  In those cases, we have to set a default value, such as 'iPhone 6s' etc.
+ *
+ *  For thumbnails, we basically copy 'product.js' init_option2() and change_option2() function.
+ *  Besides, since we need to change current grid__product to absolute position, so we have to make 
+ *  a fake grid__product before it to keep the structure. (See code for details)
+*/
+
+/* Part 1: Thumbnails */
+function init_thumbnails(product, start_pos, total_options, variants){
+  $('.active-grid__product-thumbnail').removeClass('active-grid__product-thumbnail');
+  product.find('#grid__product-thumbnail div').remove();
+
+  var arr2 = new Array();
+  var src = new Array();
+  var i = 0;
+  for (; i < total_options && variants[i][0] != variants[start_pos][0]; i++);
+  for (; i < total_options && variants[i][0] == variants[start_pos][0]; i++){
+    var flag2 = true;
+    for (var j = 0; j < arr2.length; j++){
+      if (arr2[j] == variants[i][1]){
+        flag2 = false;
+        break;
+      }
+    }
+    if (flag2 && variants[i][1] != 'Null'){
+      arr2.push(variants[i][1]);
+      src.push(variants[i][3]);
+    }
+  }
+
+  // set color number
+  if (arr2.length <= 1){
+    product.find('#color-number').text('1 Color');
+  } else {
+    // reset start_pos for init_grid__product-thumbnail
+    product.find('#productSelect').get(0).selectedIndex = start_pos;
+    product.find('#color-number').text(arr2.length + ' Colors');
+
+    for (var j = 0; j < arr2.length; j++){
+      product.find('#grid__product-thumbnail').append("<div class='grid__product-thumbnail-outer-container' name='"+arr2[j]+"' onmouseover=\"this.style.cursor='hand'\"><img style='width:77px; height:77px;' src='"+src[j]+"'/></div>");
+    }
+  }
+  // set money according to selected variant
+  product.find('#grid__product-money').text(variants[start_pos][4]);
+}
+
+/* Samilar to change_option2 in 'product.js', see that file for details */
+function change_thumbnail(option, product, total_options, variants){
+  // 1. Remove previous active elements and set new one
+  $('.active-grid__product-thumbnail').removeClass('active-grid__product-thumbnail');
+  option.find('img').addClass('active-grid__product-thumbnail');
+
+  // 2. Find the index of the new variant. Note that new variant and current variant have same option1 value which is case type.
+  var new_thumbnail_name = option.attr("name");
+  var current_index = product.find('#productSelect').get(0).selectedIndex;
+
+  var new_index = 0;
+  for (; new_index < total_options && variants[new_index][0] != variants[current_index][0]; new_index ++);
+  for (; new_index < total_options && variants[new_index][0] == variants[current_index][0] && variants[new_index][1] != new_thumbnail_name; new_index++);
+
+  // 3. Reset selectedIndex and variant money
+  product.find('#productSelect').get(0).selectedIndex = new_index;
+  product.find('#grid__product-money').text(variants[new_index][4]);
+}
+
+/* The Jump function mainly reads the product_url from productSelect and attaches variant infomation, 
+ * so that in the product page we could display what user chosen in collection page */
+function jump_to_product_page(image){
+  var variant = image.parents('.grid__product').find('#productSelect').val();
+  var url = image.attr('data-url');
+  url = url + '?variant=' + variant;
+  window.location.href = url;
+}
+
+/* This function basically initialized all the grid__product info */
+function init_grid_product(product){
+  var productSelect = product.find('#productSelect');
+  var product_options = productSelect.find('option');
+  var total_options = product_options.length;
+  var variants = new Array();
+
+  // string split, I use ' @ ' to seperate different options
+  for (var i = 0; i < total_options; i++){
+    var string = product_options.eq(i).text();
+    var t = string.split(' @ ');
+
+    variants.push(t);
+  }
+
+  /* This subfunction is used to locate the first variant's index of each case type.
+   * Note that for 'All Cases' option, we just need to find the featured picture's index */
+  var i = 0;
+  switch ($('.current-case-type').text()) {
+    case 'Clear': break;
+    case 'Slim': for (; i < total_options && variants[i][0] != 'Slim'; i++); break;
+    case 'Protector': for (; i < total_options && variants[i][0] != 'Protector'; i++); break;
+    case 'All Cases': var img_url = product.find('.grid__product-image').attr('src');
+                      for (; i < total_options && variants[i][3] != img_url; i++);
+                      break;
+    default: break;
+  }
+  // Reset image url to what we find from above function
+  product.find('.grid__product-image').attr('src', variants[i][3]);
+  init_thumbnails(product, i, total_options, variants);
+
+  // Register change thumbnail function on according element
+  product.find('#grid__product-thumbnail').off('mouseover','.grid__product-thumbnail-outer-container').on('mouseover','.grid__product-thumbnail-outer-container',function(){
+    product.find('.grid__product-image').attr('src', $(this).find('img').attr('src'));
+    change_thumbnail($(this), product, total_options, variants);
+  });
+
+  // Register page jump function
+  product.find('#grid__product-thumbnail').off('click','.grid__product-thumbnail-outer-container').on('click','.grid__product-thumbnail-outer-container',function(){
+    jump_to_product_page($(this).parents('.grid__product').find('.grid__product-image'));
+  });
+}
+
+/* Filter Initialization */
+function filter_initialization(){
+  // init the filter
+  var initial_collection_type = $('.current-collection-type').text();
+  var initial_phone_type = $('.current-phone-type').text();
+  var initial_case_type = $('.current-case-type').text();
+  var url = window.location.href;
+
+  if (initial_phone_type.length < 1){
+    $('#phone-filter__trigger').text('Choose Phone');
+  } else {
+    $('#phone-filter__trigger').text(initial_phone_type);
+  }
+  $('#collection-filter__trigger').text(initial_collection_type);
+  $('#case-filter__trigger').text(initial_case_type);
+  
+  // init the sort
+  if (url.indexOf('best-selling') >= 0){
+    $('#collection-sort li').first().addClass('active current-sort-type');
+    $('#collection-sort__trigger').text('Popular');
+  } else if (url.indexOf('created-descending') >= 0){
+    $('#collection-sort li').last().addClass('active current-sort-type');
+    $('#collection-sort__trigger').text('Latest');
+  } else {
+    $('#collection-sort__trigger').text('Sort');
+  }
+}
+
+/* Filter Animation */
+function filter_animation(){
+  // slide down filter
+  $('.collection-filter__trigger').unbind('click').bind('click',function(){
+    var filter = $(this).next();
+    filter.css('left', $(this).offset().left); // align the collection list and trigger
+
+    // If we have active filter, and it is not current clicked filter, we slide it up.
+    if ($('.active-filter').hasClass('active-filter') && !filter.hasClass('active-filter')){
+      $('.active-filter').removeClass('active-filter').slideUp(200);
+    }
+
+    // slide toggle on the filter
+    if (filter.hasClass('active-filter')){
+      filter.removeClass('active-filter').slideUp(200);
+    } else {
+      filter.addClass('active-filter').slideDown(200);
+    }
+  });
+
+  // slide up filter if someone click other place on the page
+  $(document).off('click').on('click',function(e){
+    if (!$(e.target).next().hasClass('active-filter')){
+      $('.active-filter').removeClass('active-filter').slideUp(200);
+    }
+  });
+
+  // automatically align filter and its trigger
+  $(window).resize(function(){
+    if ($('.active-filter').hasClass('active-filter')){
+      $('.active-filter').css('left', $('.active-filter').prev().offset().left);
+    }
+  });
+}
+
+/* Filter Event Registration */
+function filter_event_registration(){
+  // change collection type
+  $('#collection-filter li').unbind('click').bind('click',function(){
+    $('#collection-filter__trigger').text($(this).text());
+
+    var phone_type = (!$('.current-phone-type').hasClass('current-phone-type')) ? '/iphone-6s' : $('.current-phone-type').attr('data-url');
+    var sort_type = (!$('.current-sort-type').hasClass('current-sort-type')) ? '' : $('.current-sort-type').attr('data-url');
+    window.location.href = $(this).attr('data-url') + phone_type + $('.current-case-type').attr('data-url') + sort_type;
+  });
+
+  // change phone type
+  $('#phone-filter li').unbind('click').bind('click',function(){
+    $('#phone-filter__trigger').text($(this).text());
+
+    var sort_type = (!$('.current-sort-type').hasClass('current-sort-type')) ? '' : $('.current-sort-type').attr('data-url');
+    window.location.href = $('.current-collection-type').attr('data-url') + $(this).attr('data-url') + $('.current-case-type').attr('data-url') + sort_type;
+  });
+
+  // change case type
+  $('#case-filter li').unbind('click').bind('click',function(){
+    $('#case-filter__trigger').text($(this).text());
+
+    var phone_type = (!$('.current-phone-type').hasClass('current-phone-type')) ? '/iphone-6s' : $('.current-phone-type').attr('data-url');
+    var sort_type = (!$('.current-sort-type').hasClass('current-sort-type')) ? '' : $('.current-sort-type').attr('data-url');
+    window.location.href = $('.current-collection-type').attr('data-url') + phone_type + $(this).attr('data-url') + sort_type;
+  });
+
+  // change sort type
+  $('#collection-sort li').unbind('click').bind('click',function(){
+    $('#collection-sort__trigger').text($(this).text());
+
+    var phone_type = (!$('.current-phone-type').hasClass('current-phone-type')) ? '/iphone-6s' : $('.current-phone-type').attr('data-url');
+    window.location.href = $('.current-collection-type').attr('data-url') + phone_type + $('.current-case-type').attr('data-url') + $(this).attr('data-url');
+  });
+}
+
+$(document).ready(function(){
+  // init all the products
+  var products = $('.grid__product');
+  for (var i = 0; i < products.length; i++){
+    init_grid_product(products.eq(i));
+  }
+
+  // Register the image click jump url event
+  $('.grid__product-image').off('click').on('click',function(){
+    jump_to_product_page($(this));
+  });
+
+  /* filter initialization */
+  filter_initialization();
+  filter_event_registration();
+  filter_animation();
+
+  if (document.documentElement.clientWidth >= 768){
+    $('.grid__product').off('mouseenter').on('mouseenter',function(){
+      var product = $(this);
+      var l = product.offset().left;
+      var t = product.offset().top;
+
+      // the product-fill is a little bit complicated, I have no idea why first and last child need fix!
+      if (product.is(':last-child') && product.is(':first-child')){
+        $('<div id="product-fill" style="height:393px; width:285px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+      } else if (product.is(':first-child')){
+        $('<div id="product-fill" style="height:370px; width:288.5px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+      } else {
+        $('<div id="product-fill" style="height:370px; width:285px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+      }
+
+      product.addClass('active-grid__product');
+      product.css('left', l);
+      product.css('top', t);
+
+      product.find('#grid__product-thumbnail').css('display','block');
+    });
+
+    $('.grid__product').off('mouseleave').on('mouseleave',function(){
+      var product = $(this);
+      product.find('#grid__product-thumbnail').css('display','none');
+      product.removeClass('active-grid__product');
+      $('#product-fill').remove();
+    });
+  }
+});

@@ -7,22 +7,52 @@
 {% if settings.show_promo_image_5 %}{% assign index = index | plus: 1 %}{% endif %}
 
 {% unless index == 0 %}
-  <div class='autoscale__div' style='margin-bottom:4px;'>
+  <div class='autoscale__div' style='margin-bottom:2px;'>
     {% capture promo_image %}promo_image_5.jpg{% endcapture %}
     {% capture promo_image_link %}promo_image_5_link{% endcapture %}
-    <img class='autoscale__elem' src='{{ promo_image | asset_url }}'/>
+    <a href='{{ settings[promo_image_link] }}'>
+      <img class='autoscale__elem' src='{{ promo_image | asset_url }}'/>
+    </a>
   </div>
 
   {% for i in (1..4) %}
     {% capture promo_image %}promo_image_{{ i }}.jpg{% endcapture %}
     {% capture promo_image_link %}promo_image_{{ i }}_link{% endcapture %}
     <div class='autoscale__sub-div'>
-      <img class='autoscale__sub-elem' src='{{ promo_image | asset_url }}'/>
+      <a href='{{ settings[promo_image_link] }}'>
+        <img class='autoscale__sub-elem' src='{{ promo_image | asset_url }}'/>
+      </a>
     </div>
   {% endfor %}
+  <style>
+    .homepg-product-image{
+      width: 33.1%;
+      height: 300px;
+      margin: 0;
+      border: 1px solid orange;
+      display: inline-block;
+    }
 
-
-
+    @media screen and (max-width: 1000px){
+      .homepg-product-image{
+        width: 49.4%;
+      }
+    }
+  </style>
+  <div>
+    <div class='homepg-product-image'>
+    </div>
+    <div class='homepg-product-image'>
+    </div>
+    <div class='homepg-product-image'>
+    </div>
+    <div class='homepg-product-image'>
+    </div>
+    <div class='homepg-product-image'>
+    </div>
+    <div class='homepg-product-image'>
+    </div>
+  </div>
 
   {% comment %}
   {% for i in (1..5) %}

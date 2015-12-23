@@ -1,5 +1,5 @@
 <div class="header-bar">
-  <!-- This is desktop version (favicon, list, cart, search) -->
+  <!-- This is desktop version (favicon, list, cart) -->
   <div id='header-bar__pc' class='wrapper'>
     <div class='header-bar__module header-bar__favicon'>
       <a href='/'><img src="{{ 'header_bar_icon_pc.png' | asset_url }}"/></a>
@@ -8,7 +8,7 @@
     <div class='header-bar__module header-bar__lists'>
       {% for link in linklists.main-menu.links %}
         {% assign child_list_handle = link.title | handleize %}
-        <!-- Case 1: The link contains a sublink-list -->
+        <!-- Case 1: The link contains a sublink-list. The link itself has been disabled -->
         {% if linklists[child_list_handle].links != blank %}
           <div class='header-bar__link'>
             <a>
@@ -33,10 +33,9 @@
         {% endif %}
       {% endfor %}
     </div>
-        
 
     <div class='header-bar__module header-bar__cart'>
-      <a href="/cart">
+      <a href="/cart" class="{% if template contains 'cart' %} header-bar__link-active {% endif %}">
         <span class="icon icon-cart header-bar__cart-icon" aria-hidden="true"></span>
         {{ 'layout.cart.title' | t }}{% unless cart.item_count == 0 %}:{% endunless %}
         <span class="{% if cart.item_count == 0 %} hidden-count{% endif %}">{{ cart.item_count }}</span>
@@ -65,6 +64,8 @@
       </a>
     </div>
   </div>
+
+  <!-- The dropdown nav-bar (Search and links, if there's a sublink, a sub_dropdown will be generated) -->
   <ul id="MobileNav" class="mobile-nav">
     <li class="mobile-nav__link">
       {% if settings.header_search_enable %}
@@ -75,8 +76,32 @@
     </li>
 
     {% for link in linklists.main-menu.links %}
+      {% assign child_list_handle = link.title | handleize %}
       <li class="mobile-nav__link" aria-haspopup="true">
-        <a href="{{ link.url }}" class="mobile-nav">{{ link.title }}</a>
+        {% if linklists[child_list_handle].links != blank %}
+          <a href="{{ link.url }}" class="mobile-nav__sublist-trigger">
+            {{ link.title }}
+            <span class="icon-fallback-text mobile-nav__sublist-expand">
+              <span class="icon icon-plus" aria-hidden="true"></span>
+              <span class="fallback-text">+</span>
+            </span>
+            <span class="icon-fallback-text mobile-nav__sublist-contract">
+              <span class="icon icon-minus" aria-hidden="true"></span>
+              <span class="fallback-text">-</span>
+            </span>
+          </a>
+          <ul class="mobile-nav__sublist">  
+            {% for link in linklists[child_list_handle].links %}
+              <li class="mobile-nav__sublist-link">
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <a href="{{ link.url }}" class="mobile-nav">
+            {{ link.title }}
+          </a>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>

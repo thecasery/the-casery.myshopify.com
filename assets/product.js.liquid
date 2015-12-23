@@ -1,0 +1,445 @@
+/* This is version 2.0, maybe the final version of product page
+ *
+ * There're 8 core functions, which includes init_option0-3, change_option1-3 and share_social_media.
+ * To understand, debug or improve these code, first you need to look at the product structure.
+ *   Under '.grid__product' container, there're option 0-3 which saves the variants' options.
+ *   We read data from a select called '#productSelect', that select saves detailed information of each option, include:
+ *      (0) case type
+ *      (1) color
+ *      (2) pictures name
+ *      (3) picture url
+ *      (4) variant price
+ *   They are seprated by @. When we split the string and save it, we are ready to play with those variants!
+ *   Note: '#productSelect'.selectedIndex is very important, its value is the only thing we can submit to shopify server.
+ *         Which is the variant id, it means we choose this variant.
+ */
+
+/* Part 1: Initialize variant */
+// Social Media: '.product-img' is the share img, '#title' is product title, '.active-option2' is color
+function share_social_media(product){
+  var img = product.find('.product-img').attr('src');
+  var title = product.find('#title').text();
+  var color = product.find('.active-option2').parent().attr('name');
+  var url = window.location.href + '?variant=' + product.find('#productSelect').val();
+  // Facebook
+  product.find('#facebook').attr("href","https://www.facebook.com/dialog/feed?app_id=1516749411980352&display=page&caption=Welcome%20to%20the%20casery&picture=http:"+img+"&name="+title+"&description="+color+"&link="+url+"&redirect_uri="+window.location.href+"");
+  // Pinterest
+  product.find('#pinterest').attr("href","https://pinterest.com/pin/create/button/?url="+url+"&amp;media=http:"+img+"&amp;description="+title+" ("+color+")");
+  // Twitter
+  product.find('#twitter').attr("href","https://twitter.com/share?url="+url+"&amp;text=The Casery - "+title+" ("+color+")");
+  // Tumblr
+  product.find('#tumblr').attr("href","https://www.tumblr.com/widgets/share/tool?posttype=photo&content="+img+"&caption="+title+" ("+color+")&canonicalUrl="+url);
+}
+
+
+/* init option3 value, which is picture */
+function init_option3(product, start_pos, total_options, variants){
+  // 1. Remove previous active element
+  $('.active-option3').removeClass('active-option3');
+  $('.active-dot').removeClass('active-dot');
+  product.find('#option3 div').remove();
+  product.find('.dot').remove();
+
+  // 2. Find and display all the different option3 pictures, but having same option 1 & 2 value with variant[start_pos]
+  var arr3 = new Array();
+  for (var i = start_pos; i < total_options && variants[i][0] == variants[start_pos][0] && variants[i][1] == variants[start_pos][1]; i++){
+    var flag3 = true;
+    for (var j = 0; j < arr3.length; j++){
+      if (arr3[j] == variants[i][2]){
+        flag3 = false;
+        break;
+      }
+    }
+    if (flag3){
+      arr3.push(variants[i][2]);
+      product.find('#option3').append("<div class='thumbnail-img'><img style='display:block; width:100%;' src='"+variants[i][3]+"' /></div>");
+      if (document.documentElement.clientWidth <= 767){   // mobile, using slides instead of thumbnails
+        product.find('.slider-dots').append('<li class="dot">&bull;</li>');
+      }
+    }
+  }
+
+  // 3. reset '.product-img', '.active-option3', reset social media
+  product.find('#option3 img').first().addClass("active-option3");
+  product.find('.product-img').attr("src", $('.active-option3').attr("src"));
+  if (document.documentElement.clientWidth <= 767){   // reset slides
+    product.find('.dot').first().addClass('active-dot');
+    product.find('.slider-dots').css('left',$('.product-img').offset().left + ($('.product-img').width() - $('.slider-dots').width() + 10) / 2);
+    product.find('.slider-dots').css('top',$('.product-img').offset().top + $('.product-img').height() - 50);
+  }
+  share_social_media(product);
+}
+
+/* init option2 value, which is color */
+function init_option2(product, start_pos, total_options, variants){
+  // 1. Remove previous active element
+  $('.active-option2').removeClass('active-option2');
+  product.find('#option2 div').remove();
+
+  // 2. (1) Find the variant[i] which has same option 1 with variant[start_pos]
+  //    (2) Display different colors in that case type, note: we display picture instead of colors
+  var arr2 = new Array();
+  var i = 0;
+  for (; i < total_options && variants[i][0] != variants[start_pos][0]; i++);
+  for (; i < total_options && variants[i][0] == variants[start_pos][0]; i++){
+    var flag2 = true;
+    for (var j = 0; j < arr2.length; j++){
+      if (arr2[j] == variants[i][1]){
+        flag2 = false;
+        break;
+      }
+    }
+    if (flag2 && variants[i][1] != 'Null'){
+      arr2.push(variants[i][1]);
+      product.find('#option2').append("<div class='option2-outer-container' name='"+variants[i][1]+"' onmouseover=\"this.style.cursor='hand'\"><img style='width:88px; height:88px;' src='"+variants[i][3]+"'/></div>");
+    }
+  }
+
+  // 3. Find the right active color and Reset selectedIndex to start_pos
+  var j = 0;
+  for (; j < arr2.length && arr2[j] != variants[start_pos][1]; j++);
+  product.find('#option2 .option2-outer-container img').eq(j).addClass('active-option2');
+  product.find('#productSelect').get(0).selectedIndex = start_pos;
+  
+  // 4. Change variant money and init option3
+  product.find('.product-pc-money').text(variants[start_pos][4]);
+  product.find('.product-mobile-money').text(variants[start_pos][4]);
+  init_option3(product, start_pos, total_options, variants);
+}
+
+/* init option1 value, which is case type */
+function init_option1(product, start_pos, total_options, variants){
+  // 1. Remove previous active element
+  $('.active-option1').removeClass('active-option1');
+  $('.active-case-description').removeClass('active-case-description');
+  product.find('#option1 div').remove();
+
+  // 2. Find all the different option 1 value
+  var arr1 = new Array();
+  for (var i = 0; i < total_options; i++){
+    var flag1 = true;
+    for (var j = 0; j < arr1.length; j++){
+      if (arr1[j] == variants[i][0]){
+        flag1 = false;
+        break;
+      }
+    }
+    if (flag1){
+      arr1.push(variants[i][0]);
+      product.find('#option1').append("<div id='"+variants[i][0]+"' class='option1-btn'><p>"+variants[i][0]+"</p></div>");
+    }
+  }
+
+  // 3. Find the right active-option1 according to start_pos
+  var i = 0, j = 0;
+  for (; i < total_options && variants[i][0] != variants[start_pos][0]; i++);
+  for (; j < arr1.length && arr1[j] != variants[start_pos][0]; j++);
+  product.find('#option1 .option1-btn').eq(j).addClass('active-option1');
+
+  // 4. Set the according case description and init option 2
+  if (variants[start_pos][0].indexOf('Clear') >= 0){
+    product.find('#description-clear').addClass('active-case-description');
+  } else if (variants[start_pos][0].indexOf('Slim') >= 0){
+    product.find('#description-slim').addClass('active-case-description');
+  } else {
+    product.find('#description-protector').addClass('active-case-description');
+  }
+  init_option2(product, start_pos, total_options, variants);
+}
+
+/* Initialize all the variants!! */
+function init_variants(product){
+  var productSelect = product.find('#productSelect');
+  var product_options = productSelect.find('option');
+  var total_options = product_options.length;
+  var variants = new Array();
+
+  // string split, I use ' @ ' to seperate different options
+  for (var i = 0; i < total_options; i++){
+    var string = product_options.eq(i).text();
+    var t = string.split(' @ ');
+
+    variants.push(t);
+  }
+
+  // When we loading this page, it will automatically has a '?variant=xxxxxxx'. This is the initial variant. Its id is $('#productSelect').val(), its index is $('#productSelect').get(0).selectedIndex.
+  // We cannot just display the first variant info, we need to find the according option value and display them.
+  init_option1(product, product.find('#productSelect').get(0).selectedIndex, total_options, variants);
+}
+
+
+/* Part 2 : Update variant */
+/* Update option0 */
+// This function is pretty simple, because all the URLs have been saved in option0's value attribute
+// See 'product.liquid' for details
+function change_option0(product){
+  var new_phone_type_url = product.find('#option0').val();
+
+  window.location.href = new_phone_type_url;
+}
+
+/* Update option1 */
+function change_option1(option, product, total_options, variants){
+  // 1. Remove previous active elements and active current element
+  $('.active-option1').removeClass('active-option1');
+  $('.active-case-description').removeClass('active-case-description');
+  option.addClass('active-option1');
+
+  // 2. Find the index of the first element of new case type
+  var new_option0_name = option.attr('id');
+  var new_index = 0;
+  for (; new_index < total_options && variants[new_index][0] != new_option0_name; new_index++);
+
+  // 3. Update case description according to current case type. 
+  //    Then we initialize all the remaining variant to the first element of new case type
+  if (variants[new_index][0].indexOf('Clear') >= 0){
+    product.find('#description-clear').addClass('active-case-description');
+  } else if (variants[new_index][0].indexOf('Slim') >= 0){
+    product.find('#description-slim').addClass('active-case-description');
+  } else {
+    product.find('#description-protector').addClass('active-case-description');
+  }
+  init_option2(product, new_index, total_options, variants);
+}
+
+/* Update option2 */
+function change_option2(option, product, total_options, variants){
+  // 1. Remove previous active class and highlight current one
+  $('.active-option2').removeClass('active-option2');
+  option.find('img').addClass('active-option2');
+
+  // 2. Find the index new variant. Note that new variant and current variant have the same option1 value, which is case type.
+  var new_option2_name = option.attr("name");
+  var current_index = product.find('#productSelect').get(0).selectedIndex;
+
+  var new_index = 0;
+  for (; new_index < total_options && variants[new_index][0] != variants[current_index][0]; new_index ++);
+  for (; new_index < total_options && variants[new_index][0] == variants[current_index][0] && variants[new_index][1] != new_option2_name; new_index++);
+
+  // 3. Reset selectedIndex and money. Because option0,1,2 could decide a unique product, option3 only contains pictures.
+  product.find('#productSelect').get(0).selectedIndex = new_index;
+  product.find('.product-pc-money').text(variants[new_index][4]);
+  product.find('.product-mobile-money').text(variants[new_index][4]);
+  init_option3(product, new_index, total_options, variants);
+}
+
+/* update option3 */
+function change_option3(option, product, total_options, variants){
+  // Basically, this is picture changing problem.
+  product.find('.product-img').attr("src", option.attr("src"));
+  $('.active-option3').removeClass("active-option3");
+  option.addClass("active-option3");
+
+  // Update social media
+  share_social_media(product);
+}
+
+function change_option3_mobile(direction, product){
+  var next_picture;
+  var next_dot;
+  // 1. This is simple logic of slides, see Code Academy for details
+  if (direction == 'left'){
+    if ($('.active-option3').parent().is(':first-child')){
+      next_dot = product.find('.dot').last();
+      next_picture = product.find('#option3 div').last().find('img');
+    } else {
+      next_dot = $('.active-dot').prev();
+      next_picture = $('.active-option3').parent().prev().find('img');
+    }
+  } else if (direction == 'right'){
+    if ($('.active-option3').parent().is(':last-child')){
+      next_dot = product.find('.dot').first();
+      next_picture = product.find('#option3 div').first().find('img');
+    } else {
+      next_dot = $('.active-dot').next();
+      next_picture = $('.active-option3').parent().next().find('img');
+    }
+  }
+
+  // 2. Remove previous active elements, and active current ones
+  product.find('.product-img').attr("src", next_picture.attr("src"));
+  $('.active-option3').removeClass('active-option3');
+  $('.active-dot').removeClass('active-dot');
+  next_dot.addClass('active-dot');
+  next_picture.addClass('active-option3');
+
+  // 3. Update social media
+  share_social_media(product);
+}
+
+/* Try not to use $(this) or other things, only use the parameter in this function 
+ * This is variants update part */
+function update_variants(product){
+  var productSelect = product.find('#productSelect');
+  var product_options = productSelect.find('option');
+  var total_options = product_options.length;
+  var variants = new Array();
+
+  // string split, I use ' @ ' to seperate different options
+  for (var i = 0; i < total_options; i++){
+    var string = product_options.eq(i).text();
+    var t = string.split(' @ ');
+
+    variants.push(t);
+  }
+
+  /* change value of option 0 - phone type - (select value change) */
+  // don't forget to deregister everything before register new event, to avoid multiple registration
+  product.find('#option0').unbind('change').change(function(){
+    change_option0(product);
+  });
+
+  /* change value of option 1 - case type - (different div choose) */
+  product.find('#option1').off('click','.option1-btn').on('click', '.option1-btn', function(){
+    change_option1($(this), product, total_options, variants);
+  });
+
+  /* change value of option 2 - color - (different img choose) */
+  product.find('#option2').off('click','.option2-outer-container').on('click', '.option2-outer-container', function(){
+    change_option2($(this), product, total_options, variants);
+  });
+
+  /* change value of option 3 - picture - (different img choose) */
+  //This is easy, just image change. But note that JQuery 1.7+ use 'on' method to replace bind, delegate, etc.
+  if (document.documentElement.clientWidth > 767){
+    product.find('#option3').off('click','img').on('click','img',function(){
+      change_option3($(this), product, total_options, variants);
+    });
+  } else {
+    /*-- Write a jquery touch swipe detector! --*/
+    var xDown = null;
+    var yDown = null;
+    
+    product.find('.product-img').off('touchstart').on('touchstart', function(e){
+      xDown = e.originalEvent.touches[0].pageX;
+      yDown = e.originalEvent.touches[0].pageY;
+    });
+
+    product.find('.product-img').off('touchmove').on('touchmove', function(e){
+      if ( !xDown || !yDown) {
+        return;
+      }
+      var xUp = e.originalEvent.touches[0].pageX;
+      var yUp = e.originalEvent.touches[0].pageY;
+      var xDiff = xDown - xUp;
+      var yDiff = yDown - yUp;
+
+      // Here's code code, if xDiff larger than 8 pixels, we define it as a swipe.
+      // Besides, the yDiff must be smaller xDiff
+      if ( Math.abs(yDiff) <= Math.abs(xDiff) && xDiff > 8 ) { 
+        change_option3_mobile('left', product);
+      } else if ( Math.abs(yDiff) <= Math.abs(xDiff) && xDiff < -8){
+        change_option3_mobile('right', product);
+      }
+
+      /* reset values */
+      xDown = null;
+      yDown = null; 
+    });
+  }
+}
+
+/* Belowing are magnifier functions 
+ * A basic math explaination: small_cover : small_container = large_cover : large_container;
+ * Here small_cover and large_cover size is fixed, magnification is fixed. The small_container size is depend
+ * on the length of browser, so we only need to change the size of large_container. */
+
+/* Set cover function mainly make sure, the small_cover does not go out of the small_container */
+function set_cover(cover, cover_width, cover_height, x, y, l, r, u, d){
+  var cover_x, cover_y;
+  // set_x
+  if (x - l < cover_width / 2){
+    cover_x = l;
+  } else if (r - x < cover_width / 2){  // too right
+    cover_x = r - cover_width;
+  } else {                              // too left
+    cover_x = x - cover_width / 2;
+  }
+
+  // set_y
+  if (y - u < cover_height / 2){
+    cover_y = u;
+  } else if (d - y < cover_height / 2){ // too low
+    cover_y = d - cover_height;
+  } else {                              // too high
+    cover_y = y - cover_height / 2;
+  }
+
+  cover.css('left', cover_x);
+  cover.css('top', cover_y);
+  cover.css('width', cover_width);
+  cover.css('height', cover_height);
+}
+
+/* set_content is set the large_container position, the cover position is fixed, img is the container
+ * Change the margin of image, and only let the right part display in the cover, other place just hidden */
+function set_content(cover, container, content, magnification, large_width, large_height){
+  var margin_left = (cover.offset().left - container.offset().left) * magnification;
+  var margin_top = (cover.offset().top - container.offset().top) * magnification;
+  var img = content.find('img');
+  img.width(large_width);
+  img.height(large_height);
+  img.css('margin-left', 0 - margin_left);
+  img.css('margin-top', 0 - margin_top);
+}
+
+$(document).ready(function(){
+  // product logic init and update
+  var product=$('.product-container');
+  init_variants(product);
+  update_variants(product);
+
+  // magnifier here
+  if (document.documentElement.clientWidth > 767){
+    $('.product-img__container').on('mouseenter', function(e){
+      $('.magnifier-content').width($('.product-container-right').innerWidth());
+      $('.magnifier-content').height($('.product-container-right').innerHeight());
+      $('.magnifier-content').css('left', $('.product-container-right').offset().left);
+      $('.magnifier-content').css('top', $('.product-container-right').offset().top);
+      // variable registration
+      var small_width = $(this).width();
+      var small_height = $(this).height();
+      var large_width = 720;
+      var large_height = 720;
+
+      var magnification = large_width / small_width;
+      var content_width = $('.magnifier-content').width();
+      var content_height = $('.magnifier-content').height();
+      var cover_width = content_width / magnification;
+      var cover_height = content_height / magnification;
+      var small_l = $(this).offset().left;
+      var small_r = small_l + small_width;
+      var small_u = $(this).offset().top;
+      var small_d = small_u + small_height;
+      $('.magnifier-cover').css('display','block');
+      $('.magnifier-content img').attr('src', $('.product-img').attr('src'));
+      set_cover($('.magnifier-cover'), cover_width, cover_height, e.pageX, e.pageY, small_l, small_r, small_u, small_d);
+      set_content($('.magnifier-cover'), $('.product-img__container'), $('.magnifier-content'), magnification, large_width, large_height);
+
+      // this is cover appear trigger event (mousemove on small_container)
+      $('.product-img__container').on('mousemove',function(e){
+        set_cover($('.magnifier-cover'), cover_width, cover_height, e.pageX, e.pageY, small_l, small_r, small_u, small_d);
+        set_content($('.magnifier-cover'), $('.product-img__container'), $('.magnifier-content'), magnification, large_width, large_height);
+      });
+
+      // this is magnifier appear trigger (mouseclick on small_container)
+      $('.product-img__container').off('click').on('click',function(){
+        if ($('.active-magnifier').hasClass('active-magnifier')){
+          $('.active-magnifier').removeClass('active-magnifier');
+          $('.magnifier-content').css('display','none');
+        } else {
+          $('.magnifier-cover').addClass('active-magnifier');
+          $('.magnifier-content').css('display','block');
+        }
+      });
+    });
+    
+    // This is magnifier disappear event
+    $('.product-img__container').on('mouseleave', function(e){
+      $('.magnifier-cover').css('display','none');
+      $('.magnifier-content').css('display','none');
+      $('.active-magnifier').removeClass('active-magnifier');
+      $('.product-img__container').off('mousemove');
+    });
+  }
+});
