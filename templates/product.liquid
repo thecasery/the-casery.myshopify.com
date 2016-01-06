@@ -25,9 +25,9 @@
     <div class='product-container-right'>
       <h1 id='title' style='font-size:26px; margin-top:10px; text-transform: uppercase;'>{{ product.title }} {{ product.type }} Case</h3>
       {% if product.vendor contains 'Casery' %}
-        <p style='font:18px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
+        <p id='vendor' style='font:18px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
       {% else %}
-        <a style='font:18px; color:gray;' href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/{{ product.type | handleize }}'><p style='margin-top:-20px;'>{{ product.vendor }}</p></a>
+        <a class='grid-link__artist' style='font:18px; color:gray;' href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/{{ product.type | handleize }}'><p id='vendor' style='margin-top:-20px;'>{{ product.vendor }}</p></a>
       {% endif %}
       <h3 class='product-pc-money'></h3>
 
@@ -48,6 +48,7 @@
           {% endfor %}
         {% endpaginate %}
       </select>
+      <p id='handler' style='display:none;'>{{ product.handle }}</p>
 
       <!-- This is case type -->
       <div id = "option1" class="option1"></div>
@@ -111,12 +112,12 @@
       {% endfor %}
     </div>
   {% else %}
-    <div class='recent-view'>
-      {% include 'recently-viewed-mlveda' %}
-      {% include 'recently-viewed-theme' %}
+    <div class="section-header section-header--medium">
+      <h4 class="section-header__title">Recently Viewed Products</h4>
     </div>
-  {% endif %}
 
+    <div class='recent-view text-center'></div>
+  {% endif %}
   <!-- Drop Test -->
   <hr class="hr--clear hr--small">
   <div class='drop-test'>
@@ -133,11 +134,14 @@
 
   <!-- Instagram Feed -->
   <hr class="hr--clear hr--small">
-  <div style='text-align:center;'>
-    <div class="section-header section-header--medium">
-      <h4 class="section-header__title">Instagram Feed</h4>
-    </div>
-    <script src="https://snapwidget.com/js/snapwidget.js"></script>
+  <script src="https://snapwidget.com/js/snapwidget.js"></script>
+  <div class="section-header section-header--medium">
+    <h4 class="section-header__title">Instagram Feed</h4>
+  </div>
+  <div class='instagram-feed-pc'>
     <iframe src="https://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDIzMHw0fDF8fHllc3wyMHxub25lfG9uU3RhcnR8eWVzfHllcw==&ve=141215" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
+  </div>
+  <div class='instagram-feed-mobile'>
+    <iframe src="https://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDQwMHwyfDJ8fHllc3w1fG5vbmV8b25TdGFydHx5ZXN8eWVz&ve=291215" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
   </div>
 </div>

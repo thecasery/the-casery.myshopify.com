@@ -85,9 +85,20 @@ if ((typeof Shopify) == 'undefined') {
   var Shopify = {};
 }
 
-var page_init = function(){
+var header_bar_init = function(){
   $('.header-bar__link').off('mouseover').on('mouseover',function(){
-    $(this).find('.header-bar__sublink').css('display','block');
+    var width_of_link = 0;
+    if ($(this).text().indexOf('iPhone') >= 0){
+      width_of_link = 64;
+    } else if ($(this).text().indexOf('Samsung') >= 0){
+      width_of_link = 80;
+    } else if ($(this).text().indexOf('Collections') >= 0){
+      width_of_link = 90;
+    }
+    // This is adjust the drop down list position, make sure the text align perfect!
+    var left = $(this).offset().left + ($(this).width() - width_of_link) / 2 - 20;
+
+    $(this).find('.header-bar__sublink').css('display','block').css('left',left);
   });
 
   $('.header-bar__link').off('mouseleave').on('mouseleave',function(){
@@ -107,4 +118,4 @@ var page_init = function(){
   });
 }
 
-$(document).ready(page_init);
+$(document).ready(header_bar_init);

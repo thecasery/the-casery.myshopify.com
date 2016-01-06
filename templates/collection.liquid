@@ -5,7 +5,7 @@
   3. Accessory collection. Including accessory banner and simplify 'grid-product-item'
 {% endcomment %}
 
-{% if collection.title contains 'Men' or collection.title contains 'Women' or collection.title contains 'Artist' %}
+{% if collection.title contains 'Suit + Tie' or collection.title contains 'So Fetch' or collection.title contains 'Limited Edition' %}
   {% paginate collection.products by 24 %}
     {{ 'collection.js' | asset_url | script_tag }}
 

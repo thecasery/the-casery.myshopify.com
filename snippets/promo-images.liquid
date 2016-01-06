@@ -7,6 +7,7 @@
 {% if settings.show_promo_image_5 %}{% assign index = index | plus: 1 %}{% endif %}
 
 {% unless index == 0 %}
+  <!-- This is the big picture at top -->
   <div class='autoscale__div' style='margin-bottom:2px;'>
     {% capture promo_image %}promo_image_5.jpg{% endcapture %}
     {% capture promo_image_link %}promo_image_5_link{% endcapture %}
@@ -15,6 +16,7 @@
     </a>
   </div>
 
+  <!-- These are 4 small banners for collections -->
   {% for i in (1..4) %}
     {% capture promo_image %}promo_image_{{ i }}.jpg{% endcapture %}
     {% capture promo_image_link %}promo_image_{{ i }}_link{% endcapture %}
@@ -24,36 +26,141 @@
       </a>
     </div>
   {% endfor %}
+
+  <!-- Below are 6 small banners for 6 phone types -->
   <style>
-    .homepg-product-image{
-      width: 33.1%;
-      height: 300px;
-      margin: 0;
-      border: 1px solid orange;
+    .wide-button{
+      background-color: #EE6D54;
+      border-radius: 5px;
+      cursor: pointer;
+      position: absolute;
+      width: 100%;
+      display: none;
+      transition: background-color 0.1s;
+    }
+    .wide-button:hover{
+      background-color: #FF9D84;
+    }
+
+    .homepg-product__div{
+      width: 33.2%;
+      max-height: 400px;
+      margin: -1px;
+      margin-top: -3px;
+      vertical-align: top;
+      display: inline-block;
+      overflow: hidden;
+    }
+
+    .homepg-description{
+      position: absolute;
+      display: none;
+    }
+    #regular-5{
       display: inline-block;
     }
+    #special-5{
+      display: none;
+    }
 
-    @media screen and (max-width: 1000px){
-      .homepg-product-image{
+    @media screen and (min-width: 601px) and (max-width: 1000px){
+      .homepg-product__div{
         width: 49.4%;
+        margin: 0;
+      }
+      #regular-5 {
+        display: none;
+      }
+      #special-5 {
+        display: inline-block;
       }
     }
+
+    @media screen and (max-width: 600px){
+      .homepg-product__div{
+        width: 100%;
+      }
+    }
+
+    @media screen and (min-width: 1200px){
+      .homepg-product__div{}
+    }
   </style>
-  <div>
-    <div class='homepg-product-image'>
+  <div style='margin-top:3px;'>
+    <div class='homepg-product__div'>
+      <img class='homepg-product__background-img' style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/button-iphone6.jpg?9737700247521477945' />
+      <img class='homepg-description' src='https://cdn.shopify.com/s/files/1/0964/6944/files/iphone-6-wide-button-text.png?14793281840210422212' />
+      <a class='wide-button' href='/pages/iphone-6'>
+        <img style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/shop-now-button.png?16065893811957334388' />
+      </a>
     </div>
-    <div class='homepg-product-image'>
+    <div class='homepg-product__div'>
+      <img class='homepg-product__background-img' style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/button-iphone6s.jpg?9737700247521477945' />
+      <img class='homepg-description' src='https://cdn.shopify.com/s/files/1/0964/6944/files/iphone-6s-wide-button-text.png?14793281840210422212' />
+      <a class='wide-button' href='/pages/iphone-6s'>
+        <img style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/shop-now-button.png?16065893811957334388' />
+      </a>
     </div>
-    <div class='homepg-product-image'>
+    <div id='regular-5' class='homepg-product__div'>
+      <img class='homepg-product__background-img' style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/button-iphone5.jpg?9737700247521477945' />
+      <img class='homepg-description' src='https://cdn.shopify.com/s/files/1/0964/6944/files/iphone-5-wide-button-text.png?14793281840210422212' />
+      <a class='wide-button' href='/pages/iphone-5'>
+        <img style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/shop-now-button.png?16065893811957334388' />
+      </a>
     </div>
-    <div class='homepg-product-image'>
+    <div class='homepg-product__div'>
+      <img class='homepg-product__background-img' style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/button-iphone6plus.jpg?9737700247521477945' />
+      <img class='homepg-description' src='https://cdn.shopify.com/s/files/1/0964/6944/files/iphone-6-plus-wide-button-text.png?14793281840210422212' />
+      <a class='wide-button' href='/pages/iphone-6-plus'>
+        <img style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/shop-now-button.png?16065893811957334388' />
+      </a>
     </div>
-    <div class='homepg-product-image'>
+    <div id='special-5' class='homepg-product__div'>
+      <img class='homepg-product__background-img' style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/button-iphone5.jpg?9737700247521477945' />
+      <img class='homepg-description' src='https://cdn.shopify.com/s/files/1/0964/6944/files/iphone-5-wide-button-text.png?14793281840210422212' />
+      <a class='wide-button' href='/pages/iphone-5'>
+        <img style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/shop-now-button.png?16065893811957334388' />
+      </a>
     </div>
-    <div class='homepg-product-image'>
+    <div class='homepg-product__div'>
+      <img class='homepg-product__background-img' style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/button-iphone6splus.jpg?9737700247521477945' />
+      <img class='homepg-description' src='https://cdn.shopify.com/s/files/1/0964/6944/files/iphone-6s-plus-wide-button-text.png?5146459316297010209' />
+      <a class='wide-button' href='/pages/iphone-6s-plus'>
+        <img style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/shop-now-button.png?16065893811957334388' />
+      </a>
+    </div>
+    <div class='homepg-product__div'>
+      <img class='homepg-product__background-img' style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/button-samsungs6.jpg?9737700247521477945' />
+      <img class='homepg-description' src='https://cdn.shopify.com/s/files/1/0964/6944/files/samsung-s6-wide-button-text.png?14793281840210422212' />
+      <a class='wide-button' href='/pages/samsung-s6'>
+        <img style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/shop-now-button.png?16065893811957334388' />
+      </a>
     </div>
   </div>
+  <script>
+    function phone_pic_adjustment(){
+      var title = $('.homepg-description');
 
+      for (var i = 0; i < title.length; i++){
+        var background_pic = title.eq(i).parents('.homepg-product__div').find('.homepg-product__background-img');
+        var button = title.eq(i).parents('.homepg-product__div').find('.wide-button');
+
+        title.eq(i).css('left',background_pic.offset().left).css('top',background_pic.offset().top).css('width',background_pic.width()).css('height',background_pic.height()).css('display','block');
+        if (background_pic.height() > 400){
+          title.eq(i).css('margin-top', (400 - background_pic.height()) / 2);
+        }
+
+        button.css('left',title.eq(i).offset().left + title.eq(i).width() * 0.16).css('top',title.eq(i).offset().top + title.eq(i).height() * 0.532).css('width',title.eq(i).width() * 0.285).css('height',title.eq(i).height() * 0.13).css('display','block');
+      }
+    }
+
+    // use window.load instead of document.ready
+    $(window).load(phone_pic_adjustment);
+    $(window).resize(phone_pic_adjustment);
+  </script>
+  <script>
+      //jQuery('.homepg-description').attr('style','position: absolute;');});
+  </script>
   {% comment %}
   {% for i in (1..5) %}
     {% capture promo_image %}promo_image_{{ i }}.jpg{% endcapture %}

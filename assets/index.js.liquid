@@ -97,15 +97,15 @@ var carousel_setting = function(){
 
 /* The autoscale element function is used for adjusting picture size and location according to screen size.
  * The container size is set to current screen size.
- * The inside element size is set to 2:1. if it's largger than 2:1, we cut some of the width;
- *   if it's smaller than 2:1, we cut some of the height.
+ * The inside element size is set to 2.78 : 1. if it's largger than 2.78 : 1, we cut some of the width;
+ *   if it's smaller than 2.78 : 1, we cut some of the height.
  * 
  * To realize this function, don't forget to set container "overflow:hidden", and use margin to set element position.
  */
 var autoscale_picture = function(){
   var picture_height, picture_width, margin_top, margin_left; 
-  var mobile_device = false;  
-  if (document.documentElement.clientWidth <= 767){
+  var mobile_device;  // device type detection
+  if (document.documentElement.clientWidth <= 766){
     mobile_device = true;
   } else {
     mobile_device = false;
@@ -130,15 +130,15 @@ var autoscale_picture = function(){
     $('.slider-nav').css('left', ($('.slide-img').width()-180) / 2);
   } else {
     // At this point, pic_width & height are screen size, used to set div size.
-    picture_height = document.documentElement.clientHeight - 300;
+    picture_height = Math.max(document.documentElement.clientHeight - 300, 600);
     picture_width = document.documentElement.clientWidth;
     $('.autoscale__div').css('height', picture_height);
     $('.autoscale__div').css('width', picture_width);
 
-    // Adjust picture width:height to 2:1
-    if (picture_height < 431 && picture_width < 1200) {
-      picture_height = 431;
-      picture_width = 1200;
+    // Adjust picture width:height to 2.78:1
+    if (picture_height < 600 && picture_width < 1668) {
+      picture_height = 600;
+      picture_width = 1668;
     } else if (picture_height * 2.78 < picture_width) {
       picture_height = picture_width / 2.78;
     } else {
@@ -146,13 +146,14 @@ var autoscale_picture = function(){
     }
 
     // calculate margin to adjust picture position, make it at center.
-    margin_top = (document.documentElement.clientHeight - picture_height - 300) / 2;
+    margin_top = (Math.max(document.documentElement.clientHeight - 300, 600) - picture_height) / 2;
     margin_left = (document.documentElement.clientWidth - picture_width) / 2;
 
     // This is a side function, just to adjust slider's navigation-bar position
     $('.slider-nav').css('top', $('.slide-img').height() - 70);
     $('.slider-nav').css('left', ($('.slide-img').width()-200) / 2);
   }
+
   $('.autoscale__elem').css('height', picture_height);
   $('.autoscale__elem').css('width', picture_width);
 

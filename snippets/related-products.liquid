@@ -1,5 +1,9 @@
-{% assign number_of_products = 4 %}
-{% assign number_of_products_to_fetch = number_of_products | plus: 1 %}
+{% comment %}
+  This is product recommendation system.
+  First we check if there's enough product to recommend.
+  Second we use random start to recommend some products.
+  If it is not enough, we recommend some newest products.
+{% endcomment %}
 
 {% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
   {% assign found_a_collection = false %}
@@ -21,23 +25,26 @@
 {% endfor %}
 
 {% if t > 0 %}
+{% paginate collection.products by 1000 %}
   <hr class="hr--clear hr--small">
   <div class="section-header section-header--medium">
     <h4 class="section-header__title">{{ 'products.general.related_products_title' | t }}</h4>
   </div>
-  <div class = "collection-content">
+  <div class = "collection-content" style='text-align:center'>
+    <!-- Random Picked Products -->
     {% assign i = 0 %}
-    {% for product in collection.products %}
+    {% capture index %}{{ 'now' | date: '%S' | times: collection.products.size | divided_by: 60 }}{% endcapture %}
+    {% for product in collection.products offset:index %}
       {% if product.handle == current_product.handle or i > 3 %}
       {% elsif product.type == current_product.type %}
         {% assign i = i | plus: 1 %}
         <a href='{{ product.url }}'>
-          <div class="grid__product" onmouseover="this.style.border='1px solid #d0d0d0';" onmouseout="this.style.border='0px';">
+          <div class="related__product" onmouseover="this.style.border='1px solid #d0d0d0';" onmouseout="this.style.border='0px';">
             <span class="grid-link__image-centered">
               <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" style=' cursor:pointer;'/>
             </span>
 
-            <div class='grid__mobile-info text-center'>
+            <div class=''>
               <p class="grid-link__title">{{ product.title }}</p>
               <p class="grid-link__title grid-link__vendor">{{ product.vendor }} - {{ product.type }}</p>
               <p id='grid__product-money' class="grid-link__meta">{{ product.price | money }}</p>
@@ -46,5 +53,29 @@
         </a>
       {% endif %}
     {% endfor %}
+
+    <!-- Latest Products -->
+    {% if i <= 3 %}
+      {% for product in collection.products %}
+        {% if product.handle == current_product.handle or i > 3 %}
+        {% elsif product.type == current_product.type %}
+          {% assign i = i | plus: 1 %}
+          <a href='{{ product.url }}'>
+            <div class="related__product" onmouseover="this.style.border='1px solid #d0d0d0';" onmouseout="this.style.border='0px';">
+              <span class="grid-link__image-centered">
+                <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" style=' cursor:pointer;'/>
+              </span>
+
+              <div class=''>
+                <p class="grid-link__title">{{ product.title }}</p>
+                <p class="grid-link__title grid-link__vendor">{{ product.vendor }} - {{ product.type }}</p>
+                <p id='grid__product-money' class="grid-link__meta">{{ product.price | money }}</p>
+              </div>
+            </div>
+          </a>
+        {% endif %}
+      {% endfor %}
+    {% endif %}
   </div>
+{% endpaginate %}
 {% endif %}

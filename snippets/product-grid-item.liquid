@@ -1,4 +1,4 @@
-<!-- "grid__product is a specific grid class for this webpage, developed by Yang. Havn't integrate with original griding system" -->
+<!-- "grid__product is a specific grid class for this webpage, developed by Yang." -->
 <div class = "grid__product">
   <span class="grid-link__image-centered">
     <img class='grid__product-image' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" data-url='{{ product.url | within: collection }}'/>
@@ -16,8 +16,8 @@
     <p id='color-number' class="grid-link__title"></p>
     <hr class='grid__product-hr'/>
     <p class="grid-link__title">{{ product.title | truncate: 35 }}</p>
-    {% if collection.title contains 'Artist'%}
-      <a href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/iphone-6s'><p class="grid-link__title grid-link__vendor">{{ product.vendor }}</p></a>
+    {% if collection.title contains 'Limited Edition'%}
+      <a class='grid-link__artist' href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/iphone-6s'><p class="grid-link__title grid-link__vendor">{{ product.vendor }}</p></a>
     {% else %}
       <p class="grid-link__title grid-link__vendor">{{ product.type }} Case</p>
     {% endif %}

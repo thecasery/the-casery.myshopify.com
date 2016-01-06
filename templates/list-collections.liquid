@@ -2,7 +2,7 @@
 // poster picture position
 function post_position(){
   var width = document.documentElement.clientWidth;
-  if (width > 768){
+  if (width >= 766){
     var div_width;
     if (width > 1200){
       div_width = 500;
@@ -86,7 +86,7 @@ $(window).resize(post_position);
 #post-pic{
   width: 100%;
 }
-@media screen and (max-width: 767px){
+@media screen and (max-width: 766px){
   #left-content{
     width: 100%;
     text-align: center;

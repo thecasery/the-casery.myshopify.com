@@ -1,3 +1,150 @@
+/*!
+ * JavaScript Cookie v2.0.4
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory();
+  } else {
+    var _OldCookies = window.Cookies;
+    var api = window.Cookies = factory();
+    api.noConflict = function () {
+      window.Cookies = _OldCookies;
+      return api;
+    };
+  }
+}(function () {
+  function extend () {
+    var i = 0;
+    var result = {};
+    for (; i < arguments.length; i++) {
+      var attributes = arguments[ i ];
+      for (var key in attributes) {
+        result[key] = attributes[key];
+      }
+    }
+    return result;
+  }
+
+  function init (converter) {
+    function api (key, value, attributes) {
+      var result;
+
+      // Write
+
+      if (arguments.length > 1) {
+        attributes = extend({
+          path: '/'
+        }, api.defaults, attributes);
+
+        if (typeof attributes.expires === 'number') {
+          var expires = new Date();
+          expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
+          attributes.expires = expires;
+        }
+
+        try {
+          result = JSON.stringify(value);
+          if (/^[\{\[]/.test(result)) {
+            value = result;
+          }
+        } catch (e) {}
+
+        if (!converter.write) {
+          value = encodeURIComponent(String(value))
+            .replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+        } else {
+          value = converter.write(value, key);
+        }
+
+        key = encodeURIComponent(String(key));
+        key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+        key = key.replace(/[\(\)]/g, escape);
+
+        return (document.cookie = [
+          key, '=', value,
+          attributes.expires && '; expires=' + attributes.expires.toUTCString(), // use expires attribute, max-age is not supported by IE
+          attributes.path    && '; path=' + attributes.path,
+          attributes.domain  && '; domain=' + attributes.domain,
+          attributes.secure ? '; secure' : ''
+        ].join(''));
+      }
+
+      // Read
+
+      if (!key) {
+        result = {};
+      }
+
+      // To prevent the for loop in the first place assign an empty array
+      // in case there are no cookies at all. Also prevents odd result when
+      // calling "get()"
+      var cookies = document.cookie ? document.cookie.split('; ') : [];
+      var rdecode = /(%[0-9A-Z]{2})+/g;
+      var i = 0;
+
+      for (; i < cookies.length; i++) {
+        var parts = cookies[i].split('=');
+        var name = parts[0].replace(rdecode, decodeURIComponent);
+        var cookie = parts.slice(1).join('=');
+
+        if (cookie.charAt(0) === '"') {
+          cookie = cookie.slice(1, -1);
+        }
+
+        try {
+          cookie = converter.read ?
+            converter.read(cookie, name) : converter(cookie, name) ||
+            cookie.replace(rdecode, decodeURIComponent);
+
+          if (this.json) {
+            try {
+              cookie = JSON.parse(cookie);
+            } catch (e) {}
+          }
+
+          if (key === name) {
+            result = cookie;
+            break;
+          }
+
+          if (!key) {
+            result[name] = cookie;
+          }
+        } catch (e) {}
+      }
+
+      return result;
+    }
+
+    api.get = api.set = api;
+    api.getJSON = function () {
+      return api.apply({
+        json: true
+      }, [].slice.call(arguments));
+    };
+    api.defaults = {};
+
+    api.remove = function (key, attributes) {
+      api(key, '', extend(attributes, {
+        expires: -1
+      }));
+    };
+
+    api.withConverter = init;
+
+    return api;
+  }
+
+  return init(function () {});
+}));
+
+
 /* This is version 2.0, maybe the final version of product page
  *
  * There're 8 core functions, which includes init_option0-3, change_option1-3 and share_social_media.
@@ -53,7 +200,7 @@ function init_option3(product, start_pos, total_options, variants){
     if (flag3){
       arr3.push(variants[i][2]);
       product.find('#option3').append("<div class='thumbnail-img'><img style='display:block; width:100%;' src='"+variants[i][3]+"' /></div>");
-      if (document.documentElement.clientWidth <= 767){   // mobile, using slides instead of thumbnails
+      if (document.documentElement.clientWidth <= 766){   // mobile, using slides instead of thumbnails
         product.find('.slider-dots').append('<li class="dot">&bull;</li>');
       }
     }
@@ -62,7 +209,7 @@ function init_option3(product, start_pos, total_options, variants){
   // 3. reset '.product-img', '.active-option3', reset social media
   product.find('#option3 img').first().addClass("active-option3");
   product.find('.product-img').attr("src", $('.active-option3').attr("src"));
-  if (document.documentElement.clientWidth <= 767){   // reset slides
+  if (document.documentElement.clientWidth <= 766){   // set slides
     product.find('.dot').first().addClass('active-dot');
     product.find('.slider-dots').css('left',$('.product-img').offset().left + ($('.product-img').width() - $('.slider-dots').width() + 10) / 2);
     product.find('.slider-dots').css('top',$('.product-img').offset().top + $('.product-img').height() - 50);
@@ -301,7 +448,7 @@ function update_variants(product){
 
   /* change value of option 3 - picture - (different img choose) */
   //This is easy, just image change. But note that JQuery 1.7+ use 'on' method to replace bind, delegate, etc.
-  if (document.documentElement.clientWidth > 767){
+  if (document.documentElement.clientWidth > 766){
     product.find('#option3').off('click','img').on('click','img',function(){
       change_option3($(this), product, total_options, variants);
     });
@@ -371,8 +518,8 @@ function set_cover(cover, cover_width, cover_height, x, y, l, r, u, d){
   cover.css('height', cover_height);
 }
 
-/* set_content is set the large_container position, the cover position is fixed, img is the container
- * Change the margin of image, and only let the right part display in the cover, other place just hidden */
+/* set_content is set the large_container position, the cover position is fixed. large-img itself is the container
+ * Change the margin of image, and only let the appropriate part displayed in the cover, hide other part of this img */
 function set_content(cover, container, content, magnification, large_width, large_height){
   var margin_left = (cover.offset().left - container.offset().left) * magnification;
   var margin_top = (cover.offset().top - container.offset().top) * magnification;
@@ -383,14 +530,59 @@ function set_content(cover, container, content, magnification, large_width, larg
   img.css('margin-top', 0 - margin_top);
 }
 
+function add_cookie(handler, title, vendor, price, img, url){
+  var new_cookie = new Object();
+  new_cookie.handler = handler;
+  new_cookie.title = title;
+  new_cookie.vendor = vendor;
+  new_cookie.price = price;
+  new_cookie.img = img;
+  new_cookie.url = url;
+
+  if (Cookies.getJSON('product1') && Cookies.getJSON('product1').handler === handler){
+  } else if (Cookies.getJSON('product2') && Cookies.getJSON('product2').handler === handler){
+    Cookies.set('product2', Cookies.getJSON('product1'), { expires: 7, path: '' });
+    Cookies.set('product1', new_cookie, { expires: 7, path: '' });
+  } else if (Cookies.getJSON('product3') && Cookies.getJSON('product3').handler === handler){
+    Cookies.set('product3', Cookies.getJSON('product2'), { expires: 7, path: '' });
+    Cookies.set('product2', Cookies.getJSON('product1'), { expires: 7, path: '' });
+    Cookies.set('product1', new_cookie, { expires: 7, path: '' });
+  } else {
+    Cookies.set('product4', Cookies.getJSON('product3'), { expires: 7, path: '' });
+    Cookies.set('product3', Cookies.getJSON('product2'), { expires: 7, path: '' });
+    Cookies.set('product2', Cookies.getJSON('product1'), { expires: 7, path: '' });
+    Cookies.set('product1', new_cookie, { expires: 7, path: '' });
+  }
+}
+
 $(document).ready(function(){
   // product logic init and update
   var product=$('.product-container');
   init_variants(product);
   update_variants(product);
 
+  add_cookie(product.find('#handler').text(), product.find('#title').text(), product.find('#vendor').text(), product.find('.product-pc-money').text(), product.find('.product-img').attr('src'), window.location.href);
+
+  for (var i = 1; i <= 4; i++){
+    var cook = Cookies.getJSON('product'+i);
+    if (cook.title){
+      $('.recent-view').append("<a href='"+cook.url+"'>"
+        +"<div class='related__product' onmouseover=\"this.style.border='1px solid #d0d0d0';\" onmouseout=\"this.style.border='0px';\">"+
+            "<span class='grid-link__image-centered'>"+
+              "<img class='product-img' src='"+cook.img+"' alt='{{ product.featured_image.alt | escape }}' style='cursor:pointer;'/>"+
+            "</span>"+
+
+            "<div class=''>"+
+              "<p class='grid-link__title'>"+cook.title+"</p>"+
+              "<p class='grid-link__title grid-link__vendor'>"+cook.vendor+"</p>"+
+              "<p id='grid__product-money' class='grid-link__meta'>"+cook.price+"</p>"+
+            "</div>"+
+          "</div>"+
+        "</a>");
+    }
+  }
   // magnifier here
-  if (document.documentElement.clientWidth > 767){
+  if (document.documentElement.clientWidth > 766){
     $('.product-img__container').on('mouseenter', function(e){
       $('.magnifier-content').width($('.product-container-right').innerWidth());
       $('.magnifier-content').height($('.product-container-right').innerHeight());

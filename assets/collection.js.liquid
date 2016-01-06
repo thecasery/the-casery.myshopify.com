@@ -10,7 +10,7 @@
  *  a fake grid__product before it to keep the structure. (See code for details)
 */
 
-/* Part 1: Thumbnails */
+/* ================================ Part 1: Thumbnails ================================ */
 function init_thumbnails(product, start_pos, total_options, variants){
   $('.active-grid__product-thumbnail').removeClass('active-grid__product-thumbnail');
   product.find('#grid__product-thumbnail div').remove();
@@ -120,6 +120,7 @@ function init_grid_product(product){
   });
 }
 
+/* ============================ Part 2 : Filters ============================ */
 /* Filter Initialization */
 function filter_initialization(){
   // init the filter
@@ -238,25 +239,28 @@ $(document).ready(function(){
   filter_animation();
 
   if (document.documentElement.clientWidth >= 768){
-    $('.grid__product').off('mouseenter').on('mouseenter',function(){
-      var product = $(this);
-      var l = product.offset().left;
-      var t = product.offset().top;
+    $('.grid__product-image').off('mouseenter').on('mouseenter',function(){
+      var product = $(this).parents('.grid__product');
+      // Here's a bug fix, if current product is currently actived, we don't need to active it again!
+      if (!product.hasClass('active-grid__product')){
+        var l = product.offset().left;
+        var t = product.offset().top;
 
-      // the product-fill is a little bit complicated, I have no idea why first and last child need fix!
-      if (product.is(':last-child') && product.is(':first-child')){
-        $('<div id="product-fill" style="height:393px; width:285px; display:inline-block; background-color:white;"></div>').insertBefore(product);
-      } else if (product.is(':first-child')){
-        $('<div id="product-fill" style="height:370px; width:288.5px; display:inline-block; background-color:white;"></div>').insertBefore(product);
-      } else {
-        $('<div id="product-fill" style="height:370px; width:285px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+        // the product-fill is a little bit complicated, I have no idea why first and last child need fix!
+        if (product.is(':last-child') && product.is(':first-child')){
+          $('<div id="product-fill" style="height:393px; width:285px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+        } else if (product.is(':first-child')){
+          $('<div id="product-fill" style="height:370px; width:288.5px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+        } else {
+          $('<div id="product-fill" style="height:370px; width:285px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+        }
+
+        product.addClass('active-grid__product');
+        product.css('left', l);
+        product.css('top', t);
+
+        product.find('#grid__product-thumbnail').css('display','block');
       }
-
-      product.addClass('active-grid__product');
-      product.css('left', l);
-      product.css('top', t);
-
-      product.find('#grid__product-thumbnail').css('display','block');
     });
 
     $('.grid__product').off('mouseleave').on('mouseleave',function(){
