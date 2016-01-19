@@ -1,18 +1,35 @@
-<div class="grid">
+<div class="wrapper" style='margin-bottom:100px;'>
 
-  <div class="grid__item post-large--two-thirds push--post-large--one-sixth">
-
-    <div class="section-header">
-      <h1 class="section-header--title">{{ page.title }}</h1>
-    </div>
-    <div class="rte" style="text-align:center">
-      {{ page.content }}
-	  </div>
-
-  	<a href='{{ shop.url }}/collections/men/{{ page.title | handleize }}'><div style='width:49.5%; display:inline-block; border:1px solid orange; height: 300px; margin: 20px 0px;'>Boys</div></a>
-  	<a href='{{ shop.url }}/collections/women/{{ page.title | handleize }}'><div style='width:49.5%; display:inline-block; border:1px solid orange; height: 300px; margin: 20px 0px;'>Girls</div></a>
-  	<a href='{{ shop.url }}/collections/artist/{{ page.title | handleize }}'><div style='width:49.5%; display:inline-block; border:1px solid orange; height: 300px; margin: 20px 0px;'>Artists</div></a>
-  	<a href='{{ shop.url }}/collections/custom'><div style='width:49.5%; display:inline-block; border:1px solid orange; height: 300px; margin: 20px 0px;'>Custom</div></a>
+  <div class="section-header" style='display:none'>
+    <h1 class="section-header--title">{{ page.title }}</h1>
+  </div>
+  <div class="rte" style="text-align:center; margin-bottom:40px;">
+    {{ page.content }}
   </div>
 
+  {% capture promo_image %}promo_image_1.jpg{% endcapture %}
+  <a href='{{ shop.url }}/collections/so-fetch/{{ page.title | handleize }}'><div class='page-phone__collection-image'><img src='{{ promo_image | asset_url }}'/></div></a>
+  {% capture promo_image %}promo_image_2.jpg{% endcapture %}
+	<a href='{{ shop.url }}/collections/suit-tie/{{ page.title | handleize }}'><div class='page-phone__collection-image'><img src='{{ promo_image | asset_url }}'/></div></a>
+  {% capture promo_image %}promo_image_3.jpg{% endcapture %}
+	<a href='{{ shop.url }}/collections/limited-edition/{{ page.title | handleize }}'><div class='page-phone__collection-image'><img src='{{ promo_image | asset_url }}'/></div></a>
+  {% capture promo_image %}promo_image_4.jpg{% endcapture %}
+	<a href='{{ shop.url }}/collections'><div class='page-phone__collection-image'><img src='{{ promo_image | asset_url }}'/></div></a>
 </div>
+<style>
+  .page-phone__collection-image{
+    width: 49.5%;
+    display: inline-block;
+    margin: 0px;
+  }
+
+  .page-phone__collection-image img{
+    width: 100%;
+  }
+
+  @media screen and (max-width: 766px){
+    .page-phone__collection-image{
+      width: 100%;
+    }
+  }
+</style>

@@ -33,14 +33,8 @@ function init_thumbnails(product, start_pos, total_options, variants){
     }
   }
 
-  // set color number
-  if (arr2.length <= 1){
-    product.find('#color-number').text('1 Color');
-  } else {
-    // reset start_pos for init_grid__product-thumbnail
-    product.find('#productSelect').get(0).selectedIndex = start_pos;
-    product.find('#color-number').text(arr2.length + ' Colors');
-
+  // set thumbnails
+  if (arr2.length > 1){
     for (var j = 0; j < arr2.length; j++){
       product.find('#grid__product-thumbnail').append("<div class='grid__product-thumbnail-outer-container' name='"+arr2[j]+"' onmouseover=\"this.style.cursor='hand'\"><img style='width:77px; height:77px;' src='"+src[j]+"'/></div>");
     }
@@ -99,7 +93,7 @@ function init_grid_product(product){
     case 'Clear': break;
     case 'Slim': for (; i < total_options && variants[i][0] != 'Slim'; i++); break;
     case 'Protector': for (; i < total_options && variants[i][0] != 'Protector'; i++); break;
-    case 'All Cases': var img_url = product.find('.grid__product-image').attr('src');
+    case 'Case Type': var img_url = product.find('.grid__product-image').attr('src');
                       for (; i < total_options && variants[i][3] != img_url; i++);
                       break;
     default: break;
@@ -221,7 +215,24 @@ function filter_event_registration(){
   });
 }
 
+/* There's so many tricks here. Honestly I don't think this is a good design. 
+ * We handleize the phone type and collection type. We name the uploading files as the exactly name after handlize.
+ * Shopify do give files a timestamp, but if you upload files in a short time period, the time stamp are the same!
+ * So I use this to cheat. Good Luck
+ */
+function init_collection_image(){
+  var collection_type = $('.current-collection-type').text();
+  var phone_type = $('.current-phone-type').text();
+  phone_type = phone_type.replace(/\s+/g, '-').toLowerCase();
+  collection_type = collection_type.replace('+','').replace(/\s+/g, '-').toLowerCase();
+  $('#banner-pc').attr('src','https://cdn.shopify.com/s/files/1/0964/6944/files/'+phone_type+'-'+collection_type+'-banner.jpg?7029525211547467031');
+  $('#banner-mobile').attr('src','https://cdn.shopify.com/s/files/1/0964/6944/files/'+phone_type+'-'+collection_type+'-mobile-banner.jpg?7029525211547467031');
+}
+
 $(document).ready(function(){
+  // init the collection image
+  init_collection_image();
+
   // init all the products
   var products = $('.grid__product');
   for (var i = 0; i < products.length; i++){

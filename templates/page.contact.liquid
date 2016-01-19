@@ -30,6 +30,14 @@
       <label for="ContactFormMessage" class="label--hidden">{{ 'contact.form.message' | t }}</label>
       <textarea rows="10" id="ContactFormMessage" name="contact[body]" placeholder="{{ 'contact.form.message' | t }}">{% if form.body %}{{ form.body }}{% endif %}</textarea>
 
+      {% if form.posted_successfully? %}
+        <script>
+          alert('Message Sent Successfully!');
+        </script>
+      {% else %}
+        {{ form.errors | default_errors }}
+      {% endif %}
+
       <input type="submit" class="btn right" value="{{ 'contact.form.send' | t }}">
 
     {% endform %}

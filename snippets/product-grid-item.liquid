@@ -13,9 +13,8 @@
   <div id='grid__product-thumbnail' class='grid__product-thumbnail'>
   </div>
   <div class='grid__product-info'>
-    <p id='color-number' class="grid-link__title"></p>
-    <hr class='grid__product-hr'/>
     <p class="grid-link__title">{{ product.title | truncate: 35 }}</p>
+    <hr class='grid__product-hr'/>
     {% if collection.title contains 'Limited Edition'%}
       <a class='grid-link__artist' href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/iphone-6s'><p class="grid-link__title grid-link__vendor">{{ product.vendor }}</p></a>
     {% else %}

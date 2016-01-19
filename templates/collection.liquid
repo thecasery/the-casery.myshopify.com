@@ -12,7 +12,8 @@
     <div class='wrapper'>
       <div class='collection-header'>
         <div class='banner'>
-          <img src="{{ collection.image | collection_img_url : 'master' }}"/>
+          <img id='banner-pc' src=""/>
+          <img id='banner-mobile' src=""/>
         </div>
 
         <div class='filter'>
@@ -32,7 +33,7 @@
 
           <div id='case-filter__trigger' class='collection-filter__trigger'></div>
           <ul id='case-filter' class='collection-filter__list'>
-            <li data-url='' class="{% unless current_tags contains 'Clear' or current_tags contains 'Slim' or current_tags contains 'Protector' %} current-case-type active {% endunless %}">All Cases</li>
+            <li data-url='' class="{% unless current_tags contains 'Clear' or current_tags contains 'Slim' or current_tags contains 'Protector' %} current-case-type active {% endunless %}">Case Type</li>
             <li data-url='+Clear' class="{% if current_tags contains 'Clear' %} current-case-type active {% endif %}">Clear</li>
             <li data-url='+Slim' class="{% if current_tags contains 'Slim' %} current-case-type active {% endif %}">Slim</li>
             <li data-url='+Protector' class="{% if current_tags contains 'Protector' %} current-case-type active {% endif %}">Protector</li>
@@ -88,7 +89,7 @@
   {% else %}
   
     <div style='width:100%; overflow:hidden;'>
-      <img style='width:100%; margin-top:-10%; margin-bottom:-10px;'src = 'http://virtualrealitybrisbane.com/wp-content/uploads/2015/01/COMING-SOON-FRAME.jpg'/>
+      <img style='width:100%; margin-top:-10%; margin-bottom:-10px;'src = 'https://cdn.shopify.com/s/files/1/0964/6944/files/COMING-SOON-FRAME.jpg?12832323137125623515'/>
     </div>
 
   {% endfor %}

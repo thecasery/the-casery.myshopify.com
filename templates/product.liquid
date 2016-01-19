@@ -19,7 +19,9 @@
           {% include 'social-sharing' %}
         {% endif %}
       </div>
+      {% comment %}
       <ul class="slider-dots"></ul>
+      {% endcomment %}
     </div> 
 
     <div class='product-container-right'>
@@ -29,7 +31,7 @@
       {% else %}
         <a class='grid-link__artist' style='font:18px; color:gray;' href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/{{ product.type | handleize }}'><p id='vendor' style='margin-top:-20px;'>{{ product.vendor }}</p></a>
       {% endif %}
-      <h3 class='product-pc-money'></h3>
+      <h3 class='product-pc-money' style='display:inline;'></h3><p style='display:inline; font-size:16px;'>  -  Free shipping in U.S.</p>
 
       <!-- This is color -->
       <div id = "option2" class="option2"></div>
@@ -61,14 +63,16 @@
 
           {% endfor %}
         </select>
+        {% unless product.vendor contains 'Casery' %}
+          <p style='font-weight:bold;'>Limited Edition : Quantity of 100</p>
+        {% endunless %}
         <h3 class='product-mobile-money'>{{ product.selected_variant.price | money }}</h3>
         <input type="submit" name="add" id="AddToCart" value="ADD TO CART"/>
       </form>
-
       <div class='product-case-description'>
         <div id='description-clear' class="case-description">
           <p><strong>Clear Case:</strong></p>
-          <p>The Casery Clear Case shows off your signature style while offering quality protection. Our dual-layer hybrid hard shell back and flexible bumper edge protect your phone from dents and scratches. The raised edge offers extra protection for your screen and camera. Now you can have a case as unique as you that offers the protection your phone deserves. </p>
+          <p>The Casery Clear Case shows off your signature style while offering quality protection. Our dual-layer hybrid hard shell back and flexible bumper edge protect your phone from dents and scratches. The raised edge offers extra protection for your screen and camera. Now you can have a case as unique as you that offers the protection your phone deserves.</p>
         </div>
         <div id='description-slim' class="case-description">
           <p><strong>Slim Case:</strong></p>
@@ -76,8 +80,9 @@
         </div>
         <div id='description-protector' class="case-description">
           <p><strong>Protector Case:</strong></p>
-          <p>The Casery Protector Case safeguards your phone in style with our quality dual-layer protection. Our lightweight polycarbonate shell and flexible rubber slipcover shield your phone from scratches, dents, and drops. The impact-resistant bumper helps protect your screen and camera from scratches.  Now you can have a case as unique as you that offers the protection your phone deserves.</p>
+          <p>The Casery Protector Case safeguards your phone in style with our quality dual-layer protection. Our lightweight polycarbonate shell and flexible rubber slipcover shield your phone from scratches, dents, and drops. The impact-resistant bumper helps protect your screen and camera from scratches. Now you can have a case as unique as you that offers the protection your phone deserves.</p>
         </div>
+        <p>Designed and Printed in the U.S.</p>
       </div>
     </div>
 
@@ -118,8 +123,9 @@
 
     <div class='recent-view text-center'></div>
   {% endif %}
+  {% comment %}
   <!-- Drop Test -->
-  <hr class="hr--clear hr--small">
+  <hr/ class = "divider">
   <div class='drop-test'>
     <div class="section-header section-header--medium">
       <h4 class="section-header__title">Drop Test</h4>
@@ -131,9 +137,10 @@
       <p>Just some Test.</p>
     </div>
   </div>
+  {% endcomment %}
 
   <!-- Instagram Feed -->
-  <hr class="hr--clear hr--small">
+  <hr/ class = "divider">
   <script src="https://snapwidget.com/js/snapwidget.js"></script>
   <div class="section-header section-header--medium">
     <h4 class="section-header__title">Instagram Feed</h4>
@@ -142,6 +149,6 @@
     <iframe src="https://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDIzMHw0fDF8fHllc3wyMHxub25lfG9uU3RhcnR8eWVzfHllcw==&ve=141215" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
   </div>
   <div class='instagram-feed-mobile'>
-    <iframe src="https://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDQwMHwyfDJ8fHllc3w1fG5vbmV8b25TdGFydHx5ZXN8eWVz&ve=291215" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
+    <iframe src="http://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDE1OHwyfDJ8fHllc3wyfG5vbmV8b25TdGFydHx5ZXN8eWVz&ve=140116" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
   </div>
 </div>
