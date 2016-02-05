@@ -6,6 +6,8 @@
 {% endcomment %}
 
 {% if collection.title contains 'Suit + Tie' or collection.title contains 'So Fetch' or collection.title contains 'Limited Edition' %}
+<h1 style='display:none'>The Casery Shop Collection for {{ collection.title }} case</h1>
+<h2 style='display:none'>iPhone Samsung in So Fetch Suit & Tie & Artist Collection</h2>
   {% paginate collection.products by 24 %}
     {{ 'collection.js' | asset_url | script_tag }}
 
@@ -56,7 +58,7 @@
 
         {% else %}
 
-          <h1 class = 'text-center'>Oops.. No products!</h1>
+          <h1 class = 'text-center' style='margin-top:200px; margin-bottom:200px;'>New cases and more types coming soon :)</h1>
 
         {% endfor %}
       </div>

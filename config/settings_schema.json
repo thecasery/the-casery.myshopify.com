@@ -157,6 +157,11 @@
             "group": "Serif | Google Web Fonts"
           },
           {
+            "value": "Google_Open+Sans+Condensed_300,700_sans",
+            "label": "Open Sans Condensed",
+            "group": "Sans-serif | Google Web Fonts"
+          },
+          {
             "value": "Google_Open+Sans_400,700_sans",
             "label": "Open Sans",
             "group": "Sans-serif | Google Web Fonts"
@@ -215,9 +220,9 @@
             "group": "Sans-serif"
           },
           {
-            "value": "Google_Abel_400,700_serif",
-            "label": "Abel",
-            "group": "Serif | Google Web Fonts"
+            "value": "Google_Open+Sans+Condensed_300,700_sans",
+            "label": "Open Sans Condensed",
+            "group": "Sans-serif | Google Web Fonts"
           },
           {
             "value": "Google_Open+Sans_400,700_sans",
@@ -282,6 +287,11 @@
             "value": "Google_Abel_400,700_serif",
             "label": "Abel",
             "group": "Serif | Google Web Fonts"
+          },
+          {
+            "value": "Google_Open+Sans+Condensed_300,700_sans",
+            "label": "Open Sans Condensed",
+            "group": "Sans-serif | Google Web Fonts"
           },
           {
             "value": "Google_Open+Sans_400,700_sans",

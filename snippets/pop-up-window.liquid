@@ -1,0 +1,83 @@
+<style>
+.pop-up__window{
+	border: 2px solid black;
+	position: absolute;
+	background-color: #F95940;
+	min-width: 500px;
+	width: 30%;
+	left:35%;
+	top: 30%;
+	z-index: 9999;
+	display: none;
+}
+#pop-up__close{
+	font-size: 18px;
+	font-weight: bold;
+	margin-right: 10px;
+	cursor: pointer;
+}
+#pop-up__title{
+	text-transform: uppercase;
+	font-size: 42px;
+	color: white;
+	width: 360px;
+	margin: 0 auto;
+	margin-bottom: 10px; 
+	margin-top: -10px;
+}
+#pop-up__content{
+	color: white;
+	width: 300px;
+	margin: 0 auto;
+	margin-bottom: 10px; 
+}
+#pop-up__contact-email{
+	width: 290px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+}
+
+#pop-up__submit{
+	width: 290px;
+	margin: 0 auto;
+	margin-bottom: 10px;
+	color: white;
+	background-color: black;
+}
+
+@media screen and (max-width: 1600px) and (min-width: 1200px){
+	.pop-up__window{
+		left: 30%;
+	}
+}
+
+@media screen and (max-width: 1200px) and (min-width: 950px){
+	.pop-up__window{
+		left: 25%;
+	}
+}
+
+@media screen and (max-width: 950px) and (min-width: 766px){
+	.pop-up__window{
+		left: 15%;
+	}
+}
+
+@media screen and (max-width: 766px){
+	.pop-up__window{
+		width: 94%;
+		min-width: 0;
+		left: 3%;
+	}
+}
+</style>
+<div class='pop-up__window text-center'>
+	<p id='pop-up__close' class='text-right'>X</p>
+	<h2 id='pop-up__title'>HELLO, THERE!</h2>
+	<p id='pop-up__content'>Wanna hear more from us? Join our mailing list to recieve exclusive discounts, stay up to date with what's happening at The Casery, and more.</p>
+	{% form 'customer' %}
+    <p style='color:white; font-weight:bold;'>Code : thecaserylaunch</p>
+	  <input type="text" id="pop-up__contact-email" name="contact[email]" placeholder='john@gmail.com'/>
+	  <input type='submit' id='pop-up__submit' value='Subscribe'/>
+	{% endform %}
+</div>

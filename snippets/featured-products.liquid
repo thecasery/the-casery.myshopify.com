@@ -3,18 +3,6 @@
 {% assign rows = settings.home_featured_products_row_num %}
 {% assign total_products = products_per_row | times: rows %}
 
-{% if settings.home_show_headings %}
-<div class="section-header section-header--small">
-  <h2 class="section-header__title">
-    {% if featured == 'frontpage' %}
-      {{ 'home_page.sections.frontpage_title' | t }}
-    {% else %}
-      {{ collections[featured].title | escape }}
-    {% endif %}
-  </h2>
-</div>
-{% endif %}
-
 {% case products_per_row %}
   {% when '3' %}
     {% assign grid_item_width = 'medium--one-third post-large--one-third' %}
@@ -24,10 +12,23 @@
     {% assign grid_item_width = 'medium-down--one-half post-large--one-fifth' %}
 {% endcase %}
 
-<div class = "collection-regular">
+<div class = "collection-regular wrapper text-center">
 
   {% for product in collections[featured].products limit: total_products %}
-    {% include 'product-grid-item' %}
+    <a href='{{ product.url }}'>
+      <div class="related__product" onmouseover="this.style.border='1px solid #d0d0d0';" onmouseout="this.style.border='0px';">
+        <span class="grid-link__image-centered">
+          <img class='product-img' src="{{ product.featured_image.src | img_url: 'large' }}" alt="{{ product.featured_image.alt | escape }}" style=' cursor:pointer;'/>
+        </span>
+
+        <div class='text-left'>
+          <p class="grid-link__title">{{ product.title }}</p>
+          <hr class='grid__product-hr'/>
+          
+          <p id='grid__product-money' class="grid-link__meta">{{ product.price | money }}</p>
+        </div>
+      </div>
+    </a>
   {% else %}
     {% unless emptyState %}
       {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}

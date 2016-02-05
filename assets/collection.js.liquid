@@ -35,6 +35,7 @@ function init_thumbnails(product, start_pos, total_options, variants){
 
   // set thumbnails
   if (arr2.length > 1){
+    product.find('#productSelect').get(0).selectedIndex = start_pos; //don't forget this~ important for next page to find correct product variant
     for (var j = 0; j < arr2.length; j++){
       product.find('#grid__product-thumbnail').append("<div class='grid__product-thumbnail-outer-container' name='"+arr2[j]+"' onmouseover=\"this.style.cursor='hand'\"><img style='width:77px; height:77px;' src='"+src[j]+"'/></div>");
     }
@@ -225,10 +226,9 @@ function init_collection_image(){
   var phone_type = $('.current-phone-type').text();
   phone_type = phone_type.replace(/\s+/g, '-').toLowerCase();
   collection_type = collection_type.replace('+','').replace(/\s+/g, '-').toLowerCase();
-  $('#banner-pc').attr('src','https://cdn.shopify.com/s/files/1/0964/6944/files/'+phone_type+'-'+collection_type+'-banner.jpg?7029525211547467031');
-  $('#banner-mobile').attr('src','https://cdn.shopify.com/s/files/1/0964/6944/files/'+phone_type+'-'+collection_type+'-mobile-banner.jpg?7029525211547467031');
+  $('#banner-pc').attr('src','https://cdn.shopify.com/s/files/1/0964/6944/files/'+phone_type+'-'+collection_type+'-banner.jpg?16173443664889469410');
+  $('#banner-mobile').attr('src','https://cdn.shopify.com/s/files/1/0964/6944/files/'+phone_type+'-'+collection_type+'-mobile-banner.jpg?3375088163651966011');
 }
-
 $(document).ready(function(){
   // init the collection image
   init_collection_image();

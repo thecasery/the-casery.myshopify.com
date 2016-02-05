@@ -1210,7 +1210,7 @@ select {
           appearance: none;
   background-position: right center;
   background: {
-    image: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/ico-select.svg?14872112002700508544');
+    image: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/ico-select.svg?1949077153197210754');
     repeat: no-repeat;
     position: right 10px center;
     color: #fff;
@@ -1394,11 +1394,11 @@ label.error {
 /*================ Partials | Icons ================*/
 @font-face {
   font-family: 'icons';
-  src: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.eot?14872112002700508544');
-  src: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.eot?14872112002700508544#iefix') format("embedded-opentype"),
-       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.woff?14872112002700508544') format("woff"),
-       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.ttf?14872112002700508544') format("truetype"),
-       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.svg?14872112002700508544#timber-icons') format("svg");
+  src: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.eot?1949077153197210754');
+  src: url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.eot?1949077153197210754#iefix') format("embedded-opentype"),
+       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.woff?1949077153197210754') format("woff"),
+       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.ttf?1949077153197210754') format("truetype"),
+       url('//cdn.shopify.com/s/files/1/0964/6944/t/6/assets/icons.svg?1949077153197210754#timber-icons') format("svg");
   font-weight: normal;
   font-style: normal;
 }
@@ -1531,9 +1531,9 @@ $socialIconFontStack: 'icons';
 }
 
 .breadcrumb {
-  margin-bottom: $gutter / 2.5;
+  margin-bottom: $gutter / 1.5;
   color: $colorTextBody;
-  font-size: .75em;
+  font-size: 0.9em;
 
   a,
   span {
@@ -1826,7 +1826,7 @@ $socialIconFontStack: 'icons';
 
 .section-header__title {
   color: $colorNavText;
-  text-align: center;
+  text-align: left;
 }
 
 .section-header__title--left,

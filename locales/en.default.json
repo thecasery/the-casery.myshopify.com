@@ -1,7 +1,7 @@
 {
   "general": {
     "meta": {
-      "tags": "Tagged \"{{ tags }}\"",
+      "tags": "{{ tags }}",
       "page": "Page {{ page }}"
     },
     "404": {

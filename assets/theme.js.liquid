@@ -116,6 +116,18 @@ var header_bar_init = function(){
       $(this).find('.header-bar__sublink').css('display','block').addClass('active-header-bar__link');
     }
   });
+
+  $('.header-bar__discount').off('click').on('click',function(){
+    if ($('.pop-up__window').hasClass('active-pop-up__window')){
+      $('.pop-up__window').removeClass('active-pop-up__window').css('display','none');
+    } else {
+      $('.pop-up__window').addClass('active-pop-up__window').css('display','block');
+    }
+  });
+
+  $('#pop-up__close').off('click').on('click',function(){
+    $('.pop-up__window').removeClass('active-pop-up__window').css('display','none');
+  });
 }
 
 $(document).ready(header_bar_init);

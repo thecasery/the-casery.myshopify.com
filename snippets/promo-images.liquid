@@ -7,25 +7,27 @@
 {% if settings.show_promo_image_5 %}{% assign index = index | plus: 1 %}{% endif %}
 
 {% unless index == 0 %}
+<h1 style='display:none;'>The Casery, Every Case Customized</h1>
+<h2 style='display:none;'>iPhone Android Phone Case Shop Featured Product</h2>
   <!-- This is the big picture at top -->
   <div class='autoscale__div'>
     <img class='autoscale__elem' src=''/>
-    <a class='main-banner__shop-button' href='/pages/iphone-6'>
-      <img style='width:100%;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/Home-page-shop-now-button.png?1759468145073143708'/>
+    <a href='/collections/limited-edition/iphone-6s'>
+      <!--<img class='main-banner__shop-button' id='btn-no-hover' src='https://cdn.shopify.com/s/files/1/0964/6944/files/Home-page-shop-now-button.png?1759468145073143708'/>-->
+      <img class='main-banner__shop-button'  src='https://cdn.shopify.com/s/files/1/0964/6944/files/shopnow-white.png?18219273709719409898'>
     </a>
   </div>
-  <h3 class='text-center uppercase' style='margin-top:60px;'>shop by phone type</h3>
+
+  <a href='/collections/limited-edition/iphone-6s'><img class='mobile-shop-now' style='width:200px; background-color:#F95940; margin: 20px auto; padding-bottom:4px;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/shopnow-white.png?18219273709719409898'/></a>
+  <p class='mobile-shop-now'>FREE SHIPPING IN U.S.</p>
+
+  <h3 class='text-center uppercase' style='margin-top:60px;'>Featured Products</h3>
   <hr style='margin:20px auto; margin-bottom:35px; width:200px; border-color:#F95923;'/>
-  <div class='test text-center'>
-    <a href='/pages/iphone-5'>iPhone 5</a>
-    <a href='/pages/iphone-6-plus'>iPhone 6 Plus</a>
-    <a href='/pages/iphone-6'>iPhone 6</a>
-    <a href='/pages/iphone-6s'>iPhone 6s</a>
-    <a href='/pages/iphone-6s-plus'>iPhone 6s Plus</a>
-    <a href='/pages/samsung-s6'>Galaxy S6</a>
-  </div>
+  {% include 'featured-products' %}
+
   <!-- These are 4 small banners for collections -->
   <h3 class='text-center uppercase' style='margin-top:80px;'>shop by collection</h3>
+  <hr style='margin:20px auto; margin-bottom:35px; width:200px; border-color:#F95923;'/>
   {% for i in (1..4) %}
     {% capture promo_image %}promo_image_{{ i }}.jpg{% endcapture %}
     {% capture promo_image_link %}promo_image_{{ i }}_link{% endcapture %}
@@ -39,14 +41,6 @@
 
   <!-- Below are 6 small banners for 6 phone types -->
   <style>
-    .test a{
-      display: inline-block;
-      color: gray;
-      margin: 3px 20px;
-    }
-    .test a:hover{
-      color: #F95923;
-    }
     .wide-button{
       background-color: #EE6D54;
       border-radius: 5px;
@@ -61,10 +55,11 @@
     }
 
     .main-banner__shop-button{
-      transition: background-color 0.3s;
+      background-color: #F95940;
       position: absolute;
       width: 0;
-      border: 1.5px solid #606060;
+      padding-bottom: 4px;
+      border-radius: 3px;
     }
 
     .main-banner__shop-button img{
@@ -72,7 +67,8 @@
     }
 
     .main-banner__shop-button:hover{
-      background-color: #EE6D54; 
+      background-color: #FF7F66; 
+      border: none;
     }
 
     .homepg-product__div{
@@ -96,6 +92,17 @@
       display: none;
     }
 
+    .mobile-shop-now{
+      display: none;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 766px){
+      .mobile-shop-now{
+        display: block;
+      }
+    }
+
     @media screen and (min-width: 601px) and (max-width: 1000px){
       .homepg-product__div{
         width: 49.4%;
@@ -112,9 +119,6 @@
     @media screen and (max-width: 600px){
       .homepg-product__div{
         width: 100%;
-      }
-      .test a{
-        margin: 3px 13px;
       }
     }
 
@@ -195,5 +199,15 @@
     // use window.load instead of document.ready
     $(window).load(phone_pic_adjustment);
     $(window).resize(phone_pic_adjustment);
+
+    /*$(document).ready(function(){
+      $('.main-banner__shop-button').on('mouseenter',function(){
+        $('#btn-no-hover').css('display','none');
+        $('#btn-hover').css('display','block');
+      }).on('mouseleave',function(){
+        $('#btn-no-hover').css('display','block');
+        $('#btn-hover').css('display','none');
+      });
+    });*/
   </script>
 {% endunless %}

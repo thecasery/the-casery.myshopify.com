@@ -151,7 +151,7 @@
         {% endcomment %}
         {% if settings.cart_notes_enable %}
           {% assign noteSize = cart.note | size %}
-          <div class="grid__item post-large--five-twelfths">
+          <div id='checkout-note' class="grid__item post-large--five-twelfths">
             <button type="button" class="text-link cart__note-add{% if noteSize > 0 %} is-hidden{% endif %}">
               {{ 'cart.label.add_note' | t }}
             </button>
@@ -161,7 +161,7 @@
             </div>
           </div>
         {% endif %}
-        <div class="grid__item text-right{% if settings.cart_notes_enable %} post-large--seven-twelfths{% endif %}">
+        <div id='checkout-cart' class="grid__item{% if settings.cart_notes_enable %} post-large--seven-twelfths{% endif %}">
           <p>
             <span class="cart__subtotal-title">{{ 'cart.general.subtotal' | t }}</span>
             <span class="h5 cart__subtotal">{{ cart.total_price | money }}</span>
@@ -175,11 +175,26 @@
           {% endif %}
         </div>
       </div>
-
     </div>
 
   </form>
-
+<style>
+#checkout-cart{
+  text-align: right;
+}
+#checkout-note{
+  text-align: left;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 766px){
+  #checkout-cart{
+    text-align: center;
+  }
+  #checkout-note{
+    text-align: center;
+  }
+}
+</style>
 {% else %}
   {% comment %}
     The cart is empty

@@ -311,6 +311,31 @@ h6 {
   text-align: left;
 }
 
+.header-bar__banner{
+  background-color: #F95940;
+  color: white;
+  text-align: center;
+}
+
+.header-bar__free-shipping{
+  display: inline-block; 
+  margin: 0; 
+  margin-right: 30px; 
+  font-size: 18px;
+}
+
+.header-bar__discount{
+  display: inline-block; 
+  text-decoration: underline; 
+  margin: 0; 
+  font-size:18px;
+  cursor: pointer;
+}
+
+.header-bar__discount:hover{
+  color:blue;
+}
+
 .header-bar__module {
   display: inline-block;
   vertical-align: middle;
@@ -1551,6 +1576,32 @@ $badgeSize: 60px;
 }
 
 .active-img {
+}
+
+/*================== Blog & Article ====================*/
+.article-content{
+  display:inline-block; 
+  width:75%; 
+  vertical-align:top;
+}
+
+.sidebar{
+  display:inline-block; 
+  width:20%; 
+  min-width:100px; 
+  vertical-align:top;
+  margin-left: 20px;
+}
+
+@media screen and (max-width: 766px){
+  .article-content{
+    width: 100%;
+  }
+
+  .sidebar{
+    margin-left: 0;
+    width: 100%;
+  }
 }
 
 /*============= Some common appeared class =============*/

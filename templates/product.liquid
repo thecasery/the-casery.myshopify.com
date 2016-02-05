@@ -25,7 +25,8 @@
     </div> 
 
     <div class='product-container-right'>
-      <h1 id='title' style='font-size:26px; margin-top:10px; text-transform: uppercase;'>{{ product.title }} {{ product.type }} Case</h3>
+      <h1 id='title' style='font-size:26px; margin-top:10px; text-transform: uppercase;'>{{ product.title }} {{ product.type }} Case</h1>
+      <h2 style='display:none'>{{ product.collections[0].title }} collection protector slim & clear cases</h2>
       {% if product.vendor contains 'Casery' %}
         <p id='vendor' style='font:18px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
       {% else %}
@@ -91,6 +92,21 @@
     </div>
   </div>
 
+  <!-- Instagram Feed -->
+  <hr/ class = "divider">
+  <script src="https://snapwidget.com/js/snapwidget.js"></script>
+  <div class="section-header section-header--medium">
+    <h4 class="section-header__title text-center">Instagram Feed</h4>
+    <p class='text-center'>Tag your photos using #thecasery on Facebook or Instagram and be featured on our site.</p>
+  </div>
+  <div class='instagram-feed-pc'>
+    <iframe src="https://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDIzMHw0fDF8fHllc3wyMHxub25lfG9uU3RhcnR8eWVzfHllcw==&ve=141215" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
+  </div>
+  <div class='instagram-feed-mobile'>
+    <iframe src="http://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDE1OHwyfDJ8fHllc3wyfG5vbmV8b25TdGFydHx5ZXN8eWVz&ve=140116" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
+  </div>
+
+  <!-- Related Products -->
   <hr/ class = "divider">
 
   {% if settings.product_related_enable %}
@@ -107,7 +123,7 @@
     {% assign number_of_products_to_fetch = number_of_products | plus: 1 %}
 
     <div class="section-header section-header--medium">
-      <h4 class="section-header__title">Accessories</h4>
+      <h4 class="section-header__title text-center">Accessories</h4>
     </div>
     <div class = "collection-regular">
       {% for product in acc_products limit: number_of_products_to_fetch %}
@@ -118,7 +134,7 @@
     </div>
   {% else %}
     <div class="section-header section-header--medium">
-      <h4 class="section-header__title">Recently Viewed Products</h4>
+      <h4 class="section-header__title text-center">Recently Viewed Products</h4>
     </div>
 
     <div class='recent-view text-center'></div>
@@ -128,7 +144,7 @@
   <hr/ class = "divider">
   <div class='drop-test'>
     <div class="section-header section-header--medium">
-      <h4 class="section-header__title">Drop Test</h4>
+      <h4 class="section-header__title text-center">Drop Test</h4>
     </div>
     <div class='drop-test__left'>
       <iframe width="100%" src="https://www.youtube.com/embed/TcbyrkzhIXI" frameborder="0" allowfullscreen></iframe>
@@ -138,17 +154,4 @@
     </div>
   </div>
   {% endcomment %}
-
-  <!-- Instagram Feed -->
-  <hr/ class = "divider">
-  <script src="https://snapwidget.com/js/snapwidget.js"></script>
-  <div class="section-header section-header--medium">
-    <h4 class="section-header__title">Instagram Feed</h4>
-  </div>
-  <div class='instagram-feed-pc'>
-    <iframe src="https://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDIzMHw0fDF8fHllc3wyMHxub25lfG9uU3RhcnR8eWVzfHllcw==&ve=141215" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
-  </div>
-  <div class='instagram-feed-mobile'>
-    <iframe src="http://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDE1OHwyfDJ8fHllc3wyfG5vbmV8b25TdGFydHx5ZXN8eWVz&ve=140116" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
-  </div>
 </div>
