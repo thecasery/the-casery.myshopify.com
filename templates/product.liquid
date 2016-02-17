@@ -155,3 +155,27 @@
   </div>
   {% endcomment %}
 </div>
+
+<div itemprop="product" itemscope itemtype="http://schema.org/Product" class="delta">
+  <meta itemprop="name" content="{{ product.title }} Case" />
+  <meta itemprop="brand" content="{{ product.vendor }}"/>
+  <meta itemprop="url" content="{{ shop.url }}/{{ product.url }}" />
+  <meta itemprop="image" content="{{ product.featured_image | img_url: '1024x1024' }}" />
+  <meta itemprop="description" content="{{ product.description }}"/>
+  <meta itemprop="itemcondition" href="http://schema.org/NewCondition"/>
+  
+  {% assign i = 0 %}
+  {% for variant in product.variants %}
+    {% assign i = i | plus: 1 %}
+    {% assign odd = i | modulo:2 %}
+    {% if odd == 1 %}
+      <div itemprop="offers" itemscope itemtype="http://schema.org/Offer" class="delta">
+        <span itemprop="name" content="{{ product.title }} {{ product.type }} {{ variant.option1 }} {{ variant.option2 }}"></span>
+          <span itemprop="image" content="{{ variant.image | img_url: '1024x1024' }}"></span> 
+        <span itemprop="price" content="{{ variant.price | money }}"></span>
+          <span itemprop="priceCurrency" content="{{ shop.currency }}"></span>
+        <link itemprop="availability" href="http://schema.org/InStock"></link>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>
