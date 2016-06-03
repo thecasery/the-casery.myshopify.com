@@ -259,17 +259,17 @@ var autoscale_picture = function(){
 
   if (mobile_device){
     $('.main-banner__shop-button').css('display','none');
-    $('.autoscale__elem').attr('src','https://cdn.shopify.com/s/files/1/0964/6944/files/main-banner-mobile.jpg?17679497896564180335');
+    $('.autoscale__elem').attr('src','https://cdn.shopify.com/s/files/1/0964/6944/files/home-pg-banner-pc.jpg?3785173233688904990');
 
     picture_width = document.documentElement.clientWidth;
     picture_height = picture_width * 0.75;
     $('.autoscale__div').css('height', picture_height);
     $('.autoscale__div').css('width', picture_width);
 
-    if (picture_height * 1.33 < picture_width) {
-      picture_height = picture_width / 1.33;
+    if (picture_height * 2.78 < picture_width) {
+      picture_height = picture_width / 2.78;
     } else {
-      picture_width = picture_height * 1.33;
+      picture_width = picture_height * 2.78;
     }
     margin_top = ($('.autoscale__div').height() - picture_height) / 2;
     margin_left = (document.documentElement.clientWidth - picture_width) / 2;
@@ -280,7 +280,7 @@ var autoscale_picture = function(){
   } else {
     $('.main-banner__shop-button').css('display','block');
     $('#btn-hover').css('display','none');
-    $('.autoscale__elem').attr('src','https://cdn.shopify.com/s/files/1/0964/6944/files/banner_without_shop_now.jpg?7486202873702819664');
+    $('.autoscale__elem').attr('src','https://cdn.shopify.com/s/files/1/0964/6944/files/home-pg-banner-pc.jpg?3785173233688904990');
     // At this point, pic_width & height are screen size, used to set div size.
     picture_height = Math.max(document.documentElement.clientHeight - 300, 600);
     picture_width = document.documentElement.clientWidth;
@@ -317,7 +317,7 @@ var autoscale_picture = function(){
   if (screen_width > 766){
     $('.main-banner__shop-button').width($('.autoscale__elem').width() * 0.09);
     $('.main-banner__shop-button').css('left', $('.autoscale__elem').offset().left + $('.autoscale__elem').width() * 0.455);
-    $('.main-banner__shop-button').css('top', $('.autoscale__elem').offset().top + $('.autoscale__elem').height() * 0.63);
+    $('.main-banner__shop-button').css('top', $('.autoscale__elem').offset().top + $('.autoscale__elem').height() * 0.73);
   }
 
   if (screen_width > 1200){

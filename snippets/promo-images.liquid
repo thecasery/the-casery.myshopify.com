@@ -12,18 +12,14 @@
   <!-- This is the big picture at top -->
   <div class='autoscale__div'>
     <img class='autoscale__elem' src=''/>
-    <a href='/collections/limited-edition/iphone-6s'>
+    <a href='/collections/so-fetch/iphone-6s'>
       <!--<img class='main-banner__shop-button' id='btn-no-hover' src='https://cdn.shopify.com/s/files/1/0964/6944/files/Home-page-shop-now-button.png?1759468145073143708'/>-->
-      <img class='main-banner__shop-button'  src='https://cdn.shopify.com/s/files/1/0964/6944/files/shopnow-white.png?18219273709719409898'>
+      <img class='main-banner__shop-button'  src='https://cdn.shopify.com/s/files/1/0964/6944/files/shopnow-white.png?5760949745937680181'>
     </a>
   </div>
 
-  <a href='/collections/limited-edition/iphone-6s'><img class='mobile-shop-now' style='width:200px; background-color:#F95940; margin: 20px auto; padding-bottom:4px;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/shopnow-white.png?18219273709719409898'/></a>
+  <a href='/collections/so-fetch/iphone-6s'><img class='mobile-shop-now' style='width:200px; background-color:black; margin: 20px auto; padding-bottom:4px;' src='https://cdn.shopify.com/s/files/1/0964/6944/files/shopnow-white.png?5760949745937680181'/></a>
   <p class='mobile-shop-now'>FREE SHIPPING IN U.S.</p>
-
-  <h3 class='text-center uppercase' style='margin-top:60px;'>Featured Products</h3>
-  <hr style='margin:20px auto; margin-bottom:35px; width:200px; border-color:#F95923;'/>
-  {% include 'featured-products' %}
 
   <!-- These are 4 small banners for collections -->
   <h3 class='text-center uppercase' style='margin-top:80px;'>shop by collection</h3>
@@ -37,7 +33,84 @@
       </a>
     </div>
   {% endfor %}
+<!--
+  <div class='wrapper'>
+    <div style='width: 60%; display: inline-block;'>
+      {% capture promo_image %}promo_image_1.jpg{% endcapture %}
+      {% capture promo_image_link %}promo_image_1_link{% endcapture %}
+      {% capture promo_image_header %}promo_image_1_header{% endcapture %}
+      {% capture promo_image_intro %}promo_image_1_intro{% endcapture %}
+      <a href='{{ settings[promo_image_link] }}'>
+        <img style='width: 100%' src='{{ promo_image | asset_url }}'/>
+      </a>
+      <h3 style="text-align: center;">{{ settings[promo_image_header] }}</h3>
+      <p style="text-align: center;">{{ settings[promo_image_intro] }}</p>
+    </div>
+    <div style='width: 38%; display: inline-block;'>
+      {% capture promo_image %}promo_image_2.jpg{% endcapture %}
+      {% capture promo_image_link %}promo_image_2_link{% endcapture %}
+      {% capture promo_image_header %}promo_image_2_header{% endcapture %}
+      {% capture promo_image_intro %}promo_image_2_intro{% endcapture %}
+      <a href='{{ settings[promo_image_link] }}'>
+        <img style='width: 100%' src='{{ promo_image | asset_url }}'/>
+      </a>
+      <h3 style="text-align: center;">{{ settings[promo_image_header] }}</h3>
+      <p style="text-align: center;">{{ settings[promo_image_intro] }}</p>
+    </div>
+
+    <div style='width: 100%; display: inline-block;'>
+      {% capture promo_image %}promo_image_3.jpg{% endcapture %}
+      {% capture promo_image_link %}promo_image_3_link{% endcapture %}
+      {% capture promo_image_header %}promo_image_3_header{% endcapture %}
+      {% capture promo_image_intro %}promo_image_3_intro{% endcapture %}
+      <a href='{{ settings[promo_image_link] }}'>
+        <img style='width: 100%' src='{{ promo_image | asset_url }}'/>
+      </a>
+      <h3 style="text-align: center;">{{ settings[promo_image_header] }}</h3>
+      <p style="text-align: center;">{{ settings[promo_image_intro] }}</p>
+    </div>
+
+    <div style='width: 48%; display: inline-block;'>
+      {% capture promo_image %}promo_image_4.jpg{% endcapture %}
+      {% capture promo_image_link %}promo_image_4_link{% endcapture %}
+      {% capture promo_image_header %}promo_image_4_header{% endcapture %}
+      {% capture promo_image_intro %}promo_image_4_intro{% endcapture %}
+      <a href='{{ settings[promo_image_link] }}'>
+        <img style='width: 100%' src='{{ promo_image | asset_url }}'/>
+      </a>
+      <h3 style="text-align: center;">{{ settings[promo_image_header] }}</h3>
+      <p style="text-align: center;">{{ settings[promo_image_intro] }}</p>
+    </div>
+    <div style='width: 48%; display: inline-block;'>
+      {% capture promo_image %}promo_image_5.jpg{% endcapture %}
+      {% capture promo_image_link %}promo_image_5_link{% endcapture %}
+      {% capture promo_image_header %}promo_image_5_header{% endcapture %}
+      {% capture promo_image_intro %}promo_image_5_intro{% endcapture %}
+      <a href='{{ settings[promo_image_link] }}'>
+        <img style='width: 100%' src='{{ promo_image | asset_url }}'/>
+      </a>
+      <h3 style="text-align: center;">{{ settings[promo_image_header] }}</h3>
+      <p style="text-align: center;">{{ settings[promo_image_intro] }}</p>
+    </div>
+  </div>
+-->
   <div style='height:60px'></div>
+
+  <!-- Instagram Feed -->
+  <div class='wrapper'>
+    <h3 class='text-center uppercase' style='margin-top:60px;'>Instagram Feed</h3>
+    <hr style='margin:20px auto; margin-bottom:35px; width:200px; border-color:#F95923;'/>
+    <script src="https://snapwidget.com/js/snapwidget.js"></script>
+    <div class="section-header section-header--medium">
+      <p class='text-center'>Tag your photos using #thecasery on Facebook or Instagram and be featured on our site.</p>
+    </div>
+    <div class='instagram-feed-pc'>
+      <iframe src="https://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDIzMHw0fDF8fHllc3wyMHxub25lfG9uU3RhcnR8eWVzfHllcw==&ve=141215" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
+    </div>
+    <div class='instagram-feed-mobile'>
+      <iframe src="http://snapwidget.com/bd/?h=dGhlY2FzZXJ5fGlufDE1OHwyfDJ8fHllc3wyfG5vbmV8b25TdGFydHx5ZXN8eWVz&ve=140116" title="Instagram Widget" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%;"></iframe>
+    </div>
+  </div>
 
   <!-- Below are 6 small banners for 6 phone types -->
   <style>
@@ -55,7 +128,7 @@
     }
 
     .main-banner__shop-button{
-      background-color: #F95940;
+      background-color: black;
       position: absolute;
       width: 0;
       padding-bottom: 4px;
@@ -67,7 +140,7 @@
     }
 
     .main-banner__shop-button:hover{
-      background-color: #FF7F66; 
+      background-color: #444444; 
       border: none;
     }
 

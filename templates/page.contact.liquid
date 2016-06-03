@@ -1,9 +1,9 @@
 <div class="wrapper space-on-top" style='margin-bottom: 80px;'>
   <div class="contact-us-form">
     <div class="section-header">
-      <h1 class="section-header--title">{{ page.title }}</h1>
+      <h1 style='font-weight: lighter;'>CONTACT THE CASERY</h1>
     </div>
-    
+    <div class="left-container" style='display: inline-block; width: 55%; margin-right: 15px;'>
     {% form 'contact' %}
 
       {% if form.posted_successfully? %}
@@ -15,7 +15,6 @@
       {{ form.errors | default_errors }}
 
       {% assign name_attr = 'contact.form.name' | t | handle %}
-      <iframe frameborder="0" style="border:0; width: 100%;" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJAXRcThe7woARm7U6fefgYAI&key=AIzaSyDmbZmEv7tJQevzt1mk6hPXzg2H4Y0RCsQ" allowfullscreen></iframe>
 
       <label for="ContactFormName" class="label--hidden">{{ 'contact.form.name' | t }}</label>
       <input type="text" id="ContactFormName" name="contact[{{ name_attr }}]" placeholder="{{ 'contact.form.name' | t }}" autocapitalize="words" value="{% if form[name_attr] %}{{ form[name_attr] }}{% elsif customer %}{{ customer.name }}{% endif %}">
@@ -41,5 +40,9 @@
       <input type="submit" class="btn right" value="{{ 'contact.form.send' | t }}">
 
     {% endform %}
+    </div>
+    <div class='right-container' style='display: inline-block; width: 40%;'>
+          <iframe frameborder="0" style="border:0; width: 100%;" src="https://www.google.com/maps/embed/v1/place?q=place_id:ChIJAXRcThe7woARm7U6fefgYAI&key=AIzaSyDmbZmEv7tJQevzt1mk6hPXzg2H4Y0RCsQ" allowfullscreen></iframe>
+    </div>
   </div>
 </div>

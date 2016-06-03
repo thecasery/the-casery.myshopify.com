@@ -1,0 +1,57 @@
+<!-- "grid__product is a specific grid class for this webpage, developed by Yang." -->
+<style>
+  .grid__artist-available{
+    background-color: black;
+    color:white;
+  }
+  .grid__artist-large{
+    width: 48%;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .grid__artist-small{
+    width: 24%;
+    display: inline-block;
+    text-align: center;
+  }
+
+  @media screen and (max-width: 767px){
+    .grid__artist-large{
+      width: 100%;
+    }
+
+    .grid__artist-small{
+      width: 49%;
+    }
+  }
+</style>
+{% if count == 1 or count == 6 or count == 7 or count == 8 or count == 13 or count == 16 or count == 17 or count == 20 %}
+  <div class = "grid__artist-large">
+    <div class = 'grid__artist-available'>
+      <h2 style='margin:0;'>50 AVAILABLE</h2>
+    </div>
+    <div class = 'grid__artist-image'>
+      <a href='{{ product.url }}'><img style='width:100%;' src='{{ product.featured_image.src | img_url: "1024x1024" }}'/></a>
+    </div>
+
+    <div class='grid__artist-info'>
+      <p class="grid-link__title" style='font-size:26px;'>{{ product.title | truncate: 35 }}</p>
+      <a class='grid-link__artist' href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/iphone-6s'><p class="grid-link__title grid-link__vendor" style='font-size:22px;'>{{ product.vendor }}</p></a>
+    </div>
+  </div>
+{% else %}
+  <div class = "grid__artist-small">
+    <div class = 'grid__artist-available' style='margin:0;'>
+      <h2 style='margin:0;'>50 AVAILABLE</h2>
+    </div>
+    <div class = 'grid__artist-image'>
+      <a href='{{ product.url }}'><img style='width:100%;' src='{{ product.featured_image.src | img_url: "1024x1024" }}'/></a>
+    </div>
+
+    <div class='grid__artist-info'>
+      <p class="grid-link__title" style='font-size:26px;'>{{ product.title | truncate: 35 }}</p>
+      <a class='grid-link__artist' href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/iphone-6s'><p class="grid-link__title grid-link__vendor" style='font-size:22px;'>{{ product.vendor }}</p></a>
+    </div>
+  </div>
+{% endif %}

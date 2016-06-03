@@ -26,8 +26,8 @@
             {% endfor %}
           </ul>
 
-          <div id='collection-filter__trigger' class='collection-filter__trigger'></div>
-          <ul id='collection-filter' class='collection-filter__list'>
+          <div id='collection-filter__trigger' class='collection-filter__trigger' style='display:none;'></div>
+          <ul id='collection-filter' class='collection-filter__list' style='display:none;'>
             {% for link in linklists.collection-types.links %}
               <li data-url='{{ link.url }}' class='{% if link.title contains collection.title %} current-collection-type active {% endif %}'>{{ link.title }}</li>
             {% endfor %}
@@ -51,17 +51,32 @@
         </div>
       </div>
 
-      <div class='collection-content'>
-        {% for product in collection.products %}
-        
-          {% include 'product-grid-item' %}
+      {% if collection.title contains 'Limited Edition' %}
+        {% assign count = 0 %}
+        <div class='artist-collection-content'>
+          {% for product in collection.products %}
+            {% assign count = count | plus: 1 %}
+            {% include 'product-grid-item' %}
 
-        {% else %}
+          {% else %}
 
-          <h1 class = 'text-center' style='margin-top:200px; margin-bottom:200px;'>New cases and more types coming soon :)</h1>
+            <h1 class = 'text-center' style='margin-top:200px; margin-bottom:200px;'>New cases and more types coming soon :)</h1>
 
-        {% endfor %}
-      </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class='collection-content'>
+          {% for product in collection.products %}
+          
+            {% include 'product-grid-item' %}
+
+          {% else %}
+
+            <h1 class = 'text-center' style='margin-top:200px; margin-bottom:200px;'>New cases and more types coming soon :)</h1>
+
+          {% endfor %}
+        </div>
+      {% endif %}
 
       {% if paginate.pages > 1 %}
         <hr class="hr--clear">

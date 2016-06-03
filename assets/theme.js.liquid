@@ -130,4 +130,36 @@ var header_bar_init = function(){
   });
 }
 
+// This function is kind of bug fix, it is not a good design.
+// Fixed same title/description for different page
+var page_title_description_init = function(){
+  var url = window.location.href;
+
+  // title related
+  var original_page_title = $('#page-title').text();
+  var title_parts = original_page_title.split(' @ ');
+
+  // These are collection pages
+  if (url.indexOf('collections') >= 0 && url.indexOf('products') < 0){
+    // description related
+    var original_page_description = $('#page-description').attr('content');
+    var all_parts = url.split('/');
+    var tags = all_parts[all_parts.length - 1];
+    tags = tags.replace('+',' ');
+
+    var new_page_description = tags + ' case ' + original_page_description;
+    $('#page-description').attr('content', new_page_description);
+
+    // its sure have 2 parts, one page title, another other content
+    var new_page_title = title_parts[0] + tags + title_parts[1];
+    $('#page-title').text(new_page_title);
+  }
+
+  // other pages
+  else {
+    $('#page-title').text(title_parts[0] + title_parts[1]);
+  }
+}
+
 $(document).ready(header_bar_init);
+$(document).ready(page_title_description_init);

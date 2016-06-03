@@ -1,5 +1,5 @@
 {{ 'product.js' | asset_url | script_tag }}
-<div class='wrapper space-on-top' itemscope itemtype="http://schema.org/Product">
+<div class='wrapper space-on-top' >
   <!-- Basic information here 
     option 0 is phone type;
     option 1 is case type;
@@ -28,11 +28,11 @@
       <h1 id='title' style='font-size:26px; margin-top:10px; text-transform: uppercase;'>{{ product.title }} {{ product.type }} Case</h1>
       <h2 style='display:none'>{{ product.collections[0].title }} collection protector slim & clear cases</h2>
       {% if product.vendor contains 'Casery' %}
-        <p id='vendor' style='font:18px; margin-top:-20px; color:gray;'>{{ product.vendor }}</p>
+        <p id='vendor' style='font:18px; margin-top:-20px; color:gray;'>{{ product.vendor }} | {{ product.type }}</p>
       {% else %}
-        <a class='grid-link__artist' style='font:18px; color:gray;' href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/{{ product.type | handleize }}'><p id='vendor' style='margin-top:-20px;'>{{ product.vendor }}</p></a>
+        <a class='grid-link__artist' style='font:18px; color:gray;' href='{{ shop.url }}/collections/{{ product.vendor | handleize }}/{{ product.type | handleize }}'><p id='vendor' style='margin-top:-20px;'>{{ product.vendor }} | {{ product.type }}</p></a>
       {% endif %}
-      <h3 class='product-pc-money' style='display:inline;'></h3><p style='display:inline; font-size:16px;'>  -  Free shipping in U.S.</p>
+      <p class='money-before' style='display: inline; font-size: 14px; text-decoration: line-through;'></p><h4 class='product-pc-money' style='display:inline;'></h4><p style='display:inline; font-size:14px; font-style: italic;'>  -  Free shipping in U.S.</p>
 
       <!-- This is color -->
       <div id = "option2" class="option2"></div>
@@ -175,6 +175,8 @@
         <span itemprop="price" content="{{ variant.price | money }}"></span>
           <span itemprop="priceCurrency" content="{{ shop.currency }}"></span>
         <link itemprop="availability" href="http://schema.org/InStock"></link>
+  		<span itemprop="itemcondition" href="http://schema.org/NewCondition"></span>
+		
       </div>
     {% endif %}
   {% endfor %}

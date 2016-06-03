@@ -1,3 +1,5 @@
+var fake_money_add_to_actual_price = 10.00;
+
 /*!
  * JavaScript Cookie v2.0.4
  * https://github.com/js-cookie/js-cookie
@@ -249,7 +251,8 @@ function init_option2(product, start_pos, total_options, variants){
   product.find('#productSelect').get(0).selectedIndex = start_pos;
   
   // 4. Change variant money and init option3
-  product.find('.product-pc-money').text(variants[start_pos][4]);
+  product.find('.money-before').text("$ " + (parseFloat(variants[start_pos][4].replace("$","")) + fake_money_add_to_actual_price).toFixed(2).toString());
+  product.find('.product-pc-money').text(" | " + variants[start_pos][4]);
   product.find('.product-mobile-money').text(variants[start_pos][4]);
   init_option3(product, start_pos, total_options, variants);
 }

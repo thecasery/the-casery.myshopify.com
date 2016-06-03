@@ -385,10 +385,10 @@
       {
         "type": "image",
         "id": "header_bar_icon_pc.png",
-        "max-width": 126,
-        "max-height": 25,
+        "max-width": 1200,
+        "max-height": 180,
         "label": "Custom icon",
-        "info": "150 x 30px .png Recommended"
+        "info": "1200 x 180px .png Recommended"
       },
       {
         "type": "image",

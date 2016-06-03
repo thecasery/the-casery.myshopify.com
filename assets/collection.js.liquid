@@ -249,7 +249,7 @@ $(document).ready(function(){
   filter_event_registration();
   filter_animation();
 
-  if (document.documentElement.clientWidth >= 768){
+  if (document.documentElement.clientWidth >= 768 && window.location.href.indexOf('limited-edition') < 0){
     $('.grid__product-image').off('mouseenter').on('mouseenter',function(){
       var product = $(this).parents('.grid__product');
       // Here's a bug fix, if current product is currently actived, we don't need to active it again!
@@ -259,11 +259,11 @@ $(document).ready(function(){
 
         // the product-fill is a little bit complicated, I have no idea why first and last child need fix!
         if (product.is(':last-child') && product.is(':first-child')){
-          $('<div id="product-fill" style="height:393px; width:285px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+          $('<div id="product-fill" style="height:383px; width:285px; display:inline-block; background-color:white;"></div>').insertBefore(product);
         } else if (product.is(':first-child')){
-          $('<div id="product-fill" style="height:370px; width:288.5px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+          $('<div id="product-fill" style="height:360px; width:288.5px; display:inline-block; background-color:white;"></div>').insertBefore(product);
         } else {
-          $('<div id="product-fill" style="height:370px; width:285px; display:inline-block; background-color:white;"></div>').insertBefore(product);
+          $('<div id="product-fill" style="height:360px; width:285px; display:inline-block; background-color:white;"></div>').insertBefore(product);
         }
 
         product.addClass('active-grid__product');

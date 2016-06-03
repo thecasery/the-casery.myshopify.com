@@ -1,13 +1,16 @@
 <div class='header-bar__banner'>
-  <p class='header-bar__free-shipping'>FREE SHIPPING IN U.S.</p>
-  <p class='header-bar__discount'>GET 10% OFF</p>
+  <p class='header-bar__discount'>10% OFF</p>
+  <p class='header-bar__free-shipping'> + FREE SHIPPING. <span style='font-weight:normal;'>(US ONLY)</span></p>
 </div>
 {% include 'pop-up-window' %}
+<div class='wrapper' style='text-align:center; margin-top:30px; margin-bottom:10px;'>
+  <a href='/'><img style='max-width: 700px; width:100%;' src="{{ 'header_bar_icon_pc.png' | asset_url }}"/></a>
+</div>
 <div class="header-bar">
   <!-- This is desktop version (favicon, list, cart) -->
   <div id='header-bar__pc' class='wrapper'>
     <div class='header-bar__module header-bar__favicon'>
-      <a href='/'><img src="{{ 'header_bar_icon_pc.png' | asset_url }}"/></a>
+      <!--<a href='/'><img src="{{ 'header_bar_icon_pc.png' | asset_url }}"/></a>-->
     </div>
 
     <div class='header-bar__module header-bar__lists'>

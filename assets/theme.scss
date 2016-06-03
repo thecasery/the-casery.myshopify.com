@@ -137,7 +137,7 @@ $breakpoint-has-push:  ('medium', 'medium-down', 'large', 'post-large', 'wide');
 $breakpoint-has-pull:  ('medium', 'medium-down', 'large', 'post-large', 'wide');
 
 /*================ Color variables ================*/
-$colorPrimary: #f95940;
+$colorPrimary: #000000;
 $colorSecondary: #bbbbbb;
 
 // Button colors
@@ -162,18 +162,18 @@ $colorLinkHover: lighten($colorPrimary, 15%);
 
 // Text colors
 $colorTextBody: #555555;
-$colorTopBarText: #fffafa;
+$colorTopBarText: #000000;
 
 // Backgrounds
 $colorBody: #ffffff;
 $colorHeader: transparent;
-$colorTopBar: #000000;
+$colorTopBar: #ffc4ca;
 
 // Border colors
 $colorBorder: #e0e0e0;
 
 // Nav and dropdown link background
-$colorNavText: #111111;
+$colorNavText: #000000;
 
 // Site Footer
 $colorFooterBg: #000000;
@@ -285,7 +285,7 @@ h6 {
 }
 
 .header-bar__banner{
-  background-color: #F95940;
+  background-color: black;
   color: white;
   text-align: center;
 }
@@ -293,8 +293,8 @@ h6 {
 .header-bar__free-shipping{
   display: inline-block; 
   margin: 0; 
-  margin-right: 30px; 
   font-size: 18px;
+  font-weight: bold;
 }
 
 .header-bar__discount{
@@ -302,6 +302,7 @@ h6 {
   text-decoration: underline; 
   margin: 0; 
   font-size:18px;
+  font-weight: bold;
   cursor: pointer;
 }
 
@@ -341,17 +342,19 @@ h6 {
 
   a{
     color: $colorTopBarText;
+    font-size: 16px;
 
     &:hover,
     &:active,
     &:focus {
       color: $colorPrimary;
+      font-weight: bold;
     }
   }
 }
 
 .header-bar__sublink{
-  background-color:black; 
+  background-color: $colorTopBar; 
   display:none; 
   position:absolute; 
   text-align:left; 
@@ -379,6 +382,7 @@ h6 {
     &:active,
     &:focus {
       color: $colorPrimary;
+      font-weight:bold;
     }
   }
 }
@@ -504,7 +508,7 @@ h6 {
     font-size: em(15px);
     font-family: $headerFontStack;
     font-weight: $headerFontWeight;
-    color: white;
+    color: $colorTopBarText;
     text-transform: uppercase;
   }
 }
@@ -693,9 +697,14 @@ h6 {
   }
 }
 
+@media screen and (max-width: 1180px){
+  .collection-content{
+    max-width: 865px;
+  }
+}
+
 .collection-content {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin: 20px auto;
   text-align: left;
 }
 
@@ -1119,6 +1128,7 @@ h6 {
 .option0{
   width:265px;
   border-color: #e0e0e0;
+  font-weight: bold;
 }
 
 .option1{
@@ -1159,13 +1169,13 @@ h6 {
   box-sizing: border-box;
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
-  border: 1px solid orange;
+  border: 1px solid black;
 }
 
 .option1-btn{
   display: inline-block;
   width: 80px; 
-  border-radius: 5px;
+  border-radius: 1px;
   border: 1px solid #e0e0e0;
   margin-right: 12px !important;
   height: 36px;
@@ -1178,11 +1188,15 @@ h6 {
 }
 
 .active-option1{
-  border: 1px solid orange;
+  border: 1px solid black;
+
+  p{
+    font-weight: bold;
+  }
 }
 
 .active-option3{
-  border: 1px solid orange;
+  border: 1px solid black;
 }
 
 .slider-dots{
